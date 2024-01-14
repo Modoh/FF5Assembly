@@ -1635,12 +1635,12 @@ VictoryExp = $7C0E		;3 byte total of Exp from monster kills (only tallied at end
 
 OriginalMaxHP = $7C11				;saved before Giant Drink doubles MHP
 						;8 bytes, 2 per char
+
+BackAttack = $7C19
 			
 EarthWallHP = $7C1E
 
-BackAttack = $7C1A
-
-CharRow = $7C1A		;1 byte * 4 characters, same format as CharStruct.CharRow
+SavedCharRow = $7C1A		;1 byte * 4 characters, same format as CharStruct.CharRow
 
 BlueLearnedCount = $7C20	;number of blue spells learned this fight, max 8
 BlueLearned = $7C21		;ids of blue spells learned, 8 bytes

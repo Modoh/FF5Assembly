@@ -1,5 +1,5 @@
 if !assembler_ver > 10801
-	print "In testing, versions of Asar newer than 1.81 (compiled from source) caused a bunch of issues.  Use version 1.81 for now."
+	print "In testing, versions of Asar newer than 1.81 (compiled from source) caused problems, and its error reporting was broken.  Use version 1.81 instead or proceed at your own risk!"
 endif
 
 if !assembler_ver < 10801
@@ -89,7 +89,9 @@ print "<name> jump table generated at ",hex(!_tempname)
 while !_i <= <number>
 	%hexstring(!_i)
 	dw <name>!_output
-	print "<name>!_output at ",hex(<name>!_output,4)
+	if !_DumpAddr
+		print "<name>!_output at ",hex(<name>!_output,4)
+	endif
 	!_i #= !_i+1
 endif	;newer versions of asar prefer endwhile, but those versions currently seem broken in other ways
 
