@@ -6,6 +6,10 @@ if !assembler_ver < 10801
 	print "Untested in versions of Asar older than 1.81"
 endif
 
+if !_StaticMode && !_CombatTweaks
+	error "Combat Tweaks are not compatible with Static Mode, turn one of them off in settings.asm"
+endif
+
 macro org(address)		
 ;macro used instead of regular org command that can optionally be ignored
 ;also warns if routines overflow, but routines need to be in address order
