@@ -9,3 +9,24 @@ Optionally, some gameplay tweaks and bug fixes can be enabled.  Right now, that 
 Assembles with the Asar assembler (v1.81), patching over an existing FF5 rom.   Can be configured to generate byte identical data to the original rom.   It should work with any FF5 rom or hack of it, but will overwrite any changes in the battle portion of the C2 bank ($C20000-C29FFF).   The menu code starting at $C2A000 is unaffected (which is good, because most translations make changes there).   
 
 I don't currently have plans to expand this project outside the C2 bank battle code, but that could change in the future. 
+
+
+
+c2battle.asm
+This is the main file holding the C2 bank code.   This is what should be fed to the Asar assembler.
+
+ff5_structures.asm
+Labels all of the memory and rom locations that the battle code accesses.   Also serves as something of a memory map. 
+
+settings.asm
+Settings for the assembler, such as whether to include gameplay tweaks or restrict code to its original addresses.
+
+macros.asm
+Utility macros to generate jump tables, among other things.
+
+outsidec2.asm
+Holds no code, only labels to routines called outside the C2 bank.
+
+attacktweaks.asm
+damagetweaks.asm
+These implement the combat tweaks, if enabled in settings. 
