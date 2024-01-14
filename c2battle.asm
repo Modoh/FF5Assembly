@@ -1,3 +1,12 @@
+;FF5 Relocatable C2 Bank Battle Assembly Code
+;Assembles in Asar 1.81
+
+;by Modoh (Modohhh@gmail.com)
+;https://github.com/Modoh/FF5Assembly
+
+;The foundation of this effort was built on disassembly and documents by InstructrTrepe, everything8215, Squall_FF8 and samurai goroh
+;As well as any other contributors to the FF5 Modding Wiki https://www.ff6hacking.com/ff5wiki/index.php/Main_Page
+
 hirom
 
 ;FF5 C2 bank sets DBR to $7E and D to $0000
@@ -23124,3 +23133,4 @@ print "C2 bank combat code ended one byte before ",pc
 warnpc $C2A000	;make sure code hasn't grown beyond available space
 pad $C2A000	;$C2A000 is the start of the menu code
 		;fortunately it is programmed as if it is in its own bank, so does not call any code from the battle portion of C2
+		
