@@ -13,20 +13,26 @@ I don't currently have plans to expand this project outside the C2 bank battle c
 
 
 c2battle.asm
+
 This is the main file holding the C2 bank code.   This is what should be fed to the Asar assembler.
 
 ff5_structures.asm
+
 Labels all of the memory and rom locations that the battle code accesses.   Also serves as something of a memory map. 
 
 settings.asm
+
 Settings for the assembler, such as whether to include gameplay tweaks or restrict code to its original addresses.
 
 macros.asm
+
 Utility macros to generate jump tables, among other things.
 
 outsidec2.asm
+
 Holds no code, only labels to routines called outside the C2 bank.
 
 attacktweaks.asm
 damagetweaks.asm
+
 These implement the combat tweaks, if enabled in settings. 
