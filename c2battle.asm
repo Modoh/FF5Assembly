@@ -118,6 +118,7 @@ MusicChange:
 
 
 %org($C2007C)
+;generates a random number between X and A, inclusive
 Random_X_A:
 	SEP #$10								;C2/007C: E2 10        SEP #$10		
 	STX $3C									;C2/007E: 86 3C        STX $3C		
@@ -331,19 +332,19 @@ CountSetBits:
 	RTS 						;C2/01D0: 60           RTS 
 
 %org($C201D1)
-;AND A with $D0ECDE table, effectively CLears a single bit determined by X
+;Uses a rom table to clear a single bit in A determined by X
 ClearBit_X:
 	AND ROMBitUnset,X				;C2/01D1: 3F DE EC D0  AND $D0ECDE,X
 	RTS						;C2/01D5: 60           RTS 
 
 %org($C201D6)
-;(OR A with $D0ECE6[X] table, effectively sets a single bit determined by X)
+;Uses a rom table to set a single bit in A determined by X
 SetBit_X:
 	ORA ROMBitSet,X					;C2/01D6: 1F E6 EC D0  ORA $D0ECE6,X
 	RTS 						;C2/01DA: 60           RTS 
 
 %org($C201DB)
-;(AND A with $D0ECE6[X] table, effectively selects a single bit determined by X)
+;Uses a rom table to select a single bit from A determined by X
 SelectBit_X:
 	AND ROMBitSet,X					;C2/01DB: 3F E6 EC D0  AND $D0ECE6,X
 	RTS 						;C2/01DF: 60           RTS 
