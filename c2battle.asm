@@ -6494,7 +6494,7 @@ AITarget0F:	;all active monsters
 
 %org($C22DC6)
 AITarget10:	;random active monster except attacker
-	LDA $7C03							;C2/2DC6: AD 03 7C     LDA $7C03
+	LDA MonsterIndex						;C2/2DC6: AD 03 7C     LDA $7C03
 	STA $12		;excluded monster				;C2/2DC9: 85 12        STA $12
 	BRA AITargetMonstersExcept					;C2/2DCB: 80 B4        BRA $2D81
 
