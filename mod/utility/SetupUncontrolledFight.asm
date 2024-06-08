@@ -1,0 +1,15 @@
+includeonce
+
+incsrc mod/utility/ClearSecondAction.asm
+
+;sets up the character structure fields for a fight command, for use by charm/zombie/berserk
+SetupUncontrolledFight:
+	LDA #$80			
+	STA CharStruct.ActionFlag,X	
+	LDA #$05	;fight		
+	STA CharStruct.Command,X	
+	STZ CharStruct.PartyTargets,X	
+	STZ CharStruct.MonsterTargets,X
+	JSR ClearSecondAction
+	RTS
+	

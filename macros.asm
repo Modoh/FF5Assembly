@@ -42,7 +42,54 @@ macro org(address)
 		endif
 	endif
 endmacro
+
+macro sub(label)
+;macro for subroutine substitution (attempts to load code from file and removes original code if succesful)
+;this could, in theory, be extended to handle multiple mod directories then report any conflicts
+
+	;!_SubSentinel is used to track whether we're in a subroutine, to catch errors
+	assert not(defined(!_SubSentinel)) || !_SubSentinel == 0,"subroutine macro called inside a subroutine"
+
+	if !_ModFiles && not(defined(<label>))
+		if not(getfilestatus("mod/<label>.asm"))	;getfilestatus returns 0 if file exists and is readable
+			incsrc "mod/<label>.asm"
+			if !_ReportMods
+				if defined(<label>)
+					print "Loaded file mod/<label>.asm -- Replaced routine <label> from file"
+				else
+					print "Loaded file mod/<label>.asm -- Label <label> not defined, using original code for routine"
+				endif
+			endif
+		endif
+	else
+		if defined(<label>)
+			if !_ReportMods
+				print "Label <label> was already defined, skipping both mod file and original code"
+			endif
+		endif
+	endif
+
+	!_SubSentinel = 1	;flags that we're in a replacable subroutine
+
+	if not(defined(<label>))
 	
+;	<label>:	could have label here but decided to leave it in original code
+
+	;original code follows this macro 
+	;it will be skipped if modded asm is used instead
+	;endsub macro will close the if statement
+endmacro
+
+macro endsub()
+;ends the wrapping if statement around a routine started with sub macro
+
+	;this check is in case we're not in an if statement, since endif will error out anyway
+	assert !_SubSentinel,"endsub macro called without a matching sub macro"	
+	
+	endif	;ends the if statement that skips original code when it's replaced by a mod file
+	!_SubSentinel = 0	
+endmacro
+
 ;macro stuff to generate attack type table
 ;there has to be a better way to do this, but hex() in asar is print-only and I can't come up with anything else
 macro singlehex(number)
@@ -82,13 +129,14 @@ macro generatejumptable(name, number)
 ;..
 ;dw <name><number>
 
+;overrides table name of Attack types to AtkTypeJumpTable
 if stringsequal("<name>","Attack")
 	!_tempname = AtkTypeJumpTable
 else
 	!_tempname = <name>
 endif
 
-print "<name> jump table generated at ",hex(!_tempname)
+print "!_tempname jump table generating at ",hex(!_tempname)
 !_i = 0
 while !_i <= <number>
 	%hexstring(!_i)

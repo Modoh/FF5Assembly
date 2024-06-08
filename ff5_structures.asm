@@ -657,8 +657,9 @@ Struct CharStruct $7E2000
 	.BonusVit:		skip 1		;2076		No song affects this, likely unused
 	.BonusMag:		skip 1		;2077
 	.BonusLevel:		skip 1		;2078
-	.Unused3:		skip 1		;2079		Only used in Atk Type 5B which is itself unused
-						;		Optional power drink fix uses this byte
+	.Unused3:				;		Only used in Atk Type 5B which is itself unused
+	.DrinkAtk_Bugfix	skip 1		;2079		Optional power drink fix uses this byte
+						;		
 	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand
 	.Reaction2Element:	skip 1		;207B
 	.Reaction2Category:	skip 1		;207C
@@ -1392,15 +1393,15 @@ Struct <name> <address>			;AttackInfo $7E79FC
 							;04 Lightning    \
 							;02 Ice           Stat bonuses
 							;01 Fire         /
-									;Stat bonuses  **cleanup: get actual rom data here
-										;0 +1 
-										;1 +2 
-										;2 +3 
-										;3 +1/-1/+1/-1 (not used) 
-										;4 -1 (use inverted stat selection) (not used) 
-										;5 +5/-5/+5/-5 (Giant Gloves) 
-										;6 -5 (use inverted stat selection) 
-										;7 +5 
+									;Stat bonus table 	**cleanup: verify
+										;0: +0, +1 
+										;1: +0, +2 
+										;2: +0, +3 
+										;3: +1, -1 (not used) 
+										;4: -1, +0 (not used) 
+										;5: +5, -5 (Giant Gloves) 
+										;6: -5, +0 
+										;7: +0, +5 
 	.MPCost:				;For Magic
 							;80 Not reflectable 
 							;40-01 MP cost
@@ -1515,7 +1516,7 @@ MultiCommand = $7B2C			;Name here is a guess but seems to fit
 					; but there's at least one place where I'm not sure what will happen if it's more than 3
 					;seems like it is which attack we're currently processing for any double attack type effects?
 
-AtkType = $7B2D			;table of attack types indexed by MultiCommand above
+AtkType = $7B2D				;table of attack types indexed by MultiCommand above
 					;High bit is used as a flag that clears some data?
 					;$FF is also a special case that points to the next MultiCommand
 
