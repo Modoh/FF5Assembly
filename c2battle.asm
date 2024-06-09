@@ -20,9 +20,18 @@ incsrc "macros.asm"
 incsrc "ff5_structures.asm"	;defines and structures used by FF5, labeled
 incsrc "outsidec2.asm"		;labels for code called outside C2 bank
 
+
 ;clean the rom area this applies to first, for easier testing
 org $C20000	
 pad $C2A000
+
+
+test:
+if test
+	error "testyes"
+else
+	error "testno"
+endif
 
 ;battle starts by jumping to the start of the C2 bank
 org $C20000
@@ -488,7 +497,7 @@ CopyDisplayDamage:
 
 %org($C2028A)
 %sub(WipeActionData)
-WipeActionData:
+;WipeActionData:
 	STZ.w TargetIndex						;C2/028A: 9C 48 00     STZ $0048
 	LDX #$0133							;C2/028D: A2 33 01     LDX #$0133
 -	STZ $79F9,X	;clears memory $79F9 - $7B2C			;C2/0290: 9E F9 79     STZ $79F9,X
@@ -650,7 +659,7 @@ NextMessageBoxSet:
 ;(Returns A: bitmask depending on equipment type and some character properties)
 ; format seems to be 2 bits per character, 00 for usable and 10 for not
 %sub(GetItemUsableY)
-GetItemUsableY:
+;GetItemUsableY:
 	LDA Temp,Y								;C2/0369: B9 20 26     LDA $2620,Y	
 	BPL +									;C2/036C: 10 05        BPL $0373	
 	LDA #$AA		;usable for none				;C2/036E: A9 AA        LDA #$AA		
@@ -843,7 +852,7 @@ SetupInventoryInfo:
 ;output:
 ;$08: 2 byte value (value*percentage/100)+Base, capped
 %sub(ApplyPercentage)
-ApplyPercentage:
+;ApplyPercentage:
 	LDX #$000F								;C2/0491: A2 0F 00     LDX #$000F
 -	STZ $0E,X		;clear $0E-1D					;C2/0494: 74 0E        STZ $0E,X
 	DEX 									;C2/0496: CA           DEX 
@@ -1685,7 +1694,7 @@ CommandTable0F:
 %org($C20B0F)
 ;Command $11 (Throw)
 %sub(CommandTable10)
-CommandTable10:
+;CommandTable10:
 	LDX AttackerOffset						;C2/0B0F: A6 32        LDX $32        
 	LDA CharStruct.SelectedItem,X					;C2/0B11: BD 5A 20     LDA $205A,X
 	BPL .Weapon		;otherwise, a scroll			;C2/0B14: 10 38        BPL $0B4E
@@ -1779,7 +1788,7 @@ CommandTable13:
 %org($C20BBF)
 ;Command $15 (Animals)
 %sub(CommandTable14)
-CommandTable14:
+;CommandTable14:
 	TDC 								;C2/0BBF: 7B           TDC 
 	TAX 								;C2/0BC0: AA           TAX 
 	LDA Level   							;C2/0BC1: AD E5 7B     LDA $7BE5      
@@ -1881,7 +1890,7 @@ CommandTable15:
 %org($C20C6F)
 ;Command $17 (X-Fight)
 %sub(CommandTable16)
-CommandTable16:
+;;CommandTable16:
 	LDA #$17		;ability name				;C2/0C6F: A9 17        LDA #$17
 	JSR GFXCmdAttackNameA						;C2/0C71: 20 FA 16     JSR $16FA
 	STZ $22			;index for attack loop			;C2/0C74: 64 22        STZ $22
@@ -2893,7 +2902,7 @@ CommandTable30:
 ;Handles weapons that cast effect spells
 ;Wind Slash by default, but can be called mid-routine for other effects like Earthquake
 %sub(CommandTable31)
-CommandTable31:
+;CommandTable31:
 	LDA #$4B	;wind slash spell effect			;C2/1425: A9 4B        LDA #$4B
 	STA TempEffect							;C2/1427: 8D 33 27     STA $2733
 WeaponEffectCommand:	;called here for other weapon effects
@@ -3227,7 +3236,7 @@ CopyAbilityInfo:
 ;Displays an ability or command animation
 ;creates Action $00,FC,01,<A>,00
 %sub(GFXCmdAbilityAnim)
-GFXCmdAbilityAnim:
+;GFXCmdAbilityAnim:
 	PHA 								;C2/16E1: 48           PHA 
 	JSR FindOpenGFXQueueSlot					;C2/16E2: 20 FA 98     JSR $98FA      
 	STZ GFXQueue.Flag,X						;C2/16E5: 9E 4C 38     STZ $384C,X
@@ -3536,7 +3545,7 @@ CheckControlTargetActive:
 ;copies command data from MenuData struct into CharStruct, and performs any other necessary processing
 ;also handles gear changes, removing control when needed, consuming items when used, and action delays
 %sub(ProcessMenuCommandData)
-ProcessMenuCommandData:
+;ProcessMenuCommandData:
 	LDA EncounterInfo.IntroFX					;C2/1926: AD EF 3E     LDA $3EEF
 	BPL +		;check for credits demo				;C2/1929: 10 03        BPL $192E
 	JSR SetupCreditsDemo						;C2/192B: 20 51 1C     JSR $1C51
@@ -4105,7 +4114,7 @@ DisableCommandsMagic:
 ;Manage the ATB timer used for zombie/charm/berserk party members
 ;and set up their action when it is ready
 %sub(HandleUncontrolledParty)
-HandleUncontrolledParty:
+;HandleUncontrolledParty:
 	TDC 								;C2/1DC4: 7B           TDC 
 	TAX         							;C2/1DC5: AA           TAX              
 	STX $3D		;char index, used in subroutines also		;C2/1DC6: 86 3D        STX $3D
@@ -4162,7 +4171,7 @@ HandleUncontrolledParty:
 ;Param X = Char Offset, $3D = Char index
 ;sets up a fight command targetting a random party member
 %sub(ZombieAction)
-ZombieAction:
+;ZombieAction:
 	LDA #$80							;C2/1E2F: A9 80        LDA #$80
 	STA CharStruct.ActionFlag,X					;C2/1E31: 9D 56 20     STA $2056,X     
 	LDA #$05	;fight						;C2/1E34: A9 05        LDA #$05
@@ -4192,7 +4201,7 @@ ZombieAction:
 ;50% chance: 	sets up a fight command targetting a random party member
 ;		or picks a random known white/black/time spell and casts with inverted targetting
 %sub(CharmAction)
-CharmAction:
+;CharmAction:
 	LDA CharStruct.EnableSpells,X					;C2/1E62: BD 3D 20     LDA $203D,X
 	AND #$0F			;white magic			;C2/1E65: 29 0F        AND #$0F
 	ORA CharStruct.EnableSpells+1,X	;black and time magic		;C2/1E67: 1D 3E 20     ORA $203E,X
@@ -4347,7 +4356,7 @@ CharmAction:
 ;Param X = Char Offset, $3D = Char index
 ;sets up a fight command targetting a random party member
 %sub(BerserkAction)
-BerserkAction:
+;BerserkAction:
 	LDA #$80							;C2/1F80: A9 80        LDA #$80
 	STA CharStruct.ActionFlag,X					;C2/1F82: 9D 56 20     STA $2056,X
 	LDA #$05	;fight						;C2/1F85: A9 05        LDA #$05
@@ -4791,7 +4800,7 @@ TimerEffectHPLeak:
 
 %org($C22264)
 %sub(TimerEffectOld)
-TimerEffectOld:								;
+;TimerEffectOld:								;
 	LDA #$01							;C2/2264: A9 01        LDA #$01
 	STA EnableTimer.Old,Y						;C2/2266: 99 F7 3C     STA $3CF7,Y
 	LDA InitialTimer.Old,Y						;C2/2269: B9 FF 3D     LDA $3DFF,Y
@@ -4880,7 +4889,7 @@ TimerEffectRegen:
 
 %org($C22319)
 %sub(TimerEffectSing)
-TimerEffectSing:
+;TimerEffectSing:
 	LDA #$01							;C2/2319: A9 01        LDA #$01
 	STA EnableTimer.Sing,Y						;C2/231B: 99 F9 3C     STA $3CF9,Y
 	LDA InitialTimer.Sing,Y						;C2/231E: B9 01 3E     LDA $3E01,Y
@@ -5316,7 +5325,7 @@ Dur10:
 %org($C225A0)
 ;Duration = 110 - Magic Power, min 30
 %sub(Dur110mod)
-Dur110mod:
+;Dur110mod:
 	SEC 							;C2/25A0: 38           SEC 
 	LDA #$6E	;110					;C2/25A1: A9 6E        LDA #$6E
 	SBC MagicPower						;C2/25A3: ED E4 7B     SBC $7BE4
@@ -5330,7 +5339,7 @@ Dur110mod:
 %org($C225AF)
 ;Duration = 30
 %sub(Dur30)
-Dur30:
+;Dur30:
 	LDA #$1E						;C2/25AF: A9 1E        LDA #$1E
 	RTS 							;C2/25B1: 60           RTS 
 %endsub()
@@ -5364,7 +5373,7 @@ Dur120mod:
 %org($C225D3)
 ;Queues up a monster's action when their ATB is ready
 %sub(MonsterATB)
-MonsterATB:
+;MonsterATB:
 	LDA #$01							;C2/25D3: A9 01        LDA #$01
 	STA AISkipDeadCheck						;C2/25D5: 8D 50 7C     STA $7C50
 	SEC 								;C2/25D8: 38           SEC 
@@ -5603,7 +5612,7 @@ MonsterATB:
 	PHA 								;C2/27A4: 48           PHA 
 	LDA AttackerIndex						;C2/27A5: A5 47        LDA $47         
 	JSR GetTimerOffset    						;C2/27A7: 20 07 02     JSR $0207       
-	PLA 		;bug? doesn't adjust for haste/slow		;C2/27AA: 68           PLA 
+	PLA 		;**bug? doesn't adjust for haste/slow		;C2/27AA: 68           PLA 
 	STA CurrentTimer.ATB,Y   					;C2/27AB: 99 7F 3D     STA $3D7F,Y     
 	LDA #$41	;pending action					;C2/27AE: A9 41        LDA #$41
 	STA EnableTimer.ATB,Y    					;C2/27B0: 99 FB 3C     STA $3CFB,Y     
@@ -5613,7 +5622,7 @@ MonsterATB:
 	STZ ForcedTarget.Party,X					;C2/27B8: 9E 2A 7C     STZ $7C2A,X
 	STZ ForcedTarget.Monster,X					;C2/27BB: 9E 2B 7C     STZ $7C2B,X
 	RTS 								;C2/27BE: 60           RTS 
-%endsub
+%endsub()
 
 %org($C227BF)
 CheckAICondition:
@@ -5683,7 +5692,7 @@ AICondition00:
 ;Param3: Status bits
 ;if checking for death status, also succeed if hp is 0 (though this behavior is bugged)
 %sub(AICondition01)
-AICondition01:		
+;AICondition01:		
 	LDA AIParam1							;C2/283E: AD 21 27     LDA $2721       
 	JSR GetAITarget	;populates list of targets to check		;C2/2841: 20 27 2C     JSR $2C27       
 	LDA AIParam2  							;C2/2844: AD 22 27     LDA $2722       
@@ -6205,7 +6214,7 @@ AICondition0D:
 %org($C22B6F)
 ;AI Condition $0E: Reaction to Damage
 %sub(AICondition0E)
-AICondition0E:
+;AICondition0E:
 	
 	;**bug: doesn't load X for second path, though luckily it's usually correct already
 	LDA ReactionFlags						;C2/2B6F: AD 53 47     LDA $4753
@@ -6400,7 +6409,7 @@ AITarget04:	;krile
 
 %org($C22CF2)
 %sub(AITarget05)
-AITarget05: 	;monster 1
+;AITarget05: 	;monster 1
 	LDA ActiveParticipants+4					;C2/2CF2: AD C6 3E     LDA $3EC6
 	BEQ .Ret							;C2/2CF5: F0 06        BEQ $2CFD
 	LDX #sizeof(CharStruct)*4					;C2/2CF7: A2 00 02     LDX #$0200
@@ -6410,7 +6419,7 @@ AITarget05: 	;monster 1
 
 %org($C22CFE)
 %sub(AITarget06)
-AITarget06: 	;monster 2
+;AITarget06: 	;monster 2
 	LDA ActiveParticipants+5					;C2/2CFE: AD C7 3E     LDA $3EC7
 	BEQ .Ret							;C2/2D01: F0 06        BEQ $2D09
 	LDX #sizeof(CharStruct)*5					;C2/2D03: A2 80 02     LDX #$0280
@@ -6420,7 +6429,7 @@ AITarget06: 	;monster 2
       
 %org($C22D0A)
 %sub(AITarget07)
-AITarget07: 	;monster 3
+;AITarget07: 	;monster 3
 	LDA ActiveParticipants+6					;C2/2D0A: AD C8 3E     LDA $3EC8
 	BEQ .Ret							;C2/2D0D: F0 06        BEQ $2D15
 	LDX #sizeof(CharStruct)*6					;C2/2D0F: A2 00 03     LDX #$0300
@@ -6430,7 +6439,7 @@ AITarget07: 	;monster 3
         
 %org($C22D16)
 %sub(AITarget08)
-AITarget08: 	;monster 4
+;AITarget08: 	;monster 4
 	LDA ActiveParticipants+7					;C2/2D16: AD C9 3E     LDA $3EC9
 	BEQ .Ret							;C2/2D19: F0 06        BEQ $2D21
 	LDX #sizeof(CharStruct)*7					;C2/2D1B: A2 80 03     LDX #$0380
@@ -6440,7 +6449,7 @@ AITarget08: 	;monster 4
         
 %org($C22D22)
 %sub(AITarget09)
-AITarget09: 	;monster 5
+;AITarget09: 	;monster 5
 	LDA ActiveParticipants+8					;C2/2D22: AD CA 3E     LDA $3ECA
 	BEQ .Ret							;C2/2D25: F0 06        BEQ $2D2D
 	LDX #sizeof(CharStruct)*8					;C2/2D27: A2 00 04     LDX #$0400
@@ -6450,7 +6459,7 @@ AITarget09: 	;monster 5
         
 %org($C22D2E)
 %sub(AITarget0A)
-AITarget0A: 	;monster 6
+;AITarget0A: 	;monster 6
 	LDA ActiveParticipants+9					;C2/2D2E: AD CB 3E     LDA $3ECB
 	BEQ .Ret							;C2/2D31: F0 06        BEQ $2D39
 	LDX #sizeof(CharStruct)*9					;C2/2D33: A2 80 04     LDX #$0480
@@ -6460,7 +6469,7 @@ AITarget0A: 	;monster 6
         
 %org($C22D3A)
 %sub(AITarget0B)
-AITarget0B: 	;monster 7
+;AITarget0B: 	;monster 7
 	LDA ActiveParticipants+10					;C2/2D3A: AD CC 3E     LDA $3ECC
 	BEQ .Ret							;C2/2D3D: F0 06        BEQ $2D45
 	LDX #sizeof(CharStruct)*10					;C2/2D3F: A2 00 05     LDX #$0500
@@ -6470,7 +6479,7 @@ AITarget0B: 	;monster 7
         
 %org($C22D46)
 %sub(AITarget0C)
-AITarget0C: 	;monster 8
+;AITarget0C: 	;monster 8
 	LDA ActiveParticipants+11					;C2/2D46: AD CD 3E     LDA $3ECD
 	BEQ .Ret							;C2/2D49: F0 06        BEQ $2D51
 	LDX #sizeof(CharStruct)*11					;C2/2D4B: A2 80 05     LDX #$0580
@@ -7855,7 +7864,7 @@ AISpellTarget:
 ;Check for and launch any reactions to the attacks this tick
 ;Includes things like waking from sleep but also AI scripted reactions
 %sub(HandleReactions)
-HandleReactions:
+;HandleReactions:
 	LDA #$01							;C2/35E3: A9 01        LDA #$01
 	STA ReactingIndexType						;C2/35E5: 8D 56 7C     STA $7C56
 	LDA CurrentlyReacting						;C2/35E8: AD 4E 47     LDA $474E
@@ -8684,7 +8693,7 @@ CheckReactionConditions:
 
 %org($C23C7F)
 %sub(SaveActionData)
-SaveActionData:
+;SaveActionData:
 	TDC 								;C2/3C7F: 7B           TDC 
 	TAY 								;C2/3C80: A8           TAY 
 	LDX AttackerOffset    						;C2/3C81: A6 32        LDX $32        
@@ -8768,7 +8777,7 @@ SaveActionData:
 %org($C23D08)
 ;restores a bunch of action data which was saved before doing monster reactions
 %sub(RestoreActionData)
-RestoreActionData:
+;RestoreActionData:
 	LDA ReactingIndex							;C2/3D08: AD 55 47     LDA $4755
 	JSR CalculateCharOffset   						;C2/3D0B: 20 EC 01     JSR $01EC     
 	TDC 									;C2/3D0E: 7B           TDC 
@@ -9014,7 +9023,7 @@ ProcessReaction:
 %org($C23EA2)
 ;Loads stats and status for all characters, including party equipment and monster AI
 %sub(LoadStatsEquipmentAI)
-LoadStatsEquipmentAI:
+;LoadStatsEquipmentAI:
 	TDC 									;C2/3EA2: 7B           TDC 		
 	TAX 									;C2/3EA3: AA           TAX 		
 	TAY 									;C2/3EA4: A8           TAY 		
@@ -9425,7 +9434,7 @@ StartTimerFromTemp:
 %org($C241AF)
 ;sets up inventory and magic lists
 %sub(SetupInventoryMagic)
-SetupInventoryMagic:
+;SetupInventoryMagic:
 	TDC 										;C2/41AF: 7B           TDC 		
 	TAX 										;C2/41B0: AA           TAX 		
 	LDA #$80									;C2/41B1: A9 80        LDA #$80		
@@ -10014,7 +10023,7 @@ SetupInventoryMagic:
 ;Calculate Item Usability
 ;(A: item data equipment type (byte 2/12), returns A = Useable byte, 2 bits per char)
 %sub(GetItemUsableA)
-GetItemUsableA:
+;GetItemUsableA:
 	PHY 									;C2/455E: 5A           PHY 		
 	AND #$3F		;strip flags					;C2/455F: 29 3F        AND #$3F		
 	JSR ShiftMultiply_4							;C2/4561: 20 B7 01     JSR $01B7	
@@ -10123,7 +10132,7 @@ StartPartyPoisonTimers:
 FightCommand:
 
 %sub(CommandTable04)
-CommandTable04:
+;CommandTable04:
 	LDX AttackerOffset							;C2/45FF: A6 32        LDX $32 		
 	LDA CharStruct.MonsterTargets,X 					;C2/4601: BD 58 20     LDA $2058,X 	
 	STA MonsterTargets							;C2/4604: 85 65        STA $65		
@@ -11176,7 +11185,7 @@ StartBattle:
 %org($C24E25)
 ;set up sandworm and one-time encounters
 %sub(CheckOneTimeEncounters)
-CheckOneTimeEncounters:
+;CheckOneTimeEncounters:
 	LDA EncounterInfo.Flags							;C2/4E25: AD FE 3E     LDA $3EFE	
 	AND #$10	;sandworm						;C2/4E28: 29 10        AND #$10		
 	BEQ .OneTimeEncounters							;C2/4E2A: F0 04        BEQ $4E30	
@@ -11253,7 +11262,7 @@ CheckOneTimeEncounters:
 ;Advances ATB so that the lowest ATB gets their turn immediately
 ;also applies Masamune's Initiative effect but it's buggy
 %sub(AdvanceStartingATB)
-AdvanceStartingATB:
+;AdvanceStartingATB:
 	LDA #$FF								;C2/4E9F: A9 FF        LDA #$FF	
 	STA $0E									;C2/4EA1: 85 0E        STA $0E	
 	TDC 									;C2/4EA3: 7B           TDC 	
@@ -11339,7 +11348,7 @@ AdvanceStartingATB:
 
 %org($C24F0A)
 %sub(InitBattle)
-InitBattle:
+;InitBattle:
 	LDX #$0067									;C2/4F0A: A2 67 00     LDX #$0067	
 	TDC 										;C2/4F0D: 7B           TDC 		
 -	STA $00,X	;Clears $00-67							;C2/4F0E: 95 00        STA $00,X	
@@ -11548,7 +11557,7 @@ SetupMusic:
 
 %org($C25070)
 %sub(EndBattle)
-EndBattle:
+;EndBattle:
 	JSR WipeDisplayStructures						;C2/5070: 20 18 02     JSR $0218      
 	LDX #$0007		;clear 8 bytes					;C2/5073: A2 07 00     LDX #$0007
 -	STZ FieldItemsWon,X							;C2/5076: 9E 3B 01     STZ $013B,X
@@ -11864,7 +11873,7 @@ UpdateFieldData:
 ;queues up any item drops to be collected later
 ;applies level and job level ups
 %sub(GetLootExp)
-GetLootExp:
+;GetLootExp:
 	LDA MonsterKillTracker							;C2/52A2: AD 09 7C     LDA $7C09
 	EOR #$FF								;C2/52A5: 49 FF        EOR #$FF
 	STA MonsterKillTracker	;inverted, anything killed is now set		;C2/52A7: 8D 09 7C     STA $7C09
@@ -12411,7 +12420,7 @@ DropMonsterLoot:
 %org($C256EC)
 ;Applies HP/MP and other changes for a character level up
 %sub(LevelUp)
-LevelUp:
+;LevelUp:
 	LDX $10		;old level*2					;C2/56EC: A6 10        LDX $10
 	LDA ROMLevelHP,X						;C2/56EE: BF 29 51 D1  LDA $D15129,X
 	STA $0E								;C2/56F2: 85 0E        STA $0E
@@ -12563,7 +12572,7 @@ db $0A,$14,$1E,$0A,$1E	;HP 10, 20, 30 then MP 10, 30		;C2/57E1: 0A 14 1E 0A 1E
 ;Divides Exp for party members
 ;minimum 1 exp per char(this isn't called if total exp is 0)
 %sub(DivideExp)
-DivideExp:
+;DivideExp:
 	LDX $10			;count of active chars				;C2/57E6: A6 10        LDX $10
 	PHX 									;C2/57E8: DA           PHX 
 
@@ -13267,7 +13276,7 @@ CommandTable2B:
 ;fixes up targetting as needed
 ;displays needed messages and animations
 %sub(CastSpell)
-CastSpell:
+;CastSpell:
 	LDA TempIsEffect						;C2/5CE1: AD 23 27     LDA $2723
 	BNE .LoadEffect							;C2/5CE4: D0 24        BNE $5D0A
 	LDA TempSpell							;C2/5CE6: AD 22 27     LDA $2722
@@ -13883,7 +13892,7 @@ GetPartyTargetOffset:
 ;Haste or Slow Modifier
 ;(A=A/2 if Haste, A=A*2 if Slow, Min 1, Max 255)
 %sub(HasteSlowMod)
-HasteSlowMod:
+;HasteSlowMod:
 	PHA 								;C2/6163: 48           PHA 
 	LDA CharStruct.Status3,X					;C2/6164: BD 1C 20     LDA $201C,X
 	ORA CharStruct.AlwaysStatus3,X					;C2/6167: 1D 72 20     ORA $2072,X
@@ -14983,7 +14992,7 @@ Attack07:
 ;Param2: Spell Power
 ;Param3: Element
 %sub(Attack08)
-Attack08:
+;Attack08:
 	LDA Param3						;C2/6971: A5 59        LDA $59
 	STA AtkElement						;C2/6973: 85 4D        STA $4D
 	JSR FlareMagicDamage					;C2/6975: 20 6A 7F     JSR $7F6A  (Flare Magic damage formula)
@@ -15074,7 +15083,7 @@ Attack0B:
 ;Param2: Spell Power
 ;Param3: HP Leak Duration
 %sub(Attack0C)
-Attack0C:
+;Attack0C:
 	JSR CheckAegis 						;C2/6A07: 20 97 7C     JSR $7C97    (Aegis Shield Check)
 	LDA AtkMissed						;C2/6A0A: A5 56        LDA $56
 	BNE .Miss						;C2/6A0C: D0 26        BNE $6A34
@@ -15433,7 +15442,7 @@ Attack1C:
 ;		04h (should scan status effects 1 and 2, but does nothing due to a bug)
 ;**bug: 	status scan checks the wrong bit
 %sub(Attack1D)
-Attack1D:
+;Attack1D:
 	JSR SetupMsgBoxIndexes	;prepares things in case of x-magic	;C2/6C17: 20 65 99     JSR $9965
 	STX $0E			;$7B2C*24				;C2/6C1A: 86 0E        STX $0E
 	STY $10			;$7B2C*12, this saved var isn't used	;C2/6C1C: 84 10        STY $10
@@ -15638,7 +15647,7 @@ Attack22:
 
 %org($C26D83)
 %sub(Attack23)
-;Attack Type 23 (Earth Wall)
+;;Attack Type 23 (Earth Wall)
 ;Param2: Spell Power
 Attack23:
 	LDA EarthWallHP 						;C2/6D83: AD 1E 7C     LDA $7C1E   (Miss if already a current Wall)
@@ -15713,7 +15722,7 @@ Attack27:
 
 %org($C26DED)
 %sub(Attack28)
-;Attack Type 28 (Direct Magic Damage)
+;;Attack Type 28 (Direct Magic Damage)
 ;Param1: Hit%
 ;Damage = Param2 + Param3*256
 Attack28:
@@ -15762,7 +15771,7 @@ Attack29:
 ;Param2: Fraction/16
 ;Param3: HP Leak Duration
 %sub(Attack2A)
-Attack2A:
+;Attack2A:
 	LDA Param1						;C2/6E2D: A5 57        LDA $57
 	STA AtkElement						;C2/6E2F: 85 4D        STA $4D
 	JSR ElementDamageModPercent				;C2/6E31: 20 B5 87     JSR $87B5  (Magic Attack Element Modifiers (ii))
@@ -15854,7 +15863,7 @@ Attack2E:
 ;Param1: Creature Type
 ;Param3: Status 1
 %sub(Attack2F)
-Attack2F:
+;Attack2F:
 	JSR CheckCreatureType					;C2/6EB1: 20 5B 7E     JSR $7E5B  (Creature Type Hit Determination)
 	LDA AtkMissed						;C2/6EB4: A5 56        LDA $56
 	BNE .Ret						;C2/6EB6: D0 03        BNE $6EBB
@@ -15888,7 +15897,7 @@ Attack30:
 ;Param1: Element
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack31)
-Attack31:
+;Attack31:
 	JSR SetHit100andTargetEvade					;C2/6EE1: 20 47 7C     JSR $7C47  (Hit = 100%, Evade = Evade%)
 	JSR HitPhysical							;C2/6EE4: 20 BE 7E     JSR $7EBE  Hit% Determination for physical
 	LDA AtkMissed							;C2/6EE7: A5 56        LDA $56
@@ -15951,7 +15960,7 @@ Attack32:
 ;Param1: Element
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack33)
-Attack33:
+;Attack33:
 	JSR SetHit100andTargetEvade 					;C2/6F58: 20 47 7C     JSR $7C47  (Hit = 100%, Evade = Evade%)
 	JSR HitPhysical  						;C2/6F5B: 20 BE 7E     JSR $7EBE  (Hit% Determination for physical)
 	LDA AtkMissed							;C2/6F5E: A5 56        LDA $56
@@ -15977,7 +15986,7 @@ Attack33:
 ;Param1: Hit%
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack34)
-Attack34:
+;Attack34:
 	JSR SetHitParam1andTargetEvade					;C2/6F84: 20 60 7C     JSR $7C60  (Hit = 1st Parameter, Evade = Evade)
 	JSR HitPhysical							;C2/6F87: 20 BE 7E     JSR $7EBE  (Hit% Determination for physical)
 	LDA AtkMissed							;C2/6F8A: A5 56        LDA $56
@@ -16047,7 +16056,7 @@ Attack36:
 ;Param1: Crit%
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack37)
-Attack37:
+;Attack37:
 	JSR SetHit100andTargetEvade 					;C2/6FF9: 20 47 7C     JSR $7C47  (Hit = 100%, Evade = Evade%)
 	JSR HitPhysical 						;C2/6FFC: 20 BE 7E     JSR $7EBE  (Hit% Determination for physical)
 	LDA AtkMissed							;C2/6FFF: A5 56        LDA $56
@@ -16101,7 +16110,7 @@ Attack39:
 ;Param1: Hit%
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack3A)
-Attack3A:
+;Attack3A:
 	JSR SetHitParam1andTargetEvade					;C2/7053: 20 60 7C     JSR $7C60  (Hit = 1st Parameter, Evade = Evade)
 	JSR HitPhysical							;C2/7056: 20 BE 7E     JSR $7EBE  (Hit% Determination for physical)
 	LDA AtkMissed							;C2/7059: A5 56        LDA $56
@@ -16146,7 +16155,7 @@ Attack3B:
 ;Param2: Rune Damage Boost
 ;Param3: Rune MP Cost
 %sub(Attack3C)
-Attack3C:
+;Attack3C:
 	JSR SetHitParam1andTargetEvade					;C2/709D: 20 60 7C     JSR $7C60  (Hit = 1st Parameter, Evade = Evade)
 	JSR HitPhysical							;C2/70A0: 20 BE 7E     JSR $7EBE  (Hit% Determination for physical)
 	LDA AtkMissed							;C2/70A3: A5 56        LDA $56
@@ -16227,7 +16236,7 @@ Attack3F:
 ;		40h Front Row (target)
 ;		Else Back Row (attacker)
 %sub(Attack40)
-Attack40:
+;Attack40:
 	JSR HitMagic							;C2/7119: 20 F6 7E     JSR $7EF6  (Hit Determination for Magic)
 	LDA AtkMissed							;C2/711C: A5 56        LDA $56
 	BNE .Ret							;C2/711E: D0 13        BNE $7133
@@ -17139,7 +17148,7 @@ Attack62:
 %org($C276CE)
 ;Attack Type 63 (Grand Cross)
 %sub(Attack63)
-Attack63:
+;Attack63:
 	LDX TargetOffset						;C2/76CE: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/76D0: BD 1A 20     LDA $201A,X
 	AND #$C2		;select for dead/stone/zombie		;C2/76D3: 29 C2        AND #$C2
@@ -17240,7 +17249,7 @@ Attack63:
 ;Attack Type 64 (Chicken Knife)
 ;Param2/3: Proc% and Proc, not handled here
 %sub(Attack64)
-Attack64:
+;Attack64:
 	JSR SetHit100andHalfTargetEvade					;C2/7774: 20 53 7C     JSR $7C53  (Hit = 100, Evade = Evade/2)
 	JSR HitPhysical							;C2/7777: 20 BE 7E     JSR $7EBE  (Hit Determination for physical)
 	LDA AtkMissed							;C2/777A: A5 56        LDA $56
@@ -17279,7 +17288,7 @@ Attack65:
 %org($C277B6)
 ;Attack Type 66 (Targetting)
 %sub(Attack66)
-Attack66:
+;Attack66:
 	SEC 							;C2/77B6: 38           SEC 
 	LDA AttackerIndex					;C2/77B7: A5 47        LDA $47
 	SBC #$04		;now monster index		;C2/77B9: E9 04        SBC #$04
@@ -17321,7 +17330,7 @@ Attack67:
 
 %org($C277E9)
 %sub(Attack69)
-;Attack Type 69 (Control)
+;;Attack Type 69 (Control)
 Attack69:
 	JSR SetupMsgBoxIndexes	;sets Y=MessageBoxData index		;C2/77E9: 20 65 99     JSR $9965
 	STX $14			;MessageBoxes index			;C2/77EC: 86 14        STX $14
@@ -17436,7 +17445,7 @@ Attack69:
 %org($C278BC)
 ;Attack Type 6A (Win Battle)
 %sub(Attack6A)
-Attack6A:
+;Attack6A:
 	STZ ActiveParticipants+4	;these are the monster slots	;C2/78BC: 9C C6 3E     STZ $3EC6
 	STZ ActiveParticipants+5					;C2/78BF: 9C C7 3E     STZ $3EC7
 	STZ ActiveParticipants+6					;C2/78C2: 9C C8 3E     STZ $3EC8
@@ -17547,7 +17556,7 @@ Attack70:
 ;Actually, there's only one battle in that table and it's ArchaeAvis
 ;I'm also fairly sure this isn't used at all, even for that fight
 %sub(Attack71)
-Attack71:
+;Attack71:
 	REP #$20								;C2/7964: C2 20        REP #$20
 	TDC 									;C2/7966: 7B           TDC 
 	TAX 									;C2/7967: AA           TAX 
@@ -17748,7 +17757,7 @@ Attack72:
 ;Attack Type 73 (Spears Strong vs. Creature)
 ;Param1: Creature Type
 %sub(Attack73)
-Attack73:
+;Attack73:
 	JSR SetHit100andTargetEvade					;C2/7AFA: 20 47 7C     JSR $7C47  (Hit = 100, Evade = Evade)
 	JSR HitPhysical							;C2/7AFD: 20 BE 7E     JSR $7EBE  (Hit Determination for physical)
 	LDA AtkMissed							;C2/7B00: A5 56        LDA $56
@@ -17809,7 +17818,7 @@ HitCalcLevelMEvade:
 ;Hit=Param1, Evade=Target Evade
 ;duplicate of another routine only called from one place
 %sub(SetHitParam1andTargetEvade_Dupe)
-SetHitParam1andTargetEvade_Dupe:
+;SetHitParam1andTargetEvade_Dupe:
 	LDA Param1						;C2/7C3B: A5 57        LDA $57
 	STA HitPercent						;C2/7C3D: 85 4E        STA $4E    ($4E = Hit%)
 	LDX TargetOffset					;C2/7C3F: A6 49        LDX $49
@@ -17913,7 +17922,7 @@ CheckAegis:
 
 %org($C27CC3)
 %sub(MultiTargetHitPercent)
-;Multitargetting effect on Hit%
+;;Multitargetting effect on Hit%
 MultiTargetHitPercent:
 	LDA AttackerOffset2							;C2/7CC3: A5 39        LDA $39
 	TAX 									;C2/7CC5: AA           TAX 
@@ -18278,7 +18287,7 @@ HitMagic:
 %org($C27F1B)	
 ;Hit% Determination for Physical Magic
 %sub(HitPhysicalMagic)
-HitPhysicalMagic:
+;HitPhysicalMagic:
 	LDA Param1						;C2/7F1B: A5 57        LDA $57
 	BMI .Return						;C2/7F1D: 30 10        BMI $7F2F    (Check for Autohit)
 	JSR SetHitParam1andTargetEvade_Dupe			;C2/7F1F: 20 3B 7C     JSR $7C3B    (Hit = 1st Parameter, Evade = Evade%)
@@ -18431,7 +18440,7 @@ PhysicalMagicDamage:
 ;M = Level*Strength/128 + 2
 ;Defense = Target Defense
 %sub(SwordDamage)
-SwordDamage:
+;SwordDamage:
 	LDA AttackerOffset2						;C2/7FFC: A5 39        LDA $39
 	TAX 								;C2/7FFE: AA           TAX 
 	LDA AttackInfo.AtkPower,X					;C2/7FFF: BD 03 7A     LDA $7A03,X (Battle Power)
@@ -18478,7 +18487,7 @@ SwordDamage:
 ;Defense = Target Defense
 ;
 %sub(FistDamage)
-FistDamage:
+;FistDamage:
 	LDA AttackerOffset2					;C2/803E: A5 39        LDA $39
 	TAX 							;C2/8040: AA           TAX 
 	LDA AttackInfo.AtkPower,X 				;C2/8041: BD 03 7A     LDA $7A03,X  (Battle Power)
@@ -18566,7 +18575,7 @@ FistDamage:
 ;
 ;**bug: knife agility calc only uses low byte, so effectively contributes only 0 or 1 to M
 %sub(KnifeDamage)
-KnifeDamage:
+;KnifeDamage:
 	LDA AttackerOffset2					;C2/80D4: A5 39        LDA $39
 	TAX 							;C2/80D6: AA           TAX 
 	LDA AttackInfo.AtkPower,X 				;C2/80D7: BD 03 7A     LDA $7A03,X  (Battle Power)
@@ -18618,7 +18627,7 @@ KnifeDamage:
 ;M = Level*Strength/128 + 2
 ;Defense = Target Defense / 4
 %sub(AxeDamage)
-AxeDamage:
+;AxeDamage:
 	LDA AttackerOffset2					;C2/812B: A5 39        LDA $39
 	TAX 							;C2/812D: AA           TAX 
 	LDA AttackInfo.AtkPower,X				;C2/812E: BD 03 7A     LDA $7A03,X  (Battle Power)
@@ -18660,7 +18669,7 @@ AxeDamage:
 ;M = Level*Agility/128 + 2 + Level*MagicPower/128
 ;Defense = Target Magic Defense
 %sub(BellDamage)
-BellDamage:
+;BellDamage:
 	LDA AttackerOffset2				;C2/816F: A5 39        LDA $39
 	TAX 						;C2/8171: AA           TAX 
 	LDA AttackInfo.AtkPower,X			;C2/8172: BD 03 7A     LDA $7A03,X  (Battle Power)
@@ -18714,7 +18723,7 @@ BellDamage:
 ;M = Level*MagicPower/256 + 2
 ;Defense = Target Magic Defense
 %sub(RodDamage)
-RodDamage:
+;RodDamage:
 	LDA AttackerOffset2				;C2/81CB: A5 39        LDA $39
 	TAX 						;C2/81CD: AA           TAX 
 	LDA AttackInfo.AtkPower,X			;C2/81CE: BD 03 7A     LDA $7A03,X  (Battle Power)
@@ -18776,7 +18785,7 @@ LevelDamage:
 %org($C28227)
 ;Monster damage formula
 %sub(MonsterDamage)
-MonsterDamage:
+;MonsterDamage:
 	LDX AttackerOffset						;C2/8227: A6 32        LDX $32
 	LDA CharStruct.MonsterAttack,X					;C2/8229: BD 44 20     LDA $2044,X   Monster Attack
 	STA $0E								;C2/822C: 85 0E        STA $0E
@@ -18819,7 +18828,7 @@ ItemFormula:
 ;M = Strength*Level/128 + 1
 ;Defense = Target Defense
 %sub(PhysicalParamDamage)
-PhysicalParamDamage:
+;PhysicalParamDamage:
 	TDC 							;C2/8261: 7B           TDC 
 	TAX 							;C2/8262: AA           TAX 
 	LDA Param2   						;C2/8263: A5 58        LDA $58      (Spell Power)
@@ -18857,7 +18866,7 @@ PhysicalParamDamage:
 ;M = Level*Strength/128 + Level*Agility/128 + 2
 ;Defense = Target Defense
 %sub(ThrowDamage)
-ThrowDamage:
+;ThrowDamage:
 	LDX AttackerOffset					;C2/8299: A6 32        LDX $32
 	LDA CharStruct.SelectedItem,X				;C2/829B: BD 5A 20     LDA $205A,X
 	STA ThrownItem						;C2/829E: 8D 63 7C     STA $7C63
@@ -18920,7 +18929,7 @@ ThrowDamage:
 ;Defense = Target Defense
 ;Gil Cost = Param1 * Level
 %sub(GilTossDamage)
-GilTossDamage:
+;GilTossDamage:
 	CLC 							;C2/830A: 18           CLC 
 	LDA Level						;C2/830B: AD E5 7B     LDA $7BE5     (Level)
 	ADC #$0A   	;+10					;C2/830E: 69 0A        ADC #$0A      (Level+10)
@@ -18966,7 +18975,7 @@ GilTossDamage:
 %org($C28366)
 ;Multitargetting Modifications to Attack
 %sub(MultiTargetMod)
-MultiTargetMod:
+;MultiTargetMod:
 	LDA AttackerOffset2						;C2/8366: A5 39        LDA $39
 	TAX 								;C2/8368: AA           TAX 
 	LDA AttackInfo.Targetting,X					;C2/8369: BD FC 79     LDA $79FC,X
@@ -18999,7 +19008,7 @@ MultiTargetMod:
 %org($C2839B)
 ;Back Row Modifications
 %sub(BackRowMod)
-BackRowMod:
+;BackRowMod:
 	LDX AttackerOffset						;C2/839B: A6 32        LDX $32
 	LDA CharStruct.CmdStatus,X					;C2/839D: BD 1E 20     LDA $201E,X
 	AND #$10   							;C2/83A0: 29 10        AND #$10     (Check if Attacker is Jumping)
@@ -19023,7 +19032,7 @@ BackRowMod:
 %org($C283BD)
 ;Command modifications to damage
 %sub(CommandMod)
-CommandMod:
+;CommandMod:
 	LDX AttackerOffset							;C2/83BD: A6 32        LDX $32
 	LDA CharStruct.DamageMod,X						;C2/83BF: BD 1F 20     LDA $201F,X
 	AND #$40								;C2/83C2: 29 40        AND #$40
@@ -19094,7 +19103,7 @@ CommandMod:
 %org($C28430)
 ;Double Grip Damage Multiplier Modifier
 %sub(DoubleGripMod)
-DoubleGripMod:
+;DoubleGripMod:
 	LDX AttackerOffset						;C2/8430: A6 32        LDX $32
 	LDA CharStruct.Passives2,X					;C2/8432: BD 21 20     LDA $2021,X
 	AND #$20    				;Double Grip		;C2/8435: 29 20        AND #$20     (Attacker has Double Grip Ability)
@@ -19116,7 +19125,7 @@ DoubleGripMod:
 %org($C28452)
 ;Check for Jump
 %sub(CheckJump)
-CheckJump:
+;CheckJump:
 	LDX AttackerOffset						;C2/8452: A6 32        LDX $32
 	LDA CharStruct.CmdStatus,X					;C2/8454: BD 1E 20     LDA $201E,X 
 	AND #$10				;Jumping		;C2/8457: 29 10        AND #$10
@@ -19134,7 +19143,7 @@ CheckJump:
 %org($C28467)
 ;Bonus to Attack, costing MP
 %sub(RuneMod)
-RuneMod:
+;RuneMod:
 	LDA Param3	;MP Cost				;C2/8467: A5 59        LDA $59
 	TAX 							;C2/8469: AA           TAX 
 	STX $12							;C2/846A: 86 12        STX $12
@@ -19316,7 +19325,7 @@ EqualLevelMod:
 ;M = Level*Strength/128 + 2
 ;Defense = Target Defense
 %sub(BraveDamage)
-BraveDamage:
+;BraveDamage:
 	LDA AttackerOffset2						;C2/8577: A5 39        LDA $39
 	TAX 								;C2/8579: AA           TAX 
 	SEC 								;C2/857A: 38           SEC 
@@ -19352,7 +19361,7 @@ BraveDamage:
 ;M = Level*Strength/128 + 2, or Monster Attack Modifier
 ;Defense = Target Defense
 %sub(GoblinDamage)
-GoblinDamage:
+;GoblinDamage:
 	LDX AttackerOffset						;C2/85AD: A6 32        LDX $32
 	CLC 								;C2/85AF: 18           CLC 
 	LDA CharStruct.MonsterAttack,X					;C2/85B0: BD 44 20     LDA $2044,X
@@ -19394,7 +19403,7 @@ GoblinDamage:
 ;M = Monster M
 ;Defense = Target Defense
 %sub(StrongFightDamage)
-StrongFightDamage:
+;StrongFightDamage:
 	LDX AttackerOffset						;C2/85F1: A6 32        LDX $32
 	CLC 								;C2/85F3: 18           CLC 
 	LDA CharStruct.MonsterAttack,X					;C2/85F4: BD 44 20     LDA $2044,X
@@ -19430,7 +19439,7 @@ StrongFightDamage:
 ;M = Level*Strength/128 + Level*Agility/128 + 2
 ;Defense = Target Defense
 %sub(ChickenDamage)
-ChickenDamage:
+;ChickenDamage:
 	LDA BattleData.Escapes				;C2/8626: AD 75 7C     LDA $7C75
 	LSR 						;C2/8629: 4A           LSR 
 	TAX 						;C2/862A: AA           TAX 
@@ -19587,7 +19596,7 @@ MagicSwordMod:
 ;Elemental Modifiers for Physical
 ;
 %sub(ElementDamageModPhys)
-ElementDamageModPhys:
+;ElementDamageModPhys:
 	LDA MagicSword							;C2/8734: A5 60        LDA $60
 	BNE .Ret		;Magic Sword Elements handled elsewhere	;C2/8736: D0 35        BNE $876D
 	LDX TargetOffset						;C2/8738: A6 49        LDX $49
@@ -19625,7 +19634,7 @@ ElementDamageModPhys:
 %org($C2876E)
 ;Elemental Damage Modifiers for Magic
 %sub(ElementDamageModMag)
-ElementDamageModMag:
+;ElementDamageModMag:
 	LDA MagicSword		;shouldn't ever be set 			;C2/876E: A5 60        LDA $60
 	BNE .Return		;because it's not loaded for magic	;C2/8770: D0 42        BNE $87B4
 	LDX TargetOffset      						;C2/8772: A6 49        LDX $49        (Check for Elemental Absorb)
@@ -19677,7 +19686,7 @@ ElementDamageModMag:
 ;Very similar to ElementDamageModMag ($876E)
 ;Will note differences with *
 %sub(ElementDamageModPercent)
-ElementDamageModPercent:
+;ElementDamageModPercent:
 	LDX TargetOffset						;C2/87B5: A6 49        LDX $49
 	;check absorb
 	LDA CharStruct.EAbsorb,X					;C2/87B7: BD 30 20     LDA $2030,X    (Check for Elemental Absorb)
@@ -19711,7 +19720,7 @@ ElementDamageModPercent:
 ;Check for Critical Hit
 ;Param1: Crit%
 %sub(CheckCrit)
-CheckCrit:
+;CheckCrit:
 	LDA MagicSword	;no crits with magic sword, 			;C2/87DF: A5 60        LDA $60
 	BNE .Ret	;in vanilla FF5 no weapons support both anyway	;C2/87E1: D0 15        BNE $87F8
 			
@@ -19732,7 +19741,7 @@ CheckCrit:
 ;Check Creature Type for Critical Hit
 ;Param1: Creature Type
 %sub(CheckCreatureCrit)
-CheckCreatureCrit:
+;CheckCreatureCrit:
 	LDX TargetOffset						;C2/87F9: A6 49        LDX $49
 	LDA CharStruct.CreatureType,X					;C2/87FB: BD 65 20     LDA $2065,X  (Check Target Creature Type vs Hit)
 	AND Param1    							;C2/87FE: 25 57        AND $57      (Compare Creature Type vs Weapon)
@@ -19820,7 +19829,7 @@ CalcFinalDamageMSword:
 ;Gravity Attack Damage, Type 07h
 ;Damage is Param2($58) * Current HP of target / 16 unless target is Heavy
 %sub(GravityDamage)
-GravityDamage:
+;GravityDamage:
 	LDX TargetOffset							;C2/8874: A6 49        LDX $49
 	LDA CharStruct.CreatureType,X						;C2/8876: BD 65 20     LDA $2065,X
 	AND #$20    			;heavy					;C2/8879: 29 20        AND #$20     	(Target Creature Type = Heavy?)
@@ -20103,7 +20112,7 @@ CalcFinalDamage:
 %org($C28A4E)
 ;Calculate Damage from % of Target Max HP
 %sub(CalcDamageMaxHP)
-CalcDamageMaxHP:
+;CalcDamageMaxHP:
 	LDA Param2						;C2/8A4E: A5 58        LDA $58
 	TAX 							;C2/8A50: AA           TAX 
 	STX $2C							;C2/8A51: 86 2C        STX $2C
@@ -20149,7 +20158,7 @@ CalcDamageMaxHP:
 ;Calculate Damage from % of Attacker Current HP
 
 %sub(CalcDamageAttackerCurHP)
-CalcDamageAttackerCurHP:
+;CalcDamageAttackerCurHP:
 	LDA Param2					;C2/8A9D: A5 58        LDA $58
 	TAX 						;C2/8A9F: AA           TAX 
 	STX $2C						;C2/8AA0: 86 2C        STX $2C
@@ -20194,7 +20203,7 @@ CalcDamageAttackerCurHP:
 %org($C28AEC)
 ;Calculate Damage from % of Target Current MP
 %sub(CalcDamageTargetCurMP)
-CalcDamageTargetCurMP:
+;CalcDamageTargetCurMP:
 	LDA Param2					;C2/8AEC: A5 58        LDA $58
 	TAX 						;C2/8AEE: AA           TAX 
 	STX $2C						;C2/8AEF: 86 2C        STX $2C
@@ -20280,7 +20289,7 @@ RestoreHalfMax:
 ;	if flag is set result is (2*base + level/4)
 ;	if no flag set result is (2*base + level/4 - targetlvl/4) or 30 if target is heavy
 %sub(CalcStatusDuration)
-CalcStatusDuration:
+;CalcStatusDuration:
 	STZ $0F									;C2/8B7D: 64 0F        STZ $0F
 	LDA Param2								;C2/8B7F: A5 58        LDA $58
 	AND #$7F			;strips high bit			;C2/8B81: 29 7F        AND #$7F
@@ -20883,7 +20892,7 @@ KillNonHeavy:
 ;Revive Target
 ;Param3/$59 is fraction/16 of max hp to restore
 %sub(ReviveTarget)
-ReviveTarget:
+;ReviveTarget:
 	LDA TargetIndex						;C2/8FAA: A5 48        LDA $48
 	CMP #$04							;C2/8FAC: C9 04        CMP #$04
 	BCC .Revive			;<4 is party			;C2/8FAE: 90 0F        BCC $8FBF
@@ -21173,7 +21182,7 @@ DoubleMaxHP:
 ;Increase Attack 
 ;**bug: Only increases Attack for monsters and Goblin Punch
 %sub(AddAttack)
-AddAttack:
+;AddAttack:
 	LDX TargetOffset				;C2/9197: A6 49        LDX $49
 	CLC 						;C2/9199: 18           CLC 
 	LDA CharStruct.MonsterAttack,X			;C2/919A: BD 44 20     LDA $2044,X
@@ -21767,7 +21776,7 @@ GetCharStructActionData:
 %org($C29561)
 ;Checks for Reflect and Cover and changes target if needed
 %sub(CheckTargetRedirect)
-CheckTargetRedirect:
+;CheckTargetRedirect:
 	LDA AttackerOffset2						;C2/9561: A5 39        LDA $39
 	TAX 								;C2/9563: AA           TAX 
 	LDA AttackInfo.Category,X					;C2/9564: BD FD 79     LDA $79FD,X
@@ -22025,7 +22034,7 @@ CheckTargetRedirect:
 ;Makes sure there is a valid target available
 ;near duplicate of $4BD7 routine, just uses different memory locations to pass info
 %sub(CheckValidTargetsExist2)
-CheckValidTargetsExist2:
+;CheckValidTargetsExist2:
 	LDA $0F			;Ending Target Index			;C2/9728: A5 0F        LDA $0F
 	TAY 								;C2/972A: A8           TAY 
 	INY 								;C2/972B: C8           INY 
@@ -22201,7 +22210,7 @@ SetupReactionsAnims:
 ;for use for reactions afterward
 ;there's only space for the first 2 actions to be countered
 %sub(CopyReactionInfo)
-CopyReactionInfo:
+;CopyReactionInfo:
 	LDX TargetOffset							;C2/9885: A6 49        LDX $49
 	LDA MultiCommand							;C2/9887: AD 2C 7B     LDA $7B2C
 	BNE .Multi								;C2/988A: D0 2C        BNE $98B8
@@ -22490,7 +22499,7 @@ ApplyPartyGear:
 %org($C29A6F)
 ;Apply Stats and Status from gear ($7B7B: Character index 0-3)
 %sub(ApplyGear)
-ApplyGear:
+;ApplyGear:
 	LDA CurrentChar								;C2/9A6F: AD 7B 7B     LDA $7B7B	
 	JSR CalculateCharOffset							;C2/9A72: 20 EC 01     JSR $01EC	
 	REP #$20								;C2/9A75: C2 20        REP #$20		
@@ -22845,7 +22854,7 @@ ApplyGear:
 ;zombie from equipment is also bugged, but doesn't exist in vanilla ff5
 ApplyEquipmentStatus:
 %sub(ApplyEquipmentStatus)
-	STZ $13		;set to 1 for always status, 0 for initial		;C2/9D01: 64 13        STZ $13		
+;	STZ $13		;set to 1 for always status, 0 for initial		;C2/9D01: 64 13        STZ $13		
 	LDY AttackerOffset							;C2/9D03: A4 32        LDY $32		
 	LDX $26		;ROMArmorStatus Offset					;C2/9D05: A6 26        LDX $26		
 	LDA ROMArmorStatus.Status1,X						;C2/9D07: BF C0 26 D1  LDA $D126C0,X	

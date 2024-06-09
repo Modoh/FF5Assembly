@@ -1,6 +1,6 @@
 if !_Optimize
 
-incsrc mod/utility/EquipUsable.asm
+incsrc "utility/EquipUsable.asm"
 
 ;Calculate Item Usability (from inventory index)
 ;(Y:index into in-battle inventory)

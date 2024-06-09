@@ -10,6 +10,8 @@ if !_StaticMode && !_CombatTweaks
 	error "Combat Tweaks are not compatible with Static Mode, turn one of them off in settings.asm"
 endif
 
+!_SubRollback = 0
+
 macro org(address)		
 ;macro used instead of regular org command that can optionally be ignored
 ;also warns if routines overflow, but routines need to be in address order
@@ -48,13 +50,16 @@ macro sub(label)
 ;this could, in theory, be extended to handle multiple mod directories then report any conflicts
 
 	;!_SubSentinel is used to track whether we're in a subroutine, to catch errors
-	assert not(defined(!_SubSentinel)) || !_SubSentinel == 0,"subroutine macro called inside a subroutine"
+	
+	if defined("_SubSentinel")
+		assert !_SubSentinel == 0,"subroutine macro called inside a subroutine"
+	endif
 
-	if !_ModFiles && not(defined(<label>))
+	if !_ModFiles && not(defined("<label>"))
 		if not(getfilestatus("mod/<label>.asm"))	;getfilestatus returns 0 if file exists and is readable
 			incsrc "mod/<label>.asm"
 			if !_ReportMods
-				if defined(<label>)
+				if defined("<label>")
 					print "Loaded file mod/<label>.asm -- Replaced routine <label> from file"
 				else
 					print "Loaded file mod/<label>.asm -- Label <label> not defined, using original code for routine"
@@ -62,7 +67,7 @@ macro sub(label)
 			endif
 		endif
 	else
-		if defined(<label>)
+		if defined("<label>")
 			if !_ReportMods
 				print "Label <label> was already defined, skipping both mod file and original code"
 			endif
@@ -71,9 +76,15 @@ macro sub(label)
 
 	!_SubSentinel = 1	;flags that we're in a replacable subroutine
 
-	if not(defined(<label>))
+	if defined("<label>")
+		!_SubRollback = 1
+		pushpc
+	else
+		!_SubRollback = 0
+		<label>:
+	endif
 	
-;	<label>:	could have label here but decided to leave it in original code
+	
 
 	;original code follows this macro 
 	;it will be skipped if modded asm is used instead
@@ -86,8 +97,13 @@ macro endsub()
 	;this check is in case we're not in an if statement, since endif will error out anyway
 	assert !_SubSentinel,"endsub macro called without a matching sub macro"	
 	
-	endif	;ends the if statement that skips original code when it's replaced by a mod file
-	!_SubSentinel = 0	
+	if !_SubRollback == 1
+		warnpc $C2A000
+		pullpc
+		!_SubRollback = 0
+	endif
+	
+	!_SubSentinel = 0
 endmacro
 
 ;macro stuff to generate attack type table
