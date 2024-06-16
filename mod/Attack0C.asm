@@ -6,10 +6,10 @@ if !_Optimize
 ;Param1: Element
 ;Param2: Spell Power
 ;Param3: HP Leak Duration
-Attack0C:
+%subdef(Attack0C)
 	JSR CheckAegis 						;C2/6A07: 20 97 7C     JSR $7C97    (Aegis Shield Check)
 	LDA AtkMissed						;C2/6A0A: A5 56        LDA $56
-	BNE .Miss						;C2/6A0C: D0 26        BNE $6A34
+	BNE .CheckNull						;C2/6A0C: D0 26        BNE $6A34
 	LDA Param1						;C2/6A0E: A5 57        LDA $57
 .Element
 	STA AtkElement						;C2/6A10: 85 4D        STA $4D

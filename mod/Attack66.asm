@@ -1,7 +1,7 @@
 if !_Optimize
 
 ;Attack Type 66 (Targetting)
-Attack66:
+%subdef(Attack66)
 	SEC 							;C2/77B6: 38           SEC 
 	LDA AttackerIndex					;C2/77B7: A5 47        LDA $47
 	SBC #$04		;now monster index		;C2/77B9: E9 04        SBC #$04

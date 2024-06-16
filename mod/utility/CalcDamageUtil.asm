@@ -1,13 +1,13 @@
 includeonce
 
-incsrc "mod/utility/ShiftDivide32b.asm"
+incsrc "ShiftDivide32b.asm"
 
 ;params:
 ;$2C: fraction (/16)
 ;$2A: damage base (generally a hp total)
 ;ok to call in either 8 or 16 bit mode (multiply immediately goes to 16 bit)
 ;returns X = base * fraction / 16
-CalcDamagePercent:
+%subdef(CalcDamagePercent)
 	JSR Multiply_16bit					
 	REP #$20						
 	JSR ShiftDivide32b_16	;divide result by 16 via shifts	
@@ -26,7 +26,7 @@ CalcDamagePercent:
 	RTS 	
 
 ;end portion of CalcFinalDamage and CalcFinalDamageMSword (which is the same)
-CalcFinalDamageEnd:
+%subdef(CalcFinalDamageEnd)
 	LDX BaseDamage									
 	LDA AtkHealed 									
 	BNE .ApplyDamage	;skip attacker damage check if we're healing target						
@@ -41,7 +41,7 @@ CalcFinalDamageEnd:
 
 ;Doubles M if can't evade bit is set
 ;used in both CalcFinalDamage routines, but is skipped by a bug most of the time normally
-CantEvadeMod:
+%subdef(CantEvadeMod)
 	LDA AttackerOffset2							
 	TAX 									
 	LDA AttackInfo.Category,X						
@@ -53,7 +53,7 @@ CantEvadeMod:
 .Ret	RTS
 	
 ;Normal damage or healing application, from X
-ApplyHPDamage:
+%subdef(ApplyHPDamage)
 	LDA AtkHealed						
 	BNE .Heal						
 	STX DamageToTarget					
@@ -63,7 +63,7 @@ ApplyHPDamage:
 	RTS
 
 ;Strange flag where attacker is damaged, and uses their defense
-ApplyAttackerDamage:
+%subdef(ApplyAttackerDamage)
 	LDX AttackerOffset			;uses attacker's defense instead	
 	LDA CharStruct.Defense,X							
 	TAX 										

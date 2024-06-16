@@ -2,7 +2,7 @@
 ;**optimize: uses SandwormBattle instead of checking encounter
 if !_Optimize
 
-CommandTable10:
+%subdef(CommandTable10)
 	LDX AttackerOffset						
 	LDA CharStruct.SelectedItem,X					
 	BPL .Weapon		;otherwise, a scroll			

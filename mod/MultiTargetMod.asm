@@ -1,11 +1,11 @@
 if !_Optimize
 
-incsrc "mod/utility/CountTargetBits.asm"
+incsrc "utility/CountTargetBits.asm"
 
 ;Multitargetting Modifications
 ;
 ;**optimize: use util routine
-MultiTargetMod:
+%subdef(MultiTargetMod)
 	LDA AttackerOffset2						;C2/8366: A5 39        LDA $39
 	TAX 								;C2/8368: AA           TAX 
 	LDA AttackInfo.Targetting,X					;C2/8369: BD FC 79     LDA $79FC,X

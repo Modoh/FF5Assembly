@@ -2,12 +2,12 @@ includeonce
 
 ;Utility Routines
 
-PhysMiss:
+%subdef(PhysMiss)
 	LDA #$80	
 	STA AtkMissed	
 .Ret	RTS 		
 
-StandardMSwordFinish:
+%subdef(StandardMSwordFinish)
 	LDA TargetDead			
 	BNE PhysMiss_Ret		;borrowing RTS here to save a byte		
 	LDA AtkMissed			
@@ -16,12 +16,12 @@ StandardMSwordFinish:
 .Hit	JSR CalcFinalDamageMSword	
 	JMP ApplyMSwordStatus
 	
-PhysElement:
+%subdef(PhysElement)
 	LDA Param1							
 	STA AtkElement							
 	JSR ElementDamageModPhys		
 	
-StandardMSwordMods:
+%subdef(StandardMSwordMods)
 	JSR CommandMod							
 	JSR DoubleGripMod						
 	JSR TargetStatusModPhys						

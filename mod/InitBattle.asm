@@ -1,6 +1,6 @@
 if !_Optimize
 
-InitBattle:
+%subdef(InitBattle)
 ;opt: 	use loops and MVN to save some space
 ;	doesn't save as much as I expected
 
@@ -34,13 +34,13 @@ InitBattle:
 	LDX #!FieldData		;copy data like Escape count and battle event flags	
 	LDY #!BattleData        ;from field structure to battle structure		
 	LDA #$1F		;32 bytes (minus 1 for MVN)
-	MVN #$7E,#$7E		;moves all 32 bytes of data
+	MVN $7E,$7E		;moves all 32 bytes of data
 	TDC			;need this so high byte of A is 0 instead of $FF
 	
 	LDX #FieldTimerEnable	;also copies 16-bit FieldTimer to BattleTimer
 	LDY #BattleTimerEnable
 	LDA #$02		;3 bytes to copy
-	MVN #$7E,#$7E
+	MVN $7E,$7E
 	TDC			;need this so high byte of A is 0 instead of $FF
 
 	INC MonsterNextForm

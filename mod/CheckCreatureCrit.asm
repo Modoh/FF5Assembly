@@ -4,7 +4,7 @@ if !_Optimize
 ;Check Creature Type for Critical Hit
 ;Param1: Creature Type
 ;**optimize: 	don't switch modes, use inc on Crit flag
-CheckCreatureCrit:
+%subdef(CheckCreatureCrit)
 	LDX TargetOffset						
 	LDA CharStruct.CreatureType,X					
 	AND Param1    							

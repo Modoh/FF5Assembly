@@ -1,13 +1,13 @@
 if !_Optimize || !_CantEvade_Doubles_M	
 ;need to pull this in for the cantevade fix to prevent the code from being duplicated, even though this routine already worked
 
-incsrc "mod/utility/CalcDamageUtil.asm"
+incsrc "utility/CalcDamageUtil.asm"
 
 ;Calculate Final Damage w/Magic Sword
 ;Damage is returned in different addresses depending on what happens
 ;
 ;**optimize: 	used utility routines, shared with the other final damage routine
-CalcFinalDamageMSword:
+%subdef(CalcFinalDamageMSword)
 	JSR CalcBaseDamage								
 	LDX BaseDamage									
 	BNE .CheckCantEvade		

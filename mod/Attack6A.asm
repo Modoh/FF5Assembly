@@ -2,7 +2,7 @@ if !_Optimize
 
 
 ;Attack Type 6A (Win Battle)
-Attack6A:
+%subdef(Attack6A)
 if !_Optimize				;use a loop to save space
 	LDX #$0007		
 -	STZ ActiveParticipants+4,X 

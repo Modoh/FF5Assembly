@@ -5,7 +5,7 @@ if !_Fixes
 ;Param2: Status offset (0-3 for status 1-4)
 ;Param3: Status bits
 ;if checking for death status, also succeed if hp is 0 (though this behavior is bugged)
-AICondition01:		
+%subdef(AICondition01)		
 	LDA AIParam1							;C2/283E: AD 21 27     LDA $2721       
 	JSR GetAITarget	;populates list of targets to check		;C2/2841: 20 27 2C     JSR $2C27       
 	LDA AIParam2  							;C2/2844: AD 22 27     LDA $2722       

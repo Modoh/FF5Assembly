@@ -1,7 +1,7 @@
 if !_Optimize || !_Fixes
 
 if !_Optimize
-	incsrc "mod/utility/ClearSecondAction.asm"
+	incsrc "utility/ClearSecondAction.asm"
 endif
 
 ;copies command data from MenuData struct into CharStruct, and performs any other necessary processing
@@ -10,7 +10,7 @@ endif
 ;optimizations: uses loops to clear data ranges instead of a bunch of individual instrcutions
 ;fixes: clears SecondPartyTargets rather than SecondMonsterTargets twice
 
-ProcessMenuCommandData:
+%subdef(ProcessMenuCommandData)
 	LDA EncounterInfo.IntroFX					
 	BPL +		;check for credits demo				
 	JSR SetupCreditsDemo						

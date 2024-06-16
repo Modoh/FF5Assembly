@@ -1,6 +1,6 @@
 if !_Optimize
 
-Dur110mod:
+%subdef(Dur110mod)
 ;Duration = 110 - Attacker's Magic Power, min 30
 	SEC 							;C2/25A0: 38           SEC 
 	LDA #$6E	;110					;C2/25A1: A9 6E        LDA #$6E
@@ -9,7 +9,7 @@ Dur110mod:
 	CMP #$1E	;min 30					;C2/25A8: C9 1E        CMP #$1E
 	BCS Dur30_Ret						;C2/25AA: B0 02        BCS $25AE
 
-Dur30:
+%subdef(Dur30)
 ;Duration = 30
 ;opt: reuse code from Dur110mod 
 	LDA #$1E	;min 30					;C2/25AC: A9 1E        LDA #$1E

@@ -5,7 +5,7 @@ if !_Optimize
 ;Param2: Spell Power
 ;
 ;**optimize: save a byte on AtkMissed, use 16 bit mode to save 2 more
-Attack23:
+%subdef(Attack23)
 	LDA EarthWallHP 						;C2/6D83: AD 1E 7C     LDA $7C1E   (Miss if already a current Wall)
 	ORA EarthWallHP+1						;C2/6D86: 0D 1F 7C     ORA $7C1F
 	BNE .Miss							;C2/6D89: D0 1C        BNE $6DA7

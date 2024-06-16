@@ -5,7 +5,7 @@ if !_Fixes
 ;Adds Gil, Exp and AP from monsters
 ;queues up any item drops to be collected later
 ;applies level and job level ups
-GetLootExp:
+%subdef(GetLootExp)
 	LDA MonsterKillTracker							;C2/52A2: AD 09 7C     LDA $7C09
 	EOR #$FF								;C2/52A5: 49 FF        EOR #$FF
 	STA MonsterKillTracker	;inverted, anything killed is now set		;C2/52A7: 8D 09 7C     STA $7C09

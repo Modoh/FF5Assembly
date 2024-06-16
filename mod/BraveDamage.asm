@@ -1,10 +1,10 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Brave Blade Damage formula
 ;tweaks: Adds a Vit/256 factor to M
-BraveDamage:
+%subdef(BraveDamage)
 	JSR LoadAttackPower	;*Load Attack Power including Power Drinks
 	SEC 
 	SBC BattleData.Escapes   		;(Attack = Attack - # times escaped)

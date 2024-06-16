@@ -7,21 +7,21 @@ if !_Optimize
 ;saves 67 bytes vs the original 8 routines
 ;does execute slower than the originals, but not slower than other AI target routines
 ;X is $FFFF (-1) when called
-AITarget0C:	;11
+%subdef(AITarget0C)	;11
 	INX
-AITarget0B:	;10
+%subdef(AITarget0B)	;10
 	INX
-AITarget0A:	;9
+%subdef(AITarget0A)	;9
 	INX
-AITarget09:	;8
+%subdef(AITarget09)	;8
 	INX
-AITarget08:	;7
+%subdef(AITarget08)	;7
 	INX
-AITarget07:	;6
+%subdef(AITarget07)	;6
 	INX
-AITarget06:	;5
+%subdef(AITarget06)	;5
 	INX
-AITarget05:	;4							;C2/2CF2: AD C6 3E     LDA $3EC6
+%subdef(AITarget05)	;4						;C2/2CF2: AD C6 3E     LDA $3EC6
 	TXA                                                             ;C2/2CF5: F0 06        BEQ $2CFD
 	CLC                                                             ;C2/2CF7: A2 00 02     LDX #$0200
 	ADC #$05                                                        ;C2/2CFA: 8E 20 26     STX $2620

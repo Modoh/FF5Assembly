@@ -3,7 +3,7 @@ if !_Optimize
 ;Check for Jump
 ;**optimize: save some bytes by shifting in 8 bit mode to avoid mode switches, rearranged to only have one RTS
 
-CheckJump:
+%subdef(CheckJump)
 	LDX AttackerOffset						
 	LDA CharStruct.CmdStatus,X					
 	AND #$10				;Jumping		

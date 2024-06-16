@@ -1,12 +1,12 @@
 if !_Optimize
 
-incsrc mod/utility/SetupUncontrolledFight.asm
+incsrc utility/SetupUncontrolledFight.asm
 
 ;optimization: use utility routine to clear second action fields
 
 ;Param X = Char Offset, $3D = Char index
 ;sets up a fight command targetting a random party member
-ZombieAction:
+%subdef(ZombieAction)
 	PHX
 	JSR SetupUncontrolledFight					;*C2/1E2F: A9 80        LDA #$80
 									;*C2/1E31: 9D 56 20     STA $2056,X     

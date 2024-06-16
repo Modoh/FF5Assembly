@@ -1,6 +1,6 @@
 if !_Fixes
 
-TimerEffectSing:
+%subdef(TimerEffectSing)
 	LDA #$01							
 	STA EnableTimer.Sing,Y						
 	LDA InitialTimer.Sing,Y						

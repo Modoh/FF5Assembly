@@ -1,11 +1,11 @@
 if !_Optimize
 
-incsrc "mod/utility/CountTargetBits.asm"
+incsrc "utility/CountTargetBits.asm"
 
 ;Multitargetting effect on Hit%
 ;
 ;**optimize: use util routine
-MultiTargetHitPercent:
+%subdef(MultiTargetHitPercent)
 	LDA AttackerOffset2							;C2/7CC3: A5 39        LDA $39
 	TAX 									;C2/7CC5: AA           TAX 
 	LDA AttackInfo.Targetting,X 						;C2/7CC6: BD FC 79     LDA $79FC,X   

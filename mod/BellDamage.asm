@@ -1,10 +1,10 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Bells Damage formula
 
-BellDamage:
+%subdef(BellDamage)
 
 if !_CombatTweaks
 ;Tweaks:

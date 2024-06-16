@@ -1,5 +1,5 @@
 org $C10000
-Dispatch_C1:
+Graphics_C1:
 ;calls a routine in C1 bank
 ;index of routine to run is passed in A
 

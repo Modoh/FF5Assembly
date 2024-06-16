@@ -5,14 +5,17 @@ padbyte $00
 !_ModFiles = 1			;determines whether modded routines will be loaded from mod folder
 				;required for any gameplay tweaks/fixes/optimizations to load
 				
-!_Optimize = 1			;enables replacing routines with optimized versions to save space
+!_Optimize = 1			;enables replacing routines with size optimized versions
+				;most of the other additions need this to be on for there to be enough space
 				;should not modify game behavior on its own
 
 !_Fixes = 1			;fixes gameplay bugs
-				;may end up requiring !_Optimize so there is enough space, and many fixed routines are the optimized versions anyway
-
+				;intentionally doesn't include many beneficial bugs
+				
 !_CombatTweaks = 1		;applies combat formula tweaks, changing gameplay
-				;may end up requiring !_Optimize so there is enough space?
+				;magic sword with more weapon types
+				;double hand with spears
+				;rod/bell/harp/brave formula improvements
 				
 ;Individual Fixes, not included in the above !_Fixes set 
 !_Overpowered_Knife_Fix = 0	;Directly fixes the knife agi bug with no concern for balance
@@ -28,14 +31,23 @@ padbyte $00
 !_Fix_Stat_Underflow = 0	;Fixes stat underflow for character equipment
 				;usually seen with Berserkers + Thornlet for ~250 magic power
 
-;Assembly Options (for testing)
+;Some bigger individual gameplay changes not included in Combat Tweaks
+!_BerserkerCommands = 0		;Berserk use random equipped commands
+				; 25% chance per slot, invalid commands or duplicates count as fight
+				;not ready yet, needs some work and testing
+
+
+
+
+;Test/Debug options
 !_DumpAddr = 0			;prints all org addresses to console
 
-!_ReportMods = 1		;prints all mod asm files that were loaded
+!_ReportMods = 0		;prints all mod asm files that were loaded
 
 !_StaticMode = 0		;keeps functions and tables at their original starting location
 				;restricts code size per-routine to the same size as the original
-				;which is useful for testing, but is unlikely to work with any mods above 
+				;this is useful for ensuring that the compiler output matches original ff5
+				;but won't work with the mod file system
 				
 ;these only apply in StaticMode
 !_StaticPad = 0			;if set, wipes the extra space if routines are smaller than the original

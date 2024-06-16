@@ -7,7 +7,7 @@ if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks
 ;			would need to be rewritten to handle base+equipment stats over 127 
 ;			but vanilla ff5 doesn't get close to that
 
-ApplyGear:
+%subdef(ApplyGear)
 	LDA CurrentChar								;C2/9A6F: AD 7B 7B     LDA $7B7B	
 	JSR CalculateCharOffset							;C2/9A72: 20 EC 01     JSR $01EC	
 	REP #$20								;C2/9A75: C2 20        REP #$20		
@@ -355,8 +355,7 @@ endif
 	CPY #$0003	;Status 1-3 immunity					;C2/9CFB: C0 03 00     CPY #$0003	
 	BNE .ApplyImmunities							;C2/9CFE: D0 F0        BNE $9CF0	
 															
-	RTS									;C2/9D00: 60           RTS
-%endsub()
+	RTS	 
 
 
 endif

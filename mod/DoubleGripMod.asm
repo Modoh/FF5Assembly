@@ -3,7 +3,7 @@ if !_Optimize
 
 ;Double Grip Damage Multiplier Modifier
 ;**optimize: save some bytes by shifting in 8 bit mode to avoid mode switches
-DoubleGripMod:
+%subdef(DoubleGripMod)
 	LDX AttackerOffset						;C2/8430: A6 32        LDX $32
 	LDA CharStruct.Passives2,X					;C2/8432: BD 21 20     LDA $2021,X
 	AND #$20    				;Double Grip		;C2/8435: 29 20        AND #$20     (Attacker has Double Grip Ability)

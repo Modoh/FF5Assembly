@@ -8,7 +8,7 @@ incsrc "utility/EquipUsable.asm"
 ; format seems to be 2 bits per character, 00 for usable and 10 for not
 
 ;optimization: use a shared routine to merge the shared code between A and Y versions
-GetItemUsableY:
+%subdef(GetItemUsableY)
 	LDA Temp,Y								
 	BPL +									
 	LDA #$AA		;usable for none				

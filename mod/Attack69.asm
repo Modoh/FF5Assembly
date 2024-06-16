@@ -3,7 +3,7 @@ if !_Optimize
 
 ;Attack Type 69 (Control)
 ;**optimize: rearranged routine to use branches instead of jumps, saves a few bytes
-Attack69:
+%subdef(Attack69)
 	JSR SetupMsgBoxIndexes	;sets Y=MessageBoxData index		;C2/77E9: 20 65 99     JSR $9965
 	STX $14			;MessageBoxes index			;C2/77EC: 86 14        STX $14
 	LDX TargetOffset						;C2/77EE: A6 49        LDX $49

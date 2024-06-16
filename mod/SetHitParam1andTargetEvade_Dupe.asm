@@ -5,7 +5,7 @@ if !_Optimize
 ;but we'll define the label to the RTS from the previous routine just in case
 
 skip -1
-SetHitParam1andTargetEvade_Dupe:
+%subdef(SetHitParam1andTargetEvade_Dupe)
 skip 1
 
 endif

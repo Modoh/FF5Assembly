@@ -1,6 +1,6 @@
 if !_Optimize || !_Fixes || !_CombatTweaks || !_Overpowered_Knife_Fix
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Knives damage formula
 ;Tweaks:
@@ -21,7 +21,7 @@ incsrc "mod/utility/damageutil.asm"
 ;M = Level*Strength/256 + Level*Agility/256 + 3
 ;Defense = Target Defense
 
-KnifeDamage:
+%subdef(KnifeDamage)
 	JSR LoadAttackPower	;*Load Attack Power including Power Drinks
 	TAX
 	STX Attack		

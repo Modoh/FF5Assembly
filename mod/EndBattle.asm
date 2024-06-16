@@ -2,7 +2,7 @@ if !_Optimize
 
 ;optimizations: save some bytes when copying BattleData back to FieldData
 
-EndBattle:
+%subdef(EndBattle)
 	JSR WipeDisplayStructures						;C2/5070: 20 18 02     JSR $0218      
 	LDX #$0007		;clear 8 bytes					;C2/5073: A2 07 00     LDX #$0007
 -	STZ FieldItemsWon,X							;C2/5076: 9E 3B 01     STZ $013B,X
@@ -90,7 +90,7 @@ EndBattle:
 	LDX #!BattleData							;C2/5123: 7B           TDC 
 	LDY #!FieldData								;C2/5124: AA           TAX 
 	LDA #$1F		;copy 32 bytes
-	MVN #$7E,#$7E
+	MVN $7E,$7E
 	
 	REP #$20
 	LDA BattleTimer

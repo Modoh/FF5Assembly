@@ -6,7 +6,7 @@ if !_Fixes
 ;		20h scans current and max hp
 ;		08h scans element weakness (*fixed: no longer scans status effects 1 and 2)
 ;		04h scans status effects 1 and 2 (*fixed)
-Attack1D:
+%subdef(Attack1D)
 	JSR SetupMsgBoxIndexes	;prepares things in case of x-magic	;C2/6C17: 20 65 99     JSR $9965
 	STX $0E			;$7B2C*24				;C2/6C1A: 86 0E        STX $0E
 	STY $10			;$7B2C*12, this saved var isn't used	;C2/6C1C: 84 10        STY $10

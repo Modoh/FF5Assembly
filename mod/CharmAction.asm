@@ -1,8 +1,8 @@
 
 if !_Optimize
 
-incsrc mod/utility/ClearSecondAction.asm
-incsrc mod/utility/SetupUncontrolledFight.asm
+incsrc utility/ClearSecondAction.asm
+incsrc utility/SetupUncontrolledFight.asm
 
 
 ;Param X = Char Offset, $3D = Char index, $3F = Char Offset
@@ -11,7 +11,7 @@ incsrc mod/utility/SetupUncontrolledFight.asm
 ;
 ;optimized: 	use existing ROMTimes650w rom table instead of SNES HW multiplier
 ;		use utility routines to setup fight and clear action fields
-CharmAction:
+%subdef(CharmAction)
 	LDA CharStruct.EnableSpells,X					;C2/1E62: BD 3D 20     LDA $203D,X
 	AND #$0F			;white magic			;C2/1E65: 29 0F        AND #$0F
 	ORA CharStruct.EnableSpells+1,X	;black and time magic		;C2/1E67: 1D 3E 20     ORA $203E,X

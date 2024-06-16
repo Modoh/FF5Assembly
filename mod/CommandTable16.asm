@@ -4,7 +4,7 @@ if !_Optimize
 ;Command $17 (X-Fight)
 ;**optimize: 	lots to trim in the targetting code
 ;		could also use BuildTargetBitmask instead of duplicating all its code here	
-CommandTable16:
+%subdef(CommandTable16)
 	LDA #$17		;ability name				;C2/0C6F: A9 17        LDA #$17
 	JSR GFXCmdAttackNameA						;C2/0C71: 20 FA 16     JSR $16FA
 	STZ $22			;index for attack loop			;C2/0C74: 64 22        STZ $22
@@ -58,7 +58,7 @@ CommandTable16:
 
 .RH	LDA RHWeapon.AtkType,X						;*C2/0CD0: 20 23 99     JSR $9923
 	STA $11			;attack type				;*C2/0CD3: 84 14        STY $14
-	LDY #RHWeapon							;*C2/0CD5: 64 12        STZ $12
+	LDY #!RHWeapon							;*C2/0CD5: 64 12        STZ $12
 	STY $14			;weapon info pointer			;*C2/0CD7: A6 0E        LDX $0E
 	STZ $16			;flag for hand anim			;*C2/0CD9: BD 85 40     LDA $4085,X    
 	JSR SimpleOneHand						;*C2/0CDC: 99 FC 79     STA $79FC,Y
@@ -101,7 +101,7 @@ CommandTable16:
 	BEQ .Next							;*C2/0D31: D0 03        BNE $0D36
 	LDA LHWeapon.AtkType,X						;*C2/0D33: 4C 96 0D     JMP $0D96
 	STA $11			;attack type				;*C2/0D36: 20 23 99     JSR $9923
-	LDY #LHWeapon							;*C2/0D39: 84 12        STY $12
+	LDY #!LHWeapon							;*C2/0D39: 84 12        STY $12
 	STY $14			;weapon info pointer			;*C2/0D3B: 64 14        STZ $14
 	LDA #$80							;*C2/0D3D: A6 0E        LDX $0E
 	STA $16			;flag for hand anim			;*C2/0D3F: BD 91 40     LDA $4091,X    
@@ -148,7 +148,7 @@ CommandTable16:
 .Ret	RTS 								;C2/0DA1: 60           RTS 
 
 
-SimpleOneHand:
+%subdef(SimpleOneHand)
 ;Process one hand's attacks (for simple no-proc attacks)
 ;Params
 ;$0E: char equipment offset

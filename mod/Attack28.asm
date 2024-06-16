@@ -5,7 +5,7 @@ if !_Optimize
 ;Damage = Param2 + Param3*256
 ;
 ;**optimize: just go to 16 bit mode and load param2
-Attack28:
+%subdef(Attack28)
 	JSR HitMagic 							;C2/6DED: 20 F6 7E     JSR $7EF6  (Hit Determination for Magic)
 	LDA AtkMissed							;C2/6DF0: A5 56        LDA $56
 	BNE .Ret							;C2/6DF2: D0 1D        BNE $6E11

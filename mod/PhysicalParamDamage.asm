@@ -1,6 +1,6 @@
 if !_Optimize
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Physical attack but with attack power loaded like a spell
 ;Attack = Param2 + 0..Param2
@@ -8,7 +8,7 @@ incsrc "mod/utility/damageutil.asm"
 ;Defense = Target Defense
 ;
 ;**optimize: use 16 bit mode and utility routines
-PhysicalParamDamage:
+%subdef(PhysicalParamDamage)
 	TDC 							;C2/8261: 7B           TDC 
 	TAX 							;C2/8262: AA           TAX 
 	LDA Param2   						;C2/8263: A5 58        LDA $58      (Spell Power)

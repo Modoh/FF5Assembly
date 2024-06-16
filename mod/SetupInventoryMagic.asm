@@ -4,7 +4,7 @@ if !_Optimize
 ;		optimize inventory setup, removing a second loop through the inventory	
 
 ;sets up inventory and magic lists
-SetupInventoryMagic:
+%subdef(SetupInventoryMagic)
 	TDC 										;C2/41AF: 7B           TDC 		
 	TAX 										;C2/41B0: AA           TAX 		
 	LDA #$80									;C2/41B1: A9 80        LDA #$80		

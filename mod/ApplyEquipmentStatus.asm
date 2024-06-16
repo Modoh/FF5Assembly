@@ -14,7 +14,7 @@ if !_Fixes
 
 ;Apply status from equipment 
 ;uses $26 as offset into ROMArmorStatus table
-ApplyEquipmentStatus:
+%subdef(ApplyEquipmentStatus)
 	STZ $13			;set to 1 for always status, 0 for initial		
 	LDY AttackerOffset							
 	LDX $26			;ROMArmorStatus Offset					
@@ -228,7 +228,7 @@ ApplyEquipmentStatus:
 
 ;made this into a utility routine
 ;will be useful if we ever support charm/berserk via item passives
-UncontrolledResetATB:
+%subdef(UncontrolledResetATB)
 	LDA CurrentChar								
 	TAX 									
 	LDA #$3C								

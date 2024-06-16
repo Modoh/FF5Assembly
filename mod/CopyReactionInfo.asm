@@ -5,7 +5,7 @@ if !_Optimize
 ;there's only space for the first 2 actions to be countered
 
 ;**optimize: used a loop for first case, 16 bit copies for second
-CopyReactionInfo:
+%subdef(CopyReactionInfo)
 	LDX TargetOffset							;C2/9885: A6 49        LDX $49
 	TDC
 	TAY

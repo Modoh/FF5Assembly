@@ -2,7 +2,7 @@
 if !_Fixes
 
 ;AI Condition $0E: Reaction to Damage
-AICondition0E:
+%subdef(AICondition0E)
 	
 	LDX AttackerOffset	;fix: load X before branch instead of after
 	LDA ReactionFlags						

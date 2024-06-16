@@ -1,13 +1,13 @@
 if !_Optimize 
 
-incsrc "mod/utility/CalcDamageUtil.asm"
+incsrc "utility/CalcDamageUtil.asm"
 
 ;Revive Target
 ;Param3/$59 is fraction/16 of max hp to restore
 
 ;**optimize: 	use utility routine
 
-ReviveTarget:
+%subdef(ReviveTarget)
 	LDA TargetIndex							
 	CMP #$04							
 	BCC .Revive			;<4 is party			

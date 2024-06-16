@@ -1,4 +1,4 @@
-
+if !_Optimize
 
 ;Attack Type 63 (Grand Cross)
 ;optimizations:
@@ -7,8 +7,8 @@
 ;		confused casters in vanilla use this retry strategy to pick spells 
 ;		which could have a much higher chance of retrying, so this should be ok
 ;	111 bytes
-Attack63:
-	LDX !TargetOffset						;C2/76CE: A6 49        LDX $49
+%subdef(Attack63)
+	LDX TargetOffset						;C2/76CE: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/76D0: BD 1A 20     LDA $201A,X
 	AND #$C2		;select for dead/stone/zombie		;C2/76D3: 29 C2        AND #$C2
 	BEQ +	 							;C2/76D5: F0 01        BEQ $76D8    (Check if Target Status 1 = Dead, Stone or Zombie)
@@ -84,13 +84,13 @@ Attack63:
 
 
 ;alternate option, disabled for now
-if false
+if 0
 ;Attack Type 63 (Grand Cross)
 ;optimizations:
 ;	uses a jump table instead of chained branches
 ;	still feels like it could be better
 ;	132 bytes
-Attack63Alt:
+%subdef(Attack63Alt)
 	LDX !TargetOffset						;C2/76CE: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/76D0: BD 1A 20     LDA $201A,X
 	AND #$C2		;select for dead/stone/zombie		;C2/76D3: 29 C2        AND #$C2
@@ -168,4 +168,6 @@ Attack63Alt:
 	JSR ApplyStatus4						;C2/7769: 20 05 8E     JSR $8E05  (Apply Status Effect 4)
 .Finish	STZ AtkMissed							;C2/7771: 64 56        STZ $56
 	RTS 								;C2/7773: 60           RTS 
+endif
+
 endif

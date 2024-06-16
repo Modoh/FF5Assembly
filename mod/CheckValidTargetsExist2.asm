@@ -1,9 +1,9 @@
-if !Optimize
+if !_Optimize
 
 ;Makes sure there is a valid target available
 
 ;optimize:	instead of reimplementing the same basic check, just act as a wrapper for CheckValidTargetsExist
-CheckValidTargetsExist2:
+%subdef(CheckValidTargetsExist2)
 	LDA $0E		;starting index param
 	STA $12		
 	LDA $0F		;ending index param

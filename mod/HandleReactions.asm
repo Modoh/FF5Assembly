@@ -8,7 +8,7 @@ if !_Fixes
 
 ;Check for and launch any reactions to the attacks this tick
 ;Includes things like waking from sleep but also AI scripted reactions
-HandleReactions:
+%subdef(HandleReactions)
 	LDA #$01							;C2/35E3: A9 01        LDA #$01
 	STA ReactingIndexType						;C2/35E5: 8D 56 7C     STA $7C56
 	LDA CurrentlyReacting						;C2/35E8: AD 4E 47     LDA $474E
@@ -711,7 +711,7 @@ endif
 	BEQ .CheckBarrier2							;C2/3B50: F0 03        BEQ $3B55
 +	
 if !_Fixes			;**bug: wrong reaction loop again
-	JMP CheckTargets2Loop
+	JMP .CheckTargets2Loop
 else
 	JMP .GoCheckTargetsLoopB						;C2/3B52: 4C 4B 39     JMP $394B
 endif

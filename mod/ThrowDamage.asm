@@ -1,13 +1,12 @@
 if !_Optimize || !_Fixes || !_CombatTweaks
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Throw Damage formula
 ;Attack = Item Attack Power + (0..Item Attack/8)
 ;M = Level*Strength/128 + Level*Agility/128 + 2
 ;Defense = Target Defense
-%sub(ThrowDamage)
-ThrowDamage:
+%subdef(ThrowDamage)
 	LDX AttackerOffset					;C2/8299: A6 32        LDX $32
 	LDA CharStruct.SelectedItem,X				;C2/829B: BD 5A 20     LDA $205A,X
 	STA ThrownItem						;C2/829E: 8D 63 7C     STA $7C63

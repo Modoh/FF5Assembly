@@ -1,7 +1,7 @@
 if !_Optimize
 
 ;Hit% Determination for Physical Magic
-HitPhysicalMagic:
+%subdef(HitPhysicalMagic)
 	LDA Param1						;C2/7F1B: A5 57        LDA $57
 	BMI .Return						;C2/7F1D: 30 10        BMI $7F2F    (Check for Autohit)
 if !_Optimize		;don't use dupe routine so we can remove it

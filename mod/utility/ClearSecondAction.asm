@@ -1,6 +1,6 @@
 includeonce
 
-ClearSecondAction:
+%subdef(ClearSecondAction)
 	;Replaces this code, used in multple places:
 	;STZ CharStruct.SecondActionFlag,X	
         ;STZ CharStruct.SecondCommand,X		

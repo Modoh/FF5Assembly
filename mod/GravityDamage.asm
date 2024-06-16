@@ -1,12 +1,12 @@
 if !_Optimize 
 
-incsrc "mod/utility/ShiftDivide32b.asm"
+incsrc "utility/ShiftDivide32b.asm"
 
 ;Gravity Attack Damage, Type 07h
 ;Damage is Param2($58) * Current HP of target / 16 unless target is Heavy
 
 ;optimized: 	used utility routine to divide 32 bit number
-GravityDamage:
+%subdef(GravityDamage)
 	LDX TargetOffset							;C2/8874: A6 49        LDX $49
 	LDA CharStruct.CreatureType,X						;C2/8876: BD 65 20     LDA $2065,X
 	AND #$20    			;heavy					;C2/8879: 29 20        AND #$20     	(Target Creature Type = Heavy?)

@@ -5,7 +5,7 @@ includeonce
 
 ;takes ROMItemEquippable index in X
 ;returns equippable byte in A
-EquipUsable:
+%subdef(EquipUsable)
 	LDA $14			;save original value of the temp var we're using to restore later
 	PHA
 	TDC 									

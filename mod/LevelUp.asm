@@ -3,7 +3,7 @@ if !_Fixes
 ;**fix: updates stored max hp that's restored if giant drink was used
 
 ;Applies HP/MP and other changes for a character level up
-LevelUp:
+%subdef(LevelUp)
 	LDX $10		;old level*2					;C2/56EC: A6 10        LDX $10
 	LDA ROMLevelHP,X						;C2/56EE: BF 29 51 D1  LDA $D15129,X
 	STA $0E								;C2/56F2: 85 0E        STA $0E

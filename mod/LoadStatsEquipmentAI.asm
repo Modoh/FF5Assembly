@@ -3,7 +3,7 @@ if !_Fixes
 ;Fixes: Monsters that start with HP leak only have their HP leak timer started if they are hasted (wrong status byte checked)
 
 ;Loads stats and status for all characters, including party equipment and monster AI
-LoadStatsEquipmentAI:
+%subdef(LoadStatsEquipmentAI)
 	TDC 									;C2/3EA2: 7B           TDC 		
 	TAX 									;C2/3EA3: AA           TAX 		
 	TAY 									;C2/3EA4: A8           TAY 		

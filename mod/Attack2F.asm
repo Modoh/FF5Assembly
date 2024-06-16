@@ -1,6 +1,6 @@
 if !_CombatTweaks 
 
-incsrc "mod/utility/attackutil.asm"
+incsrc "utility/attackutil.asm"
 
 ;Attack type 2F (Harps, was Unused)
 ;Bells damage + status, for non-gravity harps
@@ -9,7 +9,7 @@ incsrc "mod/utility/attackutil.asm"
 ;		$57 = Attack Power Override if set
 ;		$58 = Status Chance 
 ;		$59 = Status 2
-Attack2F:
+%subdef(Attack2F)
 	JSR Attack39		;Vanilla Bell attack routine
 	LDA AtkMissed		;check for miss (only happens on void)
 	BNE .Ret

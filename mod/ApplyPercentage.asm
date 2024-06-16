@@ -1,6 +1,6 @@
 if !_Optimize
 
-incsrc mod/utility/Division_32bit.asm
+incsrc utility/Division_32bit.asm
 
 ;Utility routine used for the +% HP/MP passives on level up
 ;inputs: 
@@ -11,7 +11,7 @@ incsrc mod/utility/Division_32bit.asm
 ;$08: 2 byte value (value*percentage/100)+Base, capped
 
 ;optimization: use a shared 32 bit division routine
-ApplyPercentage:
+%subdef(ApplyPercentage)
 	LDX #$000F								;C2/0491: A2 0F 00     LDX #$000F
 -	STZ $0E,X		;clear $0E-1D					;C2/0494: 74 0E        STZ $0E,X
 	DEX 									;C2/0496: CA           DEX 

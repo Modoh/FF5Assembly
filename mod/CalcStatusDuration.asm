@@ -7,7 +7,7 @@ if !_Optimize
 ;	if no flag set result is (2*base + level/4 - targetlvl/4) or 30 if target is heavy
 
 ;**optimize: simplified calclations, removing some really strange code
-CalcStatusDuration:
+%subdef(CalcStatusDuration)
 	LDA Param2								
 	ASL        			;base*2, high bit into carry (ignored)
 	STA $0E    								

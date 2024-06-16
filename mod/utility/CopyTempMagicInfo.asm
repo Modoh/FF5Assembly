@@ -7,11 +7,11 @@ includeonce
 ;It would be much easier if it were a 4/4/4 split instead of 5/4/3, 
 ;and it would make more sense in the attackinfo structure that way as well
 ;but would have to change the in memory layout that too much stuff uses
-CopyTempMagicInfo:
+%subdef(CopyTempMagicInfo)
 	TDC
 	TAX
--	LDA TempMagicInfo,X    			
-       	STA AttackInfo,Y       
+-	LDA !TempMagicInfo,X    			
+       	STA !AttackInfo,Y       
        	INX                    
        	INY                    
        	CPX #$0005             
@@ -20,8 +20,8 @@ CopyTempMagicInfo:
        	INY                    
        	INY                    
        	INY                    
--	LDA TempMagicInfo,X    
-        STA AttackInfo,Y	
+-	LDA !TempMagicInfo,X    
+        STA !AttackInfo,Y	
         INX 			
         INY 			
         CPX #$0008		

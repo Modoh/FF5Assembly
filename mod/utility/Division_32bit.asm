@@ -6,7 +6,7 @@ includeonce
 ;Quotient: 	$16-19
 ;Remainder: 	$1A-1C
 ;copied from FF5 where it was inlined in a few routines
-Division_32bit:
+%subdef(Division_32bit)
 	REP #$20								;C2/04A6: C2 20        REP #$20
 	CLC 									;C2/04A8: 18           CLC 
 	LDX #$0020								;C2/04A9: A2 20 00     LDX #$0020
@@ -35,6 +35,7 @@ Division_32bit:
 	BNE -									;C2/04D5: D0 D5        BNE $04AC
 	TDC 									;C2/04D7: 7B           TDC 
 	SEP #$20								;C2/04D8: E2 20        SEP #$20
+	RTS
 	
 
 

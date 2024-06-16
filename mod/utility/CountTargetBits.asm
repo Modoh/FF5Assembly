@@ -1,7 +1,7 @@
 includeonce
 
 ;returns X = number of targets in TargetBitmask
-CountTargetBits:
+%subdef(CountTargetBits)
 	LDA MultiCommand							
 	ASL 									
 	TAX 									

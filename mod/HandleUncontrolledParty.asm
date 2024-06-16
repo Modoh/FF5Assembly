@@ -5,7 +5,7 @@ if !_Fixes || !_Optimize
 
 ;Manage the ATB timer used for zombie/charm/berserk party members
 ;and set up their action when it is ready
-HandleUncontrolledParty:
+%subdef(HandleUncontrolledParty)
 	TDC 								
 	TAX         							
 	STX $3D		;char index, used in subroutines also		

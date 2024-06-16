@@ -6,17 +6,17 @@ if !assembler_ver < 10801
 	print "Untested in versions of Asar older than 1.81"
 endif
 
-if !_StaticMode && !_CombatTweaks
-	error "Combat Tweaks are not compatible with Static Mode, turn one of them off in settings.asm"
+if !_StaticMode && !_ModFiles
+	error "Static Mode is not compatible with loading any mod files, turn one of them off in settings.asm"
 endif
 
+!_SubSentinel = 0
 !_SubRollback = 0
 
 macro org(address)		
 ;macro used instead of regular org command that can optionally be ignored
 ;also warns if routines overflow, but routines need to be in address order
 ;most of what I wanted here doesn't work because asar has a bunch of undocumented limitations
-;	?here:
 	
 	if !_DumpAddr 
 		print "PC: ",pc,", org: ",hex(<address>)
@@ -45,62 +45,102 @@ macro org(address)
 	endif
 endmacro
 
+macro subdef(label)
+	!_SubDefined_<label> = 1
+;	error !_SubDefined_<label>
+;	error !_SubDefined_<label>
+	<label>:
+endmacro
+
 macro sub(label)
 ;macro for subroutine substitution (attempts to load code from file and removes original code if succesful)
 ;this could, in theory, be extended to handle multiple mod directories then report any conflicts
 
+;not all that happy with how hacky this got, shame the original simple version didn't work
+
 	;!_SubSentinel is used to track whether we're in a subroutine, to catch errors
-	
-	if defined("_SubSentinel")
-		assert !_SubSentinel == 0,"subroutine macro called inside a subroutine"
+
+	;assert !_SubSentinel,"subroutine macro called inside a subroutine"
+	;asar's assert routine is apparently worthless, so we do it manually
+	if !_SubSentinel
+		error "subroutine macro for <label> called inside another subroutine"
 	endif
 
-	if !_ModFiles && not(defined("<label>"))
-		if not(getfilestatus("mod/<label>.asm"))	;getfilestatus returns 0 if file exists and is readable
-			incsrc "mod/<label>.asm"
+	if !_ModFiles 
+		if defined("_SubDefined_<label>")
 			if !_ReportMods
-				if defined("<label>")
-					print "Loaded file mod/<label>.asm -- Replaced routine <label> from file"
+				print "Label <label> was already defined, skipping any mod files and original code"
+			endif
+		else
+			if not(getfilestatus("mod/<label>.asm"))	;getfilestatus returns 0 if file exists and is readable
+				incsrc "mod/<label>.asm"
+				if defined("_SubDefined_<label>")	;check if the included file defined this routine
+					if !_ReportMods
+						print "Loaded file mod/<label>.asm -- Replacing routine <label> from file"
+					endif
 				else
-					print "Loaded file mod/<label>.asm -- Label <label> not defined, using original code for routine"
+					if !_ReportMods
+						print "Loaded file mod/<label>.asm -- Label <label> was not defined by file, using original code for routine"
+					endif
 				endif
 			endif
 		endif
-	else
-		if defined("<label>")
-			if !_ReportMods
-				print "Label <label> was already defined, skipping both mod file and original code"
-			endif
+		!_SubLabel = <label>
+		
+
+		if defined("_SubDefined_<label>")
+		;label was either already defined or was just defined in the loaded file
+		;save pc so we can roll it back later, as there's no way to conditionally skip code from a macro that I can see
+;			pushpc			;pushpc in asar trashes the current address for some reason, so it's unusable
+
+			;!_SubPC #= pc()	;alternate option?
+			
+			;original code follows this macro 
+			;if we don't need it, the endsub macro will roll back the pc to reclaim the space
+			!_SubRollback = 1
+			!_SubRollbackLabel = <label>
+			!_SubSentinel = 1
+
+			;put us in a garbage namespace, so the original code labels don't cause redefinition errors
+			namespace discarded
+			<label>_Rollback:
+		else
+			!_SubRollback = 0
 		endif
+
 	endif
 
-	!_SubSentinel = 1	;flags that we're in a replacable subroutine
-
-	if defined("<label>")
-		!_SubRollback = 1
-		pushpc
-	else
-		!_SubRollback = 0
-		<label>:
-	endif
-	
-	
-
-	;original code follows this macro 
-	;it will be skipped if modded asm is used instead
-	;endsub macro will close the if statement
+	;flags that we're in a replacable subroutine
+	!_SubSentinel = 1
 endmacro
 
 macro endsub()
-;ends the wrapping if statement around a routine started with sub macro
+	namespace off
 
-	;this check is in case we're not in an if statement, since endif will error out anyway
-	assert !_SubSentinel,"endsub macro called without a matching sub macro"	
+	;make sure this was called after a %sub call
+
+	;assert !_SubSentinel,"endsub macro called without a matching sub macro"	
+	;asar's assert routine is apparently worthless, so we do it manually
+	if !_SubSentinel == 0
+		error "endsub macro called without a matching sub macro"
+	endif	
+
 	
-	if !_SubRollback == 1
-		warnpc $C2A000
-		pullpc
-		!_SubRollback = 0
+	if !_ModFiles
+		;check if we need to roll back the pc to reclaim the original code space
+		;this method requires extra space during the processing, but I can't see any other way in asar to do it
+		;unfortunately this does mean that large replaced subs near the end of the bank could overflow it, even if the final size would be small enough
+		if !_SubRollback != 0 
+			;make sure the original code assembly didn't overflow the battle area
+			warnpc $C2A000
+			
+			;restore original pc, so subsequent code uses the space the original routine occupied
+			namespace discarded
+			org !{_SubRollbackLabel}_Rollback
+			namespace off
+			!_SubRollback = 0
+					
+		endif
 	endif
 	
 	!_SubSentinel = 0

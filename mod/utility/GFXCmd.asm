@@ -1,15 +1,13 @@
 includeonce
 
-!_GFXCmd = 1
-
 ;Routines to creates an animation commands
 
-GFXCmdMagicAnim:
+%subdef(GFXCmdMagicAnim)
 	LDX #$0007
 ;	BRA GFXCmdAnim	;this or JMP if these are separated
 
 ;creates Action $00,FC,<X>,<A>,00
-GFXCmdAnim:
+%subdef(GFXCmdAnim)
 	PHA
  	TXA
 	PHA	

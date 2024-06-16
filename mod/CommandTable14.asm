@@ -2,7 +2,7 @@ if !_Optimize
 
 ;Command $15 (Animals)
 ;**optimize: rewrite to remove repeated BRA's 
-CommandTable14:
+%subdef(CommandTable14)
 	TDC 								;C2/0BBF: 7B           TDC 
 	TAX 								;C2/0BC0: AA           TAX 
 	LDA Level   							;C2/0BC1: AD E5 7B     LDA $7BE5      
@@ -94,12 +94,12 @@ CommandTable14:
 	JMP CastSpell							;C2/0C64: 4C E1 5C     JMP $5CE1
 	
 	
-if false
+if 0
 ;Command $15 (Animals)
 ;**optimize: rewrite to remove repeated BRA's 
 ;smaller but unusual version using snes divide hardware
 ;doesn't save enough space to be worth the complexity and testing, but fun
-CommandTable14Alt:
+%subdef(CommandTable14Alt)
 	TDC 					           		
 	TAX 					           		
 	LDA Level   				           		

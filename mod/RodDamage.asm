@@ -1,6 +1,6 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Rods damage formula
 ;Attack = (0..Attack Power)*2
@@ -13,7 +13,7 @@ incsrc "mod/utility/damageutil.asm"
 ;Defense = Target Magic Defense/2
 ;goal is to make rods hit for 0 less often, but still not overshadow actual spells
 
-RodDamage:
+%subdef(RodDamage)
 	JSR LoadAttackPower	;*Load Attack Power including Power Drinks
 	TAX	
 	STX $0E			

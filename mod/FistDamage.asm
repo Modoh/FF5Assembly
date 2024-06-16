@@ -1,6 +1,6 @@
 if !_Optimize || !_Fixes || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Fists Damage Formula
 ;Tweaks: Power Drink fix and significant size optimization
@@ -13,7 +13,7 @@ incsrc "mod/utility/damageutil.asm"
 ;	M = 2
 ;Defense = Target Defense
 ;
-FistDamage:
+%subdef(FistDamage)
 	JSR LoadAttackPower	;includes power drinks if fixes are on
 	TAX 							
 	STX $0E			;Attack Power			

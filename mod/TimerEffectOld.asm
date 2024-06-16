@@ -1,6 +1,6 @@
 if !_Optimize || !_Fixes
 
-TimerEffectOld:								;
+%subdef(TimerEffectOld)								;
 ;fixed: stats that were exactly 0 would underflow to 255
 ;..	also would only decrease monster attack if it was >128
 ;optimized: one loop of 8 instead of 2 loops of 4	

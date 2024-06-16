@@ -2,7 +2,7 @@ if !_Fixes
 ;Fixes: applys haste/slow mod to monster attack delays
 
 ;Queues up a monster's action when their ATB is ready
-MonsterATB:
+%subdef(MonsterATB)
 	LDA #$01							;C2/25D3: A9 01        LDA #$01
 	STA AISkipDeadCheck						;C2/25D5: 8D 50 7C     STA $7C50
 	SEC 								;C2/25D8: 38           SEC 

@@ -3,7 +3,7 @@ if !_Optimize
 ;Haste or Slow Modifier
 ;(A=A/2 if Haste, A=A*2 if Slow, Min 1, Max 255)
 ;**opt: only load status once, take advantage of haste/slow being exclusive
-HasteSlowMod:
+%subdef(HasteSlowMod)
 	PHA 								;C2/6163: 48           PHA 
 	LDA CharStruct.Status3,X					;C2/6164: BD 1C 20     LDA $201C,X
 	ORA CharStruct.AlwaysStatus3,X					;C2/6167: 1D 72 20     ORA $2072,X

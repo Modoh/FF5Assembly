@@ -1,11 +1,11 @@
-if !_Optimize || !_GFXCmd
+if !_Optimize 
 
-incsrc mod/utility/GFXCmd.asm	
+incsrc utility/GFXCmd.asm	
 ;uses GFXCmdAnim combined routine to save space
 
 ;Displays an ability or command animation
 ;creates Action $00,FC,01,<A>,00
-GFXCmdAbilityAnim:
+%subdef(GFXCmdAbilityAnim)
 	LDX #$0001
 	JMP GFXCmdAnim 	
 

@@ -1,6 +1,6 @@
 if !_Optimize
 
-WipeActionData:
+%subdef(WipeActionData)
 	STZ TargetIndex		;opt: uses single byte instead of 2 byte address
 	LDX #$0133							
 -	STZ $79F9,X	;clears memory $79F9 - $7B2C			

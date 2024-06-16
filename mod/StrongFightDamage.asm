@@ -1,12 +1,12 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Strong Fight Damage
 ;Tweaks: 	updated to work with power drink fix and optimized
 ;		Not likely to occur (impossible in vanilla?) 
 ;		but vanilla code would have worked so fixing it here
-StrongFightDamage:
+%subdef(StrongFightDamage)
 	LDX AttackerOffset													
 	LDA CharStruct.MonsterAttack,X
 	JSR LoadAttackPower_DrinkOnly

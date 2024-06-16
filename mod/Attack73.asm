@@ -1,11 +1,11 @@
 if !_CombatTweaks 
 
-incsrc "mod/utility/attackutil.asm"
+incsrc "utility/attackutil.asm"
 
 ;Attack Type 73 (Spears Strong vs. Creature)
 ;Tweaks: Adding Magic Sword
 ;Param1: Creature Type
-Attack73:
+%subdef(Attack73)
 	JSR SetHit100andTargetEvade					
 	JSR HitPhysical							
 	LDA AtkMissed							

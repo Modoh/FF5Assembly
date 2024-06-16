@@ -1,10 +1,10 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Swords damage formula
 ;Tweaks: Added Power Drink fix and refactored a bit for some code reuse
-SwordDamage:
+%subdef(SwordDamage)
 	JSR LoadAttackPower		;*Load Attack Power including Power Drinks
 	TAX 	        		;
 	STX $0E	        		;

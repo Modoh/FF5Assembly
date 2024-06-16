@@ -7,10 +7,10 @@ if !_Optimize
 ;Param3: HP Leak Duration
 ;
 ;**optimize: remove Second Param3 load
-Attack2A:
+%subdef(Attack2A)
 	LDA Param1						;C2/6E2D: A5 57        LDA $57
 	STA AtkElement						;C2/6E2F: 85 4D        STA $4D
-	JSR ElementDamageModMag2				;C2/6E31: 20 B5 87     JSR $87B5  (Magic Attack Element Modifiers (ii))
+	JSR ElementDamageModPercent				;C2/6E31: 20 B5 87     JSR $87B5  (Magic Attack Element Modifiers (ii))
 	LDA AtkMissed						;C2/6E34: A5 56        LDA $56
 	BNE .Ret						;C2/6E36: D0 13        BNE $6E4B
 	JSR CalcDamageMaxHP					;C2/6E38: 20 4E 8A     JSR $8A4E  (Calculate Damage from % of Target Max HP)

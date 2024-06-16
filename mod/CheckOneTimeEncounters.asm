@@ -3,7 +3,7 @@ if !_Optimize
 ;set up sandworm and one-time encounters
 ;opt: 	remove unused support for more than 1 byte of encounter replacement flags
 ;	also saves space by using 16 bit mode
-CheckOneTimeEncounters:
+%subdef(CheckOneTimeEncounters)
 	LDA EncounterInfo.Flags							;C2/4E25: AD FE 3E     LDA $3EFE	
 	AND #$10	;sandworm						;C2/4E28: 29 10        AND #$10		
 	BEQ .OneTimeEncounters							;C2/4E2A: F0 04        BEQ $4E30	

@@ -1,6 +1,6 @@
 if !_Optimize 
 
-incsrc "mod/utility/CalcDamageUtil.asm"
+incsrc "utility/CalcDamageUtil.asm"
 
 
 ;Calculate Damage from % of Target Current MP
@@ -8,7 +8,7 @@ incsrc "mod/utility/CalcDamageUtil.asm"
 ;**optimize: 	go to 16 bit mode earlier, remove unnecessary high byte OR
 ;		use utility routine
 
-CalcDamageTargetCurMP:
+%subdef(CalcDamageTargetCurMP)
 	LDA Param2					
 	REP #$20 					
 	STA $2C						

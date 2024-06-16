@@ -1,10 +1,10 @@
 if !_Optimize
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Bonus to Attack, costing MP
 ;optimizations: use utility routine, moved crit flag to save bytes changing modes
-RuneMod:
+%subdef(RuneMod)
 	LDA Param3	;MP Cost				;C2/8467: A5 59        LDA $59
 	TAX 							;C2/8469: AA           TAX 
 	STX $12							;C2/846A: 86 12        STX $12
@@ -36,7 +36,7 @@ RuneMod:
 .Finish	TDC 							;C2/84AB: 7B           TDC 
 	SEP #$20						;C2/84AC: E2 20        SEP #$20
 	RTS 							;C2/84AE: 60           RTS 
-%endsub()
+
 
 
 endif

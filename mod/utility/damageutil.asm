@@ -2,7 +2,7 @@ includeonce
 
 ;Loads Attack Power including Power Drinks
 ;Returns: 	Total Attack Power in A (capped at 255)
-LoadAttackPower:
+%subdef(LoadAttackPower)
 	LDA AttackerOffset2
 	TAX
 	LDA AttackInfo.AtkPower,X		;(Attack Power)
@@ -24,7 +24,7 @@ endif
 ;Returns: 16 bit result in A 
 ;Note: 	Call in 8 bit mode, returns in 16 bit mode
 ;	This is strange but allows us to follow original code flow without wasting space
-StatTimesLevel:
+%subdef(StatTimesLevel)
 	STA $24	
 	LDA Level  		;(Level)
 	STA $25	
@@ -36,7 +36,7 @@ StatTimesLevel:
 ;standard strength calculation
 ;calling in 16 bit mode is ok
 ;M=Str*Lvl/128+2, Def=Target Def
-StrDamageCalc:	
+%subdef(StrDamageCalc)	
 	TDC 	        		;
 	SEP #$20			;
 	LDA Strength  			;(Strength)
@@ -49,20 +49,20 @@ StrDamageCalc:
 	JMP NormalDefense16
 
 
-NormalDefense16:
+%subdef(NormalDefense16)
 	TDC
 	SEP #$20
-NormalDefense:
+%subdef(NormalDefense)
 	LDX TargetOffset      		
 	LDA CharStruct.Defense,X	
 	TAX 
 	STX Defense
 	RTS 
 	
-NormalMDefense16:
+%subdef(NormalMDefense16)
 	TDC
 	SEP #$20	
-NormalMDefense:
+%subdef(NormalMDefense)
 	LDX TargetOffset	
 	LDA CharStruct.MDefense,X  		;(Magic Defense)				
 	TAX 	

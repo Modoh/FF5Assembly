@@ -2,7 +2,7 @@ if !_Optimize
 
 ;Back Row Modifications
 ;**optimize: save some bytes by shifting in 8 bit mode to avoid mode switches
-BackRowMod:
+%subdef(BackRowMod)
 	LDX AttackerOffset						;C2/839B: A6 32        LDX $32
 	LDA CharStruct.CmdStatus,X					;C2/839D: BD 1E 20     LDA $201E,X
 	AND #$10   							;C2/83A0: 29 10        AND #$10     (Check if Attacker is Jumping)

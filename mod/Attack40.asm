@@ -8,7 +8,7 @@ if !_Optimize
 ;		40h Front Row (target)
 ;		Else Back Row (attacker)
 ;**optimize: Don't load Param2 twice
-Attack40:
+%subdef(Attack40)
 	JSR HitMagic							;C2/7119: 20 F6 7E     JSR $7EF6  (Hit Determination for Magic)
 	LDA AtkMissed							;C2/711C: A5 56        LDA $56
 	BNE .Ret							;C2/711E: D0 13        BNE $7133

@@ -2,7 +2,7 @@ if !_Optimize
 
 ;Attack Type 64 (Chicken Knife)
 ;Param2/3: Proc% and Proc, not handled here
-Attack64:
+%subdef(Attack64)
 	JSR SetHit100andHalfTargetEvade					;C2/7774: 20 53 7C     JSR $7C53  (Hit = 100, Evade = Evade/2)
 	JSR HitPhysical							;C2/7777: 20 BE 7E     JSR $7EBE  (Hit Determination for physical)
 	LDA AtkMissed							;C2/777A: A5 56        LDA $56

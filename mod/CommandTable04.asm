@@ -1,6 +1,6 @@
 if !_Optimize || !_CombatTweaks
 
-incsrc mod/utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
+incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 
 ;Command $05 (Fight)
 ;optimizations: 
@@ -8,7 +8,7 @@ incsrc mod/utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 ;	saves hand-specific data to scratch ram then calls FightOneHand (a new routine), rather than near-duplicate code for each hand
 ;	uses 16 bit mode where applicable to save a few more bytes (in FightOneHand)
 ;	uses utility routines to create graphics commands (one existing, one new)
-CommandTable04:
+%subdef(CommandTable04)
 	LDX AttackerOffset							
 	LDA CharStruct.MonsterTargets,X 					
 	STA MonsterTargets							
@@ -36,7 +36,7 @@ CommandTable04:
 	STA $11
 	LDY RHWeapon.Param2,X
 	STY $12				;Params 2 and 3
-	LDY #RHWeapon
+	LDY #!RHWeapon
 	STY $14
 	STZ $16				;magic sword hand bit
 	JSR FightOneHand
@@ -50,7 +50,7 @@ CommandTable04:
 	STA $11
 	LDY LHWeapon.Param2,X
 	STY $12
-	LDY #LHWeapon
+	LDY #!LHWeapon
 	STY $14
 	LDA #$80
 	STA $16
@@ -66,7 +66,7 @@ CommandTable04:
 ;$13: Weapon Param3 (command or magic proc)
 ;$14: Pointer to weapon info struct
 ;$16: 0 for rh, $80 for LH
-FightOneHand:
+%subdef(FightOneHand)
 	LDA $10				;Weapon Properties			
 	AND #$02			;command instead of attack		
 	BEQ .NormalAttack							
@@ -93,7 +93,7 @@ FightOneHand:
 
 .CopyAttackInfo									
 	LDA ($14),Y			;weapon info (via pointer)
-	STA AttackInfo,X							
+	STA !AttackInfo,X							
 	INX 									
 	INY 									
 	INC $17									
@@ -189,7 +189,7 @@ endif					;end swordslap
 	TAY 									
 	STY $0C				;next AttackInfo offset			
 	LDA $10				;Proc or Wonder Magic			
-	JSR CopyMagicInfo							
+	JSR CopyROMMagicInfo							
 	LDA ProcSequence							
 	TAX 									
 	LDY $0C				;AttackInfo offset			
@@ -214,6 +214,6 @@ endif					;end swordslap
 	SEP #$20
 	INC ProcSequence							
 	JSR GFXCmdDamageNumbers		;creates Action $00,FC,06,00,00		
-	RTS
+.Ret	RTS
 	
 endif

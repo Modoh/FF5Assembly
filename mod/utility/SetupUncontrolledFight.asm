@@ -1,9 +1,9 @@
 includeonce
 
-incsrc mod/utility/ClearSecondAction.asm
+incsrc "ClearSecondAction.asm"
 
 ;sets up the character structure fields for a fight command, for use by charm/zombie/berserk
-SetupUncontrolledFight:
+%subdef(SetupUncontrolledFight)
 	LDA #$80			
 	STA CharStruct.ActionFlag,X	
 	LDA #$05	;fight		

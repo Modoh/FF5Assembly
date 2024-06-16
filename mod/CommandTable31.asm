@@ -3,10 +3,10 @@ if !_Optimize		;**optimize: use shorter instructions to save space
 ;Command $53
 ;Handles weapons that cast effect spells
 ;Wind Slash by default, but can be called mid-routine for other effects like Earthquake
-CommandTable31:
+%subdef(CommandTable31)
 	LDA #$4B	;wind slash spell effect			
 	STA TempEffect							
-WeaponEffectCommand:	;called here for other weapon effects
+%subdef(WeaponEffectCommand)	;called here for other weapon effects
 	STZ $0E		;hand						
 	STZ NextGFXQueueSlot						
 	LDX AttackerOffset      					   

@@ -3,7 +3,7 @@ if !_Fixes
 
 ;Advances ATB so that the lowest ATB gets their turn immediately
 ;also applies Masamune's Initiative effect but it's buggy
-AdvanceStartingATB:
+%subdef(AdvanceStartingATB)
 	LDA #$FF								;C2/4E9F: A9 FF        LDA #$FF	
 	STA $0E									;C2/4EA1: 85 0E        STA $0E	
 	TDC 									;C2/4EA3: 7B           TDC 	

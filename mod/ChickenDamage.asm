@@ -1,10 +1,10 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Chicken Knife Damage Formula
 ;Power Drink fix and refactoring to free space
-ChickenDamage:
+%subdef(ChickenDamage)
 	LDA BattleData.Escapes		;Flee Count
 	LSR				;divide by 2
 	JSR LoadAttackPower_DrinkOnly	;*add Power Drink effects (only)

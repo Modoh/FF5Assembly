@@ -8,7 +8,7 @@ if !_Optimize
 ;Gil Cost = Param1 * Level
 
 ;**optimize: use shorter addresses when accessing Gil
-GilTossDamage:
+%subdef(GilTossDamage)
 	CLC 							
 	LDA Level						
 	ADC #$0A   	;+10					

@@ -3,7 +3,7 @@ includeonce
 ;Elemental Modifiers for Physical
 ;
 ;optimizations: uses shared routine
-ElementDamageModPhys:
+%subdef(ElementDamageModPhys)
 	JSR ElementDamageMod
 	STZ MagicNull		;clear a magic-only flag that could be set in shared routine if enemy was immune
 
@@ -15,7 +15,7 @@ ElementDamageModPhys:
 ;this one only differs from the shared version in that it checks for EBlock
 ;so we do some checks after the fact to fix things up, unless the attack was absorbed
 ;there are some side effects to attack/defense that go through even if blocked, but attack is flagged as a miss anyway
-ElementDamageModMag:
+%subdef(ElementDamageModMag)
 	JSR ElementDamageMod
 
 	LDA AtkHealed		;only check for EBlock if attack didn't heal
@@ -39,7 +39,7 @@ ElementDamageModMag:
 
 ;this one modifies Param2 instead of Attack, but percent damage attacks don't use Attack so we can just patch it
 ;doesn't clear defense on absorb/weak either but that doesn't matter for percent damage, so we ignore the side effect
-ElementDamageModPercent:
+%subdef(ElementDamageModPercent)
 	LDA Param2
 	TAX
 	STX Attack
@@ -52,7 +52,7 @@ ElementDamageModPercent:
 .Ret	RTS 								
 
 
-ElementDamageMod:
+%subdef(ElementDamageMod)
 	LDA MagicSword		;ok if magic because won't be loaded	
 	BNE .Ret		;Magic Sword Elements handled elsewhere	
 	LDX TargetOffset						

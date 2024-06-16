@@ -1,13 +1,13 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Monster damage formula
 ;Tweaks: 	Just updating to work with power drink fix.  
 ;		Not likely to occur, but it worked for them in vanilla if you used some chemistry on them
 ;		and needs changes to work with the new power drink 
 
-MonsterDamage:
+%subdef(MonsterDamage)
 	LDX AttackerOffset						
 	LDA CharStruct.MonsterAttack,X					
 	JSR LoadAttackPower_DrinkOnly

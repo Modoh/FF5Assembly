@@ -3,7 +3,7 @@ if !_Fixes
 ;Checks for Reflect and Cover and changes target if needed
 ;
 ;fixes: repairs check for always charm status (which doesn't exist, but they tried)
-CheckTargetRedirect:
+%subdef(CheckTargetRedirect)
 	LDA AttackerOffset2						;C2/9561: A5 39        LDA $39
 	TAX 								;C2/9563: AA           TAX 
 	LDA AttackInfo.Category,X					;C2/9564: BD FD 79     LDA $79FD,X

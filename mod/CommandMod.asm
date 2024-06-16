@@ -1,7 +1,7 @@
 if !_Optimize
 ;Command modifications to damage
 ;**optimize: save some bytes by shifting in 8 bit mode to avoid mode switches
-CommandMod:
+%subdef(CommandMod)
 	LDX AttackerOffset							;C2/83BD: A6 32        LDX $32
 	LDA CharStruct.DamageMod,X						;C2/83BF: BD 1F 20     LDA $201F,X
 	AND #$40								;C2/83C2: 29 40        AND #$40

@@ -1,10 +1,10 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Goblin Punch Damage formula
 ;nothing wrong with it in vanilla but updated to work with new Power Drink fix and optimized
-GoblinDamage:
+%subdef(GoblinDamage)
 	LDX AttackerOffset
 	LDA CharStruct.MonsterAttack,X		
 	JSR LoadAttackPower_DrinkOnly		;Add Power Drink and cap at 255

@@ -1929,7 +1929,7 @@ ROMLevelMP = $D151EF		;2 bytes * 99
 
 ROMJobPointers = $D152C0	;2 bytes * 21, pointer to first ability for each job (no freelancer)
 ROMJobLevels = $D152EA		;1 byte * 22, number of levels for each job (also ability count)
-ROMJobAbilities = $D15300	;3 bytes, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers
+ROMJobAbilities = $D15300	;3 bytes * ?, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers
 
 %CreateMagicInfoStruct(ROMAbilityInfo,$D159E0)		;8 bytes * 96 abilities
 
@@ -1943,6 +1943,6 @@ ROMCommandDelay = $D15DA0	;1 byte per command, atb delay when used
 						;8 bytes * 105? abilities
 ROMTerrainSpells = $D16DF9	;4 bytes per terrain type
 							
-ROMCombineSpells = $D16EF9	;144 bytes?
+ROMCombineSpells = $D16EF9	;144 bytes
 				;Effect spell ids for combine/mix
 				;12*item2 + item1

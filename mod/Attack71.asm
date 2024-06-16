@@ -8,7 +8,7 @@ if !_Optimize
 ;**optimize: 	Specialty data at the end doesn't need temp vars, could loop clearing timers, could trim from address setup
 ;		TempMStats loads are offset by X but X is always zero..
 ;		We could probably bypass the whole temp stat structure entirely by calculating the rom address directly
-Attack71:
+%subdef(Attack71)
 	RTS
 
 endif

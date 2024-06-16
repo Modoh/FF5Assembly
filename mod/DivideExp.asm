@@ -1,12 +1,12 @@
 if !_Optimize
 
-incsrc mod/utility/Division_32bit.asm
+incsrc utility/Division_32bit.asm
 
 ;Divides Exp for party members
 ;minimum 1 exp per char(this isn't called if total exp is 0)
 
 ;optimization: use a shared 32 bit division routine
-DivideExp:
+%subdef(DivideExp)
 	LDX $10			;count of active chars				;C2/57E6: A6 10        LDX $10
 	PHX 									;C2/57E8: DA           PHX 
 

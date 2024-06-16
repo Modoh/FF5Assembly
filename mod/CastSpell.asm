@@ -1,8 +1,8 @@
 if !_Optimize
 
-incsrc mod/utility/CalcBitfieldIndexes.asm
-incsrc mod/utility/CopyTempMagicInfo.asm
-incsrc mod/utility/GFXCmd.asm
+incsrc utility/CalcBitfieldIndexes.asm
+incsrc utility/CopyTempMagicInfo.asm
+incsrc utility/GFXCmd.asm
 
 ;Casts a Magic Spell!
 ;
@@ -15,7 +15,7 @@ incsrc mod/utility/GFXCmd.asm
 ;uses a bunch of utility routines to save space
 ;saves a few bytes with a switch to 16 bit mode
 ;removes some double TDCs
-CastSpell:
+%subdef(CastSpell)
 	LDA TempIsEffect						;C2/5CE1: AD 23 27     LDA $2723
 	BNE .LoadEffect							;C2/5CE4: D0 24        BNE $5D0A
 	LDA TempSpell							;C2/5CE6: AD 22 27     LDA $2722
@@ -29,8 +29,8 @@ CastSpell:
 	SEP #$20							;C2/5CF6: E2 20        SEP #$20
 	 								;C2/5CF8: 7B           TDC 
 	TAY 								;C2/5CF9: A8           TAY 
--	LDA ROMMagicInfo,X						;C2/5CFA: BF 80 0B D1  LDA $D10B80,X
-	STA TempMagicInfo,Y						;C2/5CFE: 99 2A 26     STA $262A,Y
+-	LDA !ROMMagicInfo,X						;C2/5CFA: BF 80 0B D1  LDA $D10B80,X
+	STA !TempMagicInfo,Y						;C2/5CFE: 99 2A 26     STA $262A,Y
 	INX 								;C2/5D01: E8           INX 
 	INY 								;C2/5D02: C8           INY 
 	CPY #$0008	;8 bytes in magic info struct			;C2/5D03: C0 08 00     CPY #$0008
@@ -46,8 +46,8 @@ CastSpell:
 	SEP #$20							;C2/5D14: E2 20        SEP #$20
 	 								;C2/5D16: 7B           TDC 
 	TAY 								;C2/5D17: A8           TAY 
--	LDA ROMEffectInfo,X						;C2/5D18: BF B1 6A D1  LDA $D16AB1,X
-	STA TempMagicInfo,Y						;C2/5D1C: 99 2A 26     STA $262A,Y
+-	LDA !ROMEffectInfo,X						;C2/5D18: BF B1 6A D1  LDA $D16AB1,X
+	STA !TempMagicInfo,Y						;C2/5D1C: 99 2A 26     STA $262A,Y
 	INX 								;C2/5D1F: E8           INX 
 	INY 								;C2/5D20: C8           INY 
 	CPY #$0008	;8 bytes in magic info struct			;C2/5D21: C0 08 00     CPY #$0008
@@ -145,7 +145,7 @@ CastSpell:
 .BuildTargetBitmask
 	JSR BuildTargetBitmask						;C2/5DC6: 20 A9 02     JSR $02A9
 	LDA TempIsEffect						;C2/5DC9: AD 23 27     LDA $2723
-	BNE .CheckMagicAnim						;C2/5DCC: D0 31        BNE $5DFF
+	BNE .CheckMagicAnimTable					;C2/5DCC: D0 31        BNE $5DFF
 	LDA TempSpell							;C2/5DCE: AD 22 27     LDA $2722
 	CMP #$80	;monster fight					;C2/5DD1: C9 80        CMP #$80
 	BEQ .Fight							;C2/5DD3: F0 04        BEQ $5DD9

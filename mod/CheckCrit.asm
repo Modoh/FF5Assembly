@@ -3,7 +3,7 @@ if !_Optimize
 ;Check for Critical Hit
 ;Param1: Crit%
 ;**optimize: 	don't switch modes, use inc on Crit flag
-CheckCrit:
+%subdef(CheckCrit)
 	LDA MagicSword	;no crits with magic sword, 			
 	BNE .Ret	;in vanilla FF5 no weapons support both anyway	
 			

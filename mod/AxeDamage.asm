@@ -1,6 +1,6 @@
 if !_Fixes || !_Optimize || !_CombatTweaks 
 
-incsrc "mod/utility/damageutil.asm"
+incsrc "utility/damageutil.asm"
 
 ;Axes Damage formula
 ;Tweaks: Power Drink fix, size optimization
@@ -8,7 +8,7 @@ incsrc "mod/utility/damageutil.asm"
 ;Attack = Attack Power / 2 + 0..Attack Power
 ;M = Level*Strength/128 + 2
 ;Defense = Target Defense / 4
-AxeDamage:
+%subdef(AxeDamage)
 	JSR LoadAttackPower	;*Load Attack Power including Power Drinks
 	TAX 
 	STX $0E
