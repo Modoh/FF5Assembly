@@ -19,7 +19,7 @@ macro org(address)
 ;most of what I wanted here doesn't work because asar has a bunch of undocumented limitations
 	
 	if !_DumpAddr 
-		print "PC: ",pc,", org: ",hex(<address>)
+		print "Current PC: ",pc,", Original Vanilla Address: ",hex(<address>)
 	endif
 		
 	if !_StaticMode 
@@ -47,6 +47,11 @@ endmacro
 
 macro subdef(label)
 	!_SubDefined_<label> = 1
+	if !_DumpAddr 
+		print "Mod Routine Defined: <label> at PC: ",pc
+	endif
+	
+	
 ;	error !_SubDefined_<label>
 ;	error !_SubDefined_<label>
 	<label>:
@@ -76,7 +81,7 @@ macro sub(label)
 				incsrc "mod/<label>.asm"
 				if defined("_SubDefined_<label>")	;check if the included file defined this routine
 					if !_ReportMods
-						print "Loaded file mod/<label>.asm -- Replacing routine <label> from file"
+						print "Loaded file mod/<label>.asm -- Replaced routine <label> from file"
 					endif
 				else
 					if !_ReportMods

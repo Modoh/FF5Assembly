@@ -18,8 +18,8 @@ if !_Optimize
 	BPL -										;C2/4F1B: 10 FA        BPL $4F17	
 	TXA 		;A now $FF							;C2/4F1D: 8A           TXA 		
 
--	LDX #$0004
-	STA ATBReadyQueue,X
+	LDX #$0004
+-	STA ATBReadyQueue,X
 	DEX
 	BPL -
 	

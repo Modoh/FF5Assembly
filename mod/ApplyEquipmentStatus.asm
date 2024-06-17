@@ -189,7 +189,7 @@ if !_Fixes
 	BEQ .CheckS4								
 
 .AlwaysS4
-	STA CharStruct.AlwaysStatus4,Y	
+	LDA CharStruct.AlwaysStatus4,Y	
 	ORA $12		;Status 4 to apply					
 	STA CharStruct.AlwaysStatus4,Y						
 	BRA .Ret

@@ -170,10 +170,10 @@ endif
 
 .ClearMSwordLoop
 	LDY #$0005
-	STZ CharStruct.MSwordElemental1,X
+-	STZ CharStruct.MSwordElemental1,X
 	INX
 	DEY
-	BPL .ClearMSwordLoop
+	BPL -
 
 ;replaced by loop	
 ;	STZ CharStruct.MSwordElemental1,X					;C2/9B95: 9E 50 20     STZ $2050,X

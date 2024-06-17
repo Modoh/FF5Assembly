@@ -40,9 +40,9 @@ padbyte $00
 
 
 ;Test/Debug options
-!_DumpAddr = 0			;prints all org addresses to console
+!_DumpAddr = 1			;prints all org addresses to console
 
-!_ReportMods = 0		;prints all mod asm files that were loaded
+!_ReportMods = 1		;prints all mod asm files that were loaded
 
 !_StaticMode = 0		;keeps functions and tables at their original starting location
 				;restricts code size per-routine to the same size as the original
