@@ -107,7 +107,7 @@ macro sub(label)
 			!_SubSentinel = 1
 
 			;put us in a garbage namespace, so the original code labels don't cause redefinition errors
-			namespace discarded
+			namespace __discarded
 			<label>_Rollback:
 		else
 			!_SubRollback = 0
@@ -140,7 +140,7 @@ macro endsub()
 			warnpc $C2A000
 			
 			;restore original pc, so subsequent code uses the space the original routine occupied
-			namespace discarded
+			namespace __discarded
 			org !{_SubRollbackLabel}_Rollback
 			namespace off
 			!_SubRollback = 0

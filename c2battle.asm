@@ -2844,7 +2844,7 @@ CommandTable2A:
 	TDC 								;C2/13CE: 7B           TDC 
 	TAY 								;C2/13CF: A8           TAY 
 	LDX AttackerOffset						;C2/13D0: A6 32        LDX $32         
--	LDA !SavedAction,Y						;C2/13D2: B9 D4 41     LDA $41D4,Y
+-	LDA !SavedActionMimic,Y						;C2/13D2: B9 D4 41     LDA $41D4,Y
 	STA CharStruct.ActionFlag,X					;C2/13D5: 9D 56 20     STA $2056,X
 	INX 								;C2/13D8: E8           INX 
 	INY 								;C2/13D9: C8           INY 
@@ -8691,7 +8691,7 @@ SaveActionData:
 	LDX AttackerOffset    						;C2/3C81: A6 32        LDX $32        
 
 -	LDA CharStruct.ActionFlag,X					;C2/3C83: BD 56 20     LDA $2056,X
-	STA !SavedAction2,Y						;C2/3C86: 99 3A 47     STA $473A,Y
+	STA !SavedActionReaction,Y						;C2/3C86: 99 3A 47     STA $473A,Y
 	INX 								;C2/3C89: E8           INX 
 	INY 								;C2/3C8A: C8           INY 
 	CPY #$000A	;copy 10 bytes of action data			;C2/3C8B: C0 0A 00     CPY #$000A
@@ -8776,7 +8776,7 @@ RestoreActionData:
 	TAY 									;C2/3D0F: A8           TAY 
 	LDX AttackerOffset	;offset of forced target			;C2/3D10: A6 32        LDX $32
 
--	LDA !SavedAction2,Y							;C2/3D12: B9 3A 47     LDA $473A,Y
+-	LDA !SavedActionReaction,Y							;C2/3D12: B9 3A 47     LDA $473A,Y
 	STA CharStruct.ActionFlag,X						;C2/3D15: 9D 56 20     STA $2056,X
 	INX 									;C2/3D18: E8           INX 
 	INY 									;C2/3D19: C8           INY 
@@ -10600,7 +10600,7 @@ DispatchCommand:
 	TAY 									;C2/49C2: A8           TAY 
 .CopyActionInfo		;copies 10 bytes of command and cursor selection info from CharStruct
 	LDA CharStruct.ActionFlag,X						;C2/49C3: BD 56 20     LDA $2056,X
-	STA !SavedAction,Y		 					;C2/49C6: 99 D4 41     STA $41D4,Y
+	STA !SavedActionMimic,Y		 					;C2/49C6: 99 D4 41     STA $41D4,Y
 	INX 									;C2/49C9: E8           INX 
 	INY 									;C2/49CA: C8           INY 
 	CPY #$000A								;C2/49CB: C0 0A 00     CPY #$000A
@@ -12559,6 +12559,7 @@ ApplyHPMPPassives:
 	RTS 							;C2/57E0: 60           RTS 
 
 %org($C257E1)
+;****
 HPMPMultTable:
 db $0A,$14,$1E,$0A,$1E	;HP 10, 20, 30 then MP 10, 30		;C2/57E1: 0A 14 1E 0A 1E
 
@@ -13039,7 +13040,7 @@ CheckBattleEnd:
 .CheckFlee									
 	LDA FleeTickerActive						;C2/5B2E: AD 4E 7C     LDA $7C4E
 	BEQ .ResetFleeTicker						;C2/5B31: F0 35        BEQ $5B68
-	LDA FleeSuccess						;C2/5B33: AD E8 7B     LDA $7BE8
+	LDA FleeSuccess							;C2/5B33: AD E8 7B     LDA $7BE8
 	BMI .FleeSuccess	;80h: exit cast				;C2/5B36: 30 2A        BMI $5B62
 	BEQ .ResetFleeTicker						;C2/5B38: F0 2E        BEQ $5B68
 	LDA EncounterInfo.FleeChance					;C2/5B3A: AD F0 3E     LDA $3EF0
@@ -13052,8 +13053,8 @@ CheckBattleEnd:
 	LDA #$0A	;C1 routine: execute graphics script		;C2/5B4B: A9 0A        LDA #$0A
 	JMP CallC1							;C2/5B4D: 4C 69 00     JMP $0069     
 .AdvanceTicker
-	INC FleeTicker 						;C2/5B50: EE 5F 7C     INC $7C5F
-	LDA FleeTicker 						;C2/5B53: AD 5F 7C     LDA $7C5F
+	INC FleeTicker 							;C2/5B50: EE 5F 7C     INC $7C5F
+	LDA FleeTicker 							;C2/5B53: AD 5F 7C     LDA $7C5F
 	CMP #$14	;20 ticks before flee attempt			;C2/5B56: C9 14        CMP #$14
 	BNE .Ret							;C2/5B58: D0 11        BNE $5B6B
 	JSR Random_0_99  						;C2/5B5A: 20 A2 02     JSR $02A2     
@@ -13101,9 +13102,9 @@ UpdateMonsterRows:
 ;Command $28 (Sing)
 ;Command $2C-$4D (Magic)
 MagicCommand:
-CommandTable26:
-CommandTable27:
-CommandTable2B:		
+#CommandTable26:
+#CommandTable27:
+#CommandTable2B:		
 	LDA AttackerIndex						;C2/5B9F: A5 47        LDA $47       
 	CMP #$04	;monster check					;C2/5BA1: C9 04        CMP #$04
 	BCC .Party							;C2/5BA3: 90 03        BCC $5BA8

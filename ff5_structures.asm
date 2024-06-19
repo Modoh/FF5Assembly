@@ -1096,8 +1096,8 @@ Struct <name> <address> 	;EncounterInfo from rom encounter info table at $D03000
 	.FleeChance:		skip 1		;$3EF0		;Flee Chance = 80h if Can't Run
 	.AP			skip 1		;$3EF1
 	.Visible		skip 1		;$3EF2		;1 bit per monster
-	.MonsterID:		skip 8		;$3EF3-$7EFA	;one byte for each monster
-	.Palettes		skip 2		;$3EFB-7EFC	;2 bits per monster
+	.MonsterID:		skip 8		;$3EF3-3EFA	;one byte for each monster
+	.Palettes		skip 2		;$3EFB-3EFC	;2 bits per monster
 	.Music			skip 1		;$3EFD		;index into $D0EEDF table
 	.Flags			skip 1		;$3EFE		;80h Always Back Attack
 								;40h Can't use Void
@@ -1214,8 +1214,8 @@ endstruct
 !<name> = <name>.ActionFlag
 endmacro
 
-%CreateSavedActionStruct(SavedAction,$7E41D4)	;used for mimic
-%CreateSavedActionStruct(SavedAction2,$7E473A)	;used for reactions
+%CreateSavedActionStruct(SavedActionMimic,$7E41D4)	;used for mimic
+%CreateSavedActionStruct(SavedActionReaction,$7E473A)	;used for reactions
 
 MonsterMagic = $7E41DE		;spells available to monsters
 				;1 byte * 16 slots (per monster)
@@ -1254,16 +1254,16 @@ AIConditionMet = $4694		;non-zero if a the last checked condition is met
 
 AICurrentOffset = $4696		
 
-;SavedAction2 = $473A		;SavedAction struct, 10 bytes
+;SavedActionReaction = $473A		;SavedAction struct, 10 bytes
 				;used for monster reactions
 
 ;copies of 	MonsterAiScript post-action (100 bytes)
 ;		MonsterMagic post-action (16 bytes)
 ;		MMTargets post-action (32 bytes)
 ;saved and later restored during monster reactions
-SavedMonsterAIScript = $46D6
 SavedMonsterMagic = $46A6
 SavedMMTargets = $46B6
+SavedMonsterAIScript = $46D6
 
 ;EnableTimer.ATB and CurrentTimer.ATB are saved to these then later restored
 ;the offset is bugged though, so it saves/restores the wrong character
