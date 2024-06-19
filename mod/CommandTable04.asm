@@ -9,6 +9,7 @@ incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 ;	uses 16 bit mode where applicable to save a few more bytes (in FightOneHand)
 ;	uses utility routines to create graphics commands (one existing, one new)
 %subdef(CommandTable04)
+#FightCommand:
 	LDX AttackerOffset							
 	LDA CharStruct.MonsterTargets,X 					
 	STA MonsterTargets							
@@ -30,6 +31,7 @@ incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 	LDA CharStruct.RHWeapon,X						
 	BEQ .Left										
 
+	LDX $0E
 	LDA RHWeapon.Properties,X	
 	STA $10				;Weapon Properties
 	LDA RHWeapon.AtkType,X
@@ -44,6 +46,7 @@ incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 .Left	LDX AttackerOffset
 	LDA CharStruct.LHWeapon,X
 	BEQ .Ret
+	LDX $0E
 	LDA LHWeapon.Properties,X
 	STA $10
 	LDA LHWeapon.AtkType,X

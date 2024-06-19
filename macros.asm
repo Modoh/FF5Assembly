@@ -17,6 +17,11 @@ macro org(address)
 ;macro used instead of regular org command that can optionally be ignored
 ;also warns if routines overflow, but routines need to be in address order
 ;most of what I wanted here doesn't work because asar has a bunch of undocumented limitations
+
+	;!_SubSentinel is used to track whether we're in a subroutine
+	if !_SubSentinel
+		%endsub()
+	endif
 	
 	if !_DumpAddr 
 		print "Current PC: ",pc,", Original Vanilla Address: ",hex(<address>)
@@ -50,10 +55,7 @@ macro subdef(label)
 	if !_DumpAddr 
 		print "Mod Routine Defined: <label> at PC: ",pc
 	endif
-	
-	
-;	error !_SubDefined_<label>
-;	error !_SubDefined_<label>
+
 	<label>:
 endmacro
 
@@ -63,12 +65,9 @@ macro sub(label)
 
 ;not all that happy with how hacky this got, shame the original simple version didn't work
 
-	;!_SubSentinel is used to track whether we're in a subroutine, to catch errors
-
-	;assert !_SubSentinel,"subroutine macro called inside a subroutine"
-	;asar's assert routine is apparently worthless, so we do it manually
+	;!_SubSentinel is used to track whether we're in a subroutine
 	if !_SubSentinel
-		error "subroutine macro for <label> called inside another subroutine"
+		%endsub()
 	endif
 
 	if !_ModFiles 
@@ -111,8 +110,10 @@ macro sub(label)
 			<label>_Rollback:
 		else
 			!_SubRollback = 0
+			<label>:
 		endif
-
+	else
+		<label>:
 	endif
 
 	;flags that we're in a replacable subroutine

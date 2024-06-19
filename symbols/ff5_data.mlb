@@ -1,0 +1,3586 @@
+SnesPrgRom:00FEC0-00FFBF:ROMRNG:256 byte table of "random" numbers
+SnesPrgRom:100000:ROMMonsterStats:32 bytes * 384 monsters
+;SnesPrgRom:100000:ROMMonsterStats_Speed:	
+;SnesPrgRom:100001:ROMMonsterStats_AttackPower:	
+;SnesPrgRom:100002:ROMMonsterStats_AttackMult:	
+;SnesPrgRom:100003:ROMMonsterStats_Evade:	
+;SnesPrgRom:100004:ROMMonsterStats_Defense:	
+;SnesPrgRom:100005:ROMMonsterStats_MagicPower:	
+;SnesPrgRom:100006:ROMMonsterStats_MDefense:	
+;SnesPrgRom:100007:ROMMonsterStats_MEvade:	
+;SnesPrgRom:100008-100009:ROMMonsterStats_HP:sets max and current HP
+;SnesPrgRom:10000A-10000B:ROMMonsterStats_MP:monsters always have 9999 max mp, this sets current MP
+;SnesPrgRom:10000C-10000D:ROMMonsterStats_Exp:	
+;SnesPrgRom:10000E-10000F:ROMMonsterStats_Gil:	
+;SnesPrgRom:100010:ROMMonsterStats_AttackFX:	
+;SnesPrgRom:100011:ROMMonsterStats_EImmune:	
+;SnesPrgRom:100012:ROMMonsterStats_StatusImmune1:	
+;SnesPrgRom:100013:ROMMonsterStats_StatusImmune2:	
+;SnesPrgRom:100014:ROMMonsterStats_StatusImmune3:	
+;SnesPrgRom:100015:ROMMonsterStats_EAbsorb:	
+;SnesPrgRom:100016:ROMMonsterStats_CantEvade:	
+;SnesPrgRom:100017:ROMMonsterStats_EWeak:	
+;SnesPrgRom:100018:ROMMonsterStats_CreatureType:	
+;SnesPrgRom:100019:ROMMonsterStats_CmdImmunity:	
+;SnesPrgRom:10001A:ROMMonsterStats_Status1:high bit here means all status are always instead of initial
+;SnesPrgRom:10001B:ROMMonsterStats_Status2:	
+;SnesPrgRom:10001C:ROMMonsterStats_Status3:	
+;SnesPrgRom:10001D:ROMMonsterStats_Status4:	
+;SnesPrgRom:10001E:ROMMonsterStats_EnemyNameID:	
+;SnesPrgRom:10001F:ROMMonsterStats_Level:	
+SnesPrgRom:103000-104FFF:ROMEncounterInfo:16 bytes * 512
+;SnesPrgRom:103000:ROMEncounterInfo_IntroFX:3 Low bits are monster intro animation (0-7), high bits are a bitfield for special effects
+;SnesPrgRom:103001:ROMEncounterInfo_FleeChance:Flee Chance = 80h if Can't Run
+;SnesPrgRom:103002:ROMEncounterInfo_AP:
+;SnesPrgRom:103003:ROMEncounterInfo_Visible:1 bit per monster
+;SnesPrgRom:103004-10300B:ROMEncounterInfo_MonsterID:one byte for each monster
+;SnesPrgRom:10300C-10300D:ROMEncounterInfo_Palettes:2 bits per monster
+;SnesPrgRom:10300E:ROMEncounterInfo_Music:index into $D0EEDF table
+;SnesPrgRom:10300F:ROMEncounterInfo_Flags:		
+SnesPrgRom:105000-1055FF:ROMLoot:Rare Steal, Common Steal, Rare Drop, Always Drop
+;SnesPrgRom:105000:ROMLoot_RareSteal:
+;SnesPrgRom:105001:ROMLoot_CommonSteal:
+;SnesPrgRom:105002:ROMLoot_RareDrop:
+;SnesPrgRom:105003:ROMLoot_AlwaysDrop:					
+SnesPrgRom:105600-105BFF:ROMControlActions:monster actions for control, 4 bytes * 384 monsters
+SnesPrgRom:108600-1088FF:ROMMonsterReleaseActions:monster actions for release
+SnesPrgRom:108900-1098FF:ROMMonsterCoordinates
+SnesPrgRom:109900-109BFF:ROMSpecialtyData:monster specialty attacks, properties then name, 2 bytes * 384 monsters
+;SnesPrgRom:109900:ROMSpecialtyData_Properties:monster specialty attacks, 2 bytes * 384 monsters
+;SnesPrgRom:109901:ROMSpecialtyData_Name:monster specialty attacks, 2 bytes * 384 monsters
+SnesPrgRom:109C00-109EFF:ROMAIScriptOffsets
+SnesPrgRom:10EC00-10ECDD:RomAbilityBitInfo:2 bytes per ability, first byte is byte offset in FieldAbilityList, second is which bit corresponds with the ability
+SnesPrgRom:10ECDE-10ECE5:ROMBitUnset:0111 1111 bit selection table, 0 moves toward low bits
+SnesPrgRom:10ECE6-10ECED:ROMBitSet:1000 0000 bit selection table, 1 moves toward low bits
+SnesPrgRom:10ECEE-10ECF1:ROMTimes10:*10 valid for 0-3
+SnesPrgRom:10ECF2-10ED01:ROMBattleSpeedTable:0 then 15 then doubles until 240 then 0 0 then repeats, 2nd copy is for active/wait
+SnesPrgRom:10ED02-10ED58:ROMCommandMap:converts commands into Command table offsets
+SnesPrgRom:10ED59-10ED60:ROMTimes650w:*650 valid for 0-3 (16 bit)
+SnesPrgRom:10ED61-10ED78:ROMTimes11w:*11 valid for 0-11 (16 bit)
+SnesPrgRom:10ED79-10ED84:ROMCombatantReorder:8 9 10 11 0 1 2 3 4 5 6 7 to rearrange party members after monsters instead of before
+SnesPrgRom:10ED85-10ED88:ROMTimes84:*84 valid for 0-3
+SnesPrgRom:10ED89-10EE54:ROMTimes5w:*5 valid for 0-101 (16 bit) (yes, the table is that big)
+SnesPrgRom:10EE55-10EE64:ROMTimes12:*12 valid for 0-15
+SnesPrgRom:10EE65-10EE84:ROMTimes24w:*24 valid for 0-15 (16 bit)
+SnesPrgRom:10EE85-10EE94:ROMTimes7:*7 valid for 0-15
+SnesPrgRom:10EE95-10EEA4:ROMTimes100w:*100 valid for 0-7 (16 bit)
+SnesPrgRom:10EEA5-10EEB4:ROMTimes1620w:*1620 valid for 0-7 (16 bit)
+SnesPrgRom:10EEB5-10EEC8:ROMTimes64w:*64 valid for 0-9 (16 bit)
+SnesPrgRom:10EEC9-10EED2:ROMTimes17:*17 valid for 0-9
+SnesPrgRom:10EED3-10EEDA:ROMAbilityListPointers:pointers to character ability inventories (in ram)
+SnesPrgRom:10EEDB-10EEDE:ROMTimes20:*20 valid for 0-3
+SnesPrgRom:10EEDF-10EEE6:ROMMusicTable:maps the numbers from EncounterInfo.Music to values that the Music Change routine in C4 bank wants
+SnesPrgRom:10EEE7-10EEF5:ROMMagicLamp:list of spells to use from magic lamp casts
+SnesPrgRom:10EEF6-10EF05:ROMHideMessages:bitfield, bits are set for messages that are hidden
+SnesPrgRom:10EF06-10EF25:ROMJobMagicLevels:used to map magic commands to their magic level to display a job level up
+SnesPrgRom:10EF26-10EF57:ROMFightCommands:has 1 for commands which are standard "fight" type commands, by some criteria?
+SnesPrgRom:10EF58-10EF77:ROMToadOK:1 bit per spell, determines whether magic can be used as a toad
+SnesPrgRom:10FFA0-10FFA1:ROMMonsterFormData_Encounter:2 byte encounter, 14 byte form info, 4 entries (only one entry which is also unused)
+;SnesPrgRom:10FFA0-10FFA1:ROMMonsterFormData_Encounter:
+;SnesPrgRom:10FFA2-10FFAF:ROMMonsterFormData_FormData:
+SnesPrgRom:10FFE0-10FFFF:ROMOneTime_Encounter:2 byte encounter, 2 byte replacement, 8 entries
+;SnesPrgRom:10FFE0-10FFE1:ROMOneTime_Encounter:
+;SnesPrgRom:10FFE2-10FFE3:ROMOneTime_Replacement:
+SnesPrgRom:110000-1105FF:ROMItems_Weapons_Targetting:	
+;SnesPrgRom:110000:ROMItems_Weapons_Targetting:	
+;SnesPrgRom:110001:ROMItems_Weapons_Category:
+;SnesPrgRom:110002:ROMItems_Weapons_EquipmentType_CmdStatus_Misc:
+;SnesPrgRom:110003:ROMItems_Weapons_ElementOrStatsUp_MPCost_DamageMod:
+;SnesPrgRom:110004:ROMItems_Weapons_DoubleGrip_Description_MagicAtkType:
+;SnesPrgRom:110005:ROMItems_Weapons_Properties:
+;SnesPrgRom:110006:ROMItems_Weapons_ItemMagic_ShieldEvade:
+;SnesPrgRom:110007:ROMItems_Weapons_AtkPower_Defense:
+;SnesPrgRom:110008:ROMItems_Weapons_AtkType_MEvade:
+;SnesPrgRom:110009:ROMItems_Weapons_Param1_MDefense:
+;SnesPrgRom:11000A:ROMItems_Weapons_Param2_ElementDef:(For many atk types this is Proc chance)
+;SnesPrgRom:11000B:ROMItems_Weapons_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesPrgRom:110600-110A7F:ROMItems_Armor:	
+;SnesPrgRom:110600:ROMItems_Armor_Targetting:	
+;SnesPrgRom:110601:ROMItems_Armor_Category:
+;SnesPrgRom:110602:ROMItems_Armor_EquipmentType_CmdStatus_Misc:
+;SnesPrgRom:110603:ROMItems_Armor_ElementOrStatsUp_MPCost_DamageMod:
+;SnesPrgRom:110604:ROMItems_Armor_DoubleGrip_Description_MagicAtkType:
+;SnesPrgRom:110605:ROMItems_Armor_Properties:
+;SnesPrgRom:110606:ROMItems_Armor_ItemMagic_ShieldEvade:
+;SnesPrgRom:110607:ROMItems_Armor_AtkPower_Defense:
+;SnesPrgRom:110608:ROMItems_Armor_AtkType_MEvade:
+;SnesPrgRom:110609:ROMItems_Armor_Param1_MDefense:
+;SnesPrgRom:11060A:ROMItems_Armor_Param2_ElementDef:(For many atk types this is Proc chance)
+;SnesPrgRom:11060B:ROMItems_Armor_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesPrgRom:110A80-110B7F:ROMConsumables
+;SnesPrgRom:110A80:ROMConsumables_Targetting:0
+;SnesPrgRom:110A81:ROMConsumables_Category:1
+;SnesPrgRom:110A82:ROMConsumables_Misc_CmdStatus:2
+;SnesPrgRom:110A83:ROMConsumables_MPCost_DamageMod:3
+;SnesPrgRom:110A84:ROMConsumables_AtkType:4
+;SnesPrgRom:110A85:ROMConsumables_Param1:5
+;SnesPrgRom:110A86:ROMConsumables_Param2:6
+;SnesPrgRom:110A87:ROMConsumables_Param3:7
+SnesPrgRom:110B80-11137F:ROMMagicInfo
+;SnesPrgRom:110B80:ROMMagicInfo_Targetting:0
+;SnesPrgRom:110B81:ROMMagicInfo_Category:1
+;SnesPrgRom:110B82:ROMMagicInfo_Misc_CmdStatus:2
+;SnesPrgRom:110B83:ROMMagicInfo_MPCost_DamageMod:3
+;SnesPrgRom:110B84:ROMMagicInfo_AtkType:4
+;SnesPrgRom:110B85:ROMMagicInfo_Param1:5
+;SnesPrgRom:110B86:ROMMagicInfo_Param2:6
+;SnesPrgRom:110B87:ROMMagicInfo_Param3:7
+SnesPrgRom:112480-11257F:ROMItemEquippable:2 bytes weapons, 2 bytes armor, 64*4 byte entries
+;SnesPrgRom:112480-112481:ROMItemEquippable_Weapons:2 bytes weapons, 2 bytes armor, 64*4 byte entries
+;SnesPrgRom:112482-112483:ROMItemEquippable_Armor:2 bytes weapons, 2 bytes armor, 64*4 byte entries
+SnesPrgRom:112580-1126BF:ROMElementDef:	
+;SnesPrgRom:112580:ROMElementDef_Absorb:	
+;SnesPrgRom:112581:ROMElementDef_Evade:
+;SnesPrgRom:112582:ROMElementDef_Immune:
+;SnesPrgRom:112583:ROMElementDef_Half:
+;SnesPrgRom:112584:ROMElementDef_Weak:
+SnesPrgRom:1126C0-11287F:ROMArmorStatus_Status1:high bit here indicates always status, for all other status below as well,only the last item per type with an always status will apply
+;SnesPrgRom:1126C0:ROMArmorStatus_Status1:high bit here indicates always status, for all other status below as well,only the last item per type with an always status will apply
+;SnesPrgRom:1126C1:ROMArmorStatus_Status2:
+;SnesPrgRom:1126C2:ROMArmorStatus_Status3:
+;SnesPrgRom:1126C3:ROMArmorStatus_Status4:
+;SnesPrgRom:1126C4:ROMArmorStatus_Immune1:
+;SnesPrgRom:1126C5:ROMArmorStatus_Immune2:
+;SnesPrgRom:1126C6:ROMArmorStatus_Immune3:
+SnesPrgRom:112880-11288F:ROMStatBonuses:16 bytes, 8 stat mod pairs
+SnesPrgRom:112976:ROMGlobalTimer_Stop:
+SnesPrgRom:112977:ROMGlobalTimer_Poison:
+SnesPrgRom:112978:ROMGlobalTimer_Reflect:
+SnesPrgRom:112979:ROMGlobalTimer_Countdown:
+SnesPrgRom:11297A:ROMGlobalTimer_Mute:
+SnesPrgRom:11297B:ROMGlobalTimer_HPLeak:
+SnesPrgRom:11297C:ROMGlobalTimer_Old:
+SnesPrgRom:11297D:ROMGlobalTimer_Regen:
+SnesPrgRom:11297E:ROMGlobalTimer_Sing:
+SnesPrgRom:11297F:ROMGlobalTimer_Paralyze:
+SnesPrgRom:112980:ROMGlobalTimer_ATB:
+SnesPrgRom:112981-112990:ROMMagicAnim:16 byte table of bitfields mapping to spells $80+, 1 indicates a given spell uses animation type 7 (magic)
+SnesPrgRom:113840-113940:ROMBattleMessageOffsets:unsure on length
+SnesPrgRom:115000-115128:ROMLevelExp:3 bytes * 99 entries
+SnesPrgRom:115129-1151EE:ROMLevelHP:2 bytes * 99
+SnesPrgRom:1151EF-1152B4:ROMLevelMP:2 bytes * 99
+SnesPrgRom:1152C0-1152E9:ROMJobPointers:2 bytes * 21, pointer to first ability for each job (no freelancer)
+SnesPrgRom:1152EA-1152FF:ROMJobLevels:1 byte * 22, number of levels for each job (also ability count)
+SnesPrgRom:115300-11542B:ROMJobAbilities:3 bytes * ?, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers, unsure on length
+SnesPrgRom:1159E0-115CDF:ROMAbilityInfo
+;SnesPrgRom:1159E0:ROMAbilityInfo_Targetting:0
+;SnesPrgRom:1159E1:ROMAbilityInfo_Category:1
+;SnesPrgRom:1159E2:ROMAbilityInfo_Misc_CmdStatus:2
+;SnesPrgRom:1159E3:ROMAbilityInfo_MPCost_DamageMod:3
+;SnesPrgRom:1159E4:ROMAbilityInfo_AtkType:4
+;SnesPrgRom:1159E5:ROMAbilityInfo_Param1:5
+;SnesPrgRom:1159E6:ROMAbilityInfo_Param2:6
+;SnesPrgRom:1159E7:ROMAbilityInfo_Param3:7
+SnesPrgRom:115CE0-115CE1:ROMStatusDisableCommands:16 bit entries, index is command ID, holds Status1 and Status2 that should disable that command
+SnesPrgRom:115DA0-115DFF:ROMCommandDelay:1 byte per command, atb delay when used, 80h set -> use weapon or spell delay instead
+SnesPrgRom:116AB1-116DF8:ROMEffectInfo
+;SnesPrgRom:116AB1:ROMEffectInfo_Targetting:0
+;SnesPrgRom:116AB2:ROMEffectInfo_Category:1
+;SnesPrgRom:116AB3:ROMEffectInfo_Misc_CmdStatus:2
+;SnesPrgRom:116AB4:ROMEffectInfo_MPCost_DamageMod:3
+;SnesPrgRom:116AB5:ROMEffectInfo_AtkType:4
+;SnesPrgRom:116AB6:ROMEffectInfo_Param1:5
+;SnesPrgRom:116AB7:ROMEffectInfo_Param2:6
+;SnesPrgRom:116AB8:ROMEffectInfo_Param3:7
+SnesPrgRom:116DF9-116DFC:ROMTerrainSpells:4 bytes per terrain type
+SnesPrgRom:116EF9-116F88:ROMCombineSpells:144 bytes, Effect spell ids for combine/mix, 12*item2 + item1
+SnesWorkRam:0032:AttackerOffset:16 bit offset into Character Structures (should be multiple of $80)
+SnesWorkRam:0034:SpellOffset:16 bit offset into CharSpells struct, char index * 650
+SnesWorkRam:0036:TimerOffset:16 bit offset into timer structures, pulled from rom for a given target
+SnesWorkRam:0039:AttackerOffset2:Offset into combat tables for multi-commands? 
+SnesWorkRam:003A:RNGA
+SnesWorkRam:003B:RNGB
+SnesWorkRam:0047:AttackerIndex
+SnesWorkRam:0048:TargetIndex
+SnesWorkRam:0049:TargetOffset:16 bit offset into Character Structures (should be multiple of $80)
+SnesWorkRam:004B:AIOffset
+SnesWorkRam:004D:AtkElement
+SnesWorkRam:004E:HitPercent
+SnesWorkRam:004F:EvadePercent
+SnesWorkRam:0050:Attack:Attack Damage during calcuations (16 bit)
+SnesWorkRam:0052:M:Attack Multiplier (16 bit)
+SnesWorkRam:0054:Defense:Defense value used during calculations (16 bit), could be physical or magical
+SnesWorkRam:0056:AtkMissed:>0 miss, 80h is something specific (physical miss?)
+SnesWorkRam:0057:Param1
+SnesWorkRam:0058:Param2
+SnesWorkRam:0059:Param3
+SnesWorkRam:005A:SwordBlock:Set to 1 when attack is evaded by Hardened/Defender
+SnesWorkRam:005B:KnifeBlock:Set to 2 when attack is evaded by Guardian
+SnesWorkRam:005C:ElfCape:Set to 3 when attack is evaded by Elf Cape
+SnesWorkRam:005D:ShieldBlock:Set to 6 when attack is evaded by Shield,Set to 7 when attack is evaded by Aegis Shield vs Magic
+SnesWorkRam:005E:BladeGrasp:Set to 5 when attack is evaded by Blade Grasp passive skill
+SnesWorkRam:005F:Crit:Set to 1 when an attack crits (screen flash?)
+SnesWorkRam:0060:MagicSword:set when Magic Sword is applied, bypasses element calculations, some other effects
+SnesWorkRam:0061:TargetDead:Set to 1 when Target is instantly killed (by MSword)
+SnesWorkRam:0062:AtkHealed
+SnesWorkRam:0063:AttackerDamaged:makes attacker take damage from attack instead of target
+SnesWorkRam:0065:MonsterTargets:1 bit per monster
+SnesWorkRam:0066:PartyTargets:1 bit per party member then 0000
+SnesWorkRam:0070:MenuCurrentChar:also MonsterDead and C1Temp, used to pass info to and from C1 bank
+SnesWorkRam:013B-0142:FieldItemsWon:8 bytes, BattleItemsWon copied here at end
+SnesWorkRam:04F0-04F1:EncounterIndex:16 bit, index into $D03000 ROM combat tables
+SnesWorkRam:04F2:TerrainType
+SnesWorkRam:0500:FieldChar_0_CharRow:
+SnesWorkRam:0501:FieldChar_0_Job:
+SnesWorkRam:0502:FieldChar_0_Level:
+SnesWorkRam:0503-0505:FieldChar_0_Exp:
+SnesWorkRam:0506-0507:FieldChar_0_CurHP:
+SnesWorkRam:0508-0509:FieldChar_0_MaxHP:
+SnesWorkRam:050A-050B:FieldChar_0_CurMP:
+SnesWorkRam:050C-050D:FieldChar_0_MaxMP:
+SnesWorkRam:050E:FieldChar_0_Headgear:
+SnesWorkRam:050F:FieldChar_0_Bodywear:
+SnesWorkRam:0510:FieldChar_0_Accessory:
+SnesWorkRam:0511:FieldChar_0_RHShield:
+SnesWorkRam:0512:FieldChar_0_LHShield:
+SnesWorkRam:0513:FieldChar_0_RHWeapon:
+SnesWorkRam:0514:FieldChar_0_LHWeapon:
+SnesWorkRam:0515:FieldChar_0_CaughtMonster:
+SnesWorkRam:0516-0519:FieldChar_0_BattleCommands:
+SnesWorkRam:051A:FieldChar_0_Status1:
+SnesWorkRam:051B:FieldChar_0_Status2:
+SnesWorkRam:051C:FieldChar_0_Status3: 
+SnesWorkRam:051D:FieldChar_0_Status4:
+SnesWorkRam:051E:FieldChar_0_CmdStatus:
+SnesWorkRam:051F:FieldChar_0_DamageMod:
+SnesWorkRam:0520:FieldChar_0_Passives1:
+SnesWorkRam:0521:FieldChar_0_Passives2:
+SnesWorkRam:0522:FieldChar_0_ElementUp:
+SnesWorkRam:0523:FieldChar_0_EqWeight:
+SnesWorkRam:0524:FieldChar_0_BaseStr:
+SnesWorkRam:0525:FieldChar_0_BaseAgi:
+SnesWorkRam:0526:FieldChar_0_BaseVit:
+SnesWorkRam:0527:FieldChar_0_BaseMag:
+SnesWorkRam:0528:FieldChar_0_EquippedStr:
+SnesWorkRam:0529:FieldChar_0_EquippedAgi:
+SnesWorkRam:052A:FieldChar_0_EquippedVit:
+SnesWorkRam:052B:FieldChar_0_EquippedMag:
+SnesWorkRam:052C:FieldChar_0_Evade:
+SnesWorkRam:052D:FieldChar_0_Defense:
+SnesWorkRam:052E:FieldChar_0_MEvade:
+SnesWorkRam:052F:FieldChar_0_MDefense:
+SnesWorkRam:0530:FieldChar_0_EAbsorb:
+SnesWorkRam:0531:FieldChar_0_EBlock:		
+SnesWorkRam:0532:FieldChar_0_EImmune:
+SnesWorkRam:0533:FieldChar_0_EHalf:
+SnesWorkRam:0534:FieldChar_0_EWeak:
+SnesWorkRam:0535:FieldChar_0_StatusImmune1:
+SnesWorkRam:0536:FieldChar_0_StatusImmune2:
+SnesWorkRam:0537:FieldChar_0_StatusImmune3:
+SnesWorkRam:0538:FieldChar_0_WeaponProperties:
+SnesWorkRam:0539:FieldChar_0_ArmorProperties:
+SnesWorkRam:053A:FieldChar_0_JobLevel:
+SnesWorkRam:053B-053C:FieldChar_0_AP:
+SnesWorkRam:053D-053F:FieldChar_0_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:0540:FieldChar_0_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:0542:FieldChar_0_EquipArmor:bitmask for equippable armor
+SnesWorkRam:0544:FieldChar_0_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:0545:FieldChar_0_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:0546-549:FieldChar_0_Unused:
+SnesWorkRam:054A:FieldChar_0_MasteryStr:mastery entries are for freelancer
+SnesWorkRam:054B:FieldChar_0_MasteryAgi:
+SnesWorkRam:054C:FieldChar_0_MasteryVit:
+SnesWorkRam:054D:FieldChar_0_MasteryMag:
+SnesWorkRam:054E:FieldChar_0_MasteryPassives1:
+SnesWorkRam:054F:FieldChar_0_MasteryPassives2:
+SnesWorkRam:0550:FieldChar_1_CharRow:
+SnesWorkRam:0551:FieldChar_1_Job:
+SnesWorkRam:0552:FieldChar_1_Level:
+SnesWorkRam:0553-0555:FieldChar_1_Exp:
+SnesWorkRam:0556-0557:FieldChar_1_CurHP:
+SnesWorkRam:0558-0559:FieldChar_1_MaxHP:
+SnesWorkRam:055A-055B:FieldChar_1_CurMP:
+SnesWorkRam:055C-055D:FieldChar_1_MaxMP:
+SnesWorkRam:055E:FieldChar_1_Headgear:
+SnesWorkRam:055F:FieldChar_1_Bodywear:
+SnesWorkRam:0560:FieldChar_1_Accessory:
+SnesWorkRam:0561:FieldChar_1_RHShield:
+SnesWorkRam:0562:FieldChar_1_LHShield:
+SnesWorkRam:0563:FieldChar_1_RHWeapon:
+SnesWorkRam:0564:FieldChar_1_LHWeapon:
+SnesWorkRam:0565:FieldChar_1_CaughtMonster:
+SnesWorkRam:0566-0569:FieldChar_1_BattleCommands:
+SnesWorkRam:056A:FieldChar_1_Status1:
+SnesWorkRam:056B:FieldChar_1_Status2:
+SnesWorkRam:056C:FieldChar_1_Status3: 
+SnesWorkRam:056D:FieldChar_1_Status4:
+SnesWorkRam:056E:FieldChar_1_CmdStatus:
+SnesWorkRam:056F:FieldChar_1_DamageMod:
+SnesWorkRam:0570:FieldChar_1_Passives1:
+SnesWorkRam:0571:FieldChar_1_Passives2:
+SnesWorkRam:0572:FieldChar_1_ElementUp:
+SnesWorkRam:0573:FieldChar_1_EqWeight:
+SnesWorkRam:0574:FieldChar_1_BaseStr:
+SnesWorkRam:0575:FieldChar_1_BaseAgi:
+SnesWorkRam:0576:FieldChar_1_BaseVit:
+SnesWorkRam:0577:FieldChar_1_BaseMag:
+SnesWorkRam:0578:FieldChar_1_EquippedStr:
+SnesWorkRam:0579:FieldChar_1_EquippedAgi:
+SnesWorkRam:057A:FieldChar_1_EquippedVit:
+SnesWorkRam:057B:FieldChar_1_EquippedMag:
+SnesWorkRam:057C:FieldChar_1_Evade:
+SnesWorkRam:057D:FieldChar_1_Defense:
+SnesWorkRam:057E:FieldChar_1_MEvade:
+SnesWorkRam:057F:FieldChar_1_MDefense:
+SnesWorkRam:0580:FieldChar_1_EAbsorb:
+SnesWorkRam:0581:FieldChar_1_EBlock:		
+SnesWorkRam:0582:FieldChar_1_EImmune:
+SnesWorkRam:0583:FieldChar_1_EHalf:
+SnesWorkRam:0584:FieldChar_1_EWeak:
+SnesWorkRam:0585:FieldChar_1_StatusImmune1:
+SnesWorkRam:0586:FieldChar_1_StatusImmune2:
+SnesWorkRam:0587:FieldChar_1_StatusImmune3:
+SnesWorkRam:0588:FieldChar_1_WeaponProperties:
+SnesWorkRam:0589:FieldChar_1_ArmorProperties:
+SnesWorkRam:058A:FieldChar_1_JobLevel:
+SnesWorkRam:058B-058C:FieldChar_1_AP:
+SnesWorkRam:058D-058F:FieldChar_1_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:0590:FieldChar_1_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:0592:FieldChar_1_EquipArmor:bitmask for equippable armor
+SnesWorkRam:0594:FieldChar_1_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:0595:FieldChar_1_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:0596-0599:FieldChar_1_Unused:
+SnesWorkRam:059A:FieldChar_1_MasteryStr:mastery entries are for freelancer
+SnesWorkRam:059B:FieldChar_1_MasteryAgi:
+SnesWorkRam:059C:FieldChar_1_MasteryVit:
+SnesWorkRam:059D:FieldChar_1_MasteryMag:
+SnesWorkRam:059E:FieldChar_1_MasteryPassives1:
+SnesWorkRam:059F:FieldChar_1_MasteryPassives2:
+SnesWorkRam:05A0:FieldChar_2_CharRow:
+SnesWorkRam:05A1:FieldChar_2_Job:
+SnesWorkRam:05A2:FieldChar_2_Level:
+SnesWorkRam:05A3-05A5:FieldChar_2_Exp:
+SnesWorkRam:05A6-05A7:FieldChar_2_CurHP:
+SnesWorkRam:05A8-05A9:FieldChar_2_MaxHP:
+SnesWorkRam:05AA-05AB:FieldChar_2_CurMP:
+SnesWorkRam:05AC-05AD:FieldChar_2_MaxMP:
+SnesWorkRam:05AE:FieldChar_2_Headgear:
+SnesWorkRam:05AF:FieldChar_2_Bodywear:
+SnesWorkRam:05B0:FieldChar_2_Accessory:
+SnesWorkRam:05B1:FieldChar_2_RHShield:
+SnesWorkRam:05B2:FieldChar_2_LHShield:
+SnesWorkRam:05B3:FieldChar_2_RHWeapon:
+SnesWorkRam:05B4:FieldChar_2_LHWeapon:
+SnesWorkRam:05B5:FieldChar_2_CaughtMonster:
+SnesWorkRam:05B6-05B9:FieldChar_2_BattleCommands:
+SnesWorkRam:05BA:FieldChar_2_Status1:
+SnesWorkRam:05BB:FieldChar_2_Status2:
+SnesWorkRam:05BC:FieldChar_2_Status3: 
+SnesWorkRam:05BD:FieldChar_2_Status4:
+SnesWorkRam:05BE:FieldChar_2_CmdStatus:
+SnesWorkRam:05BF:FieldChar_2_DamageMod:
+SnesWorkRam:05C0:FieldChar_2_Passives1:
+SnesWorkRam:05C1:FieldChar_2_Passives2:
+SnesWorkRam:05C2:FieldChar_2_ElementUp:
+SnesWorkRam:05C3:FieldChar_2_EqWeight:
+SnesWorkRam:05C4:FieldChar_2_BaseStr:
+SnesWorkRam:05C5:FieldChar_2_BaseAgi:
+SnesWorkRam:05C6:FieldChar_2_BaseVit:
+SnesWorkRam:05C7:FieldChar_2_BaseMag:
+SnesWorkRam:05C8:FieldChar_2_EquippedStr:
+SnesWorkRam:05C9:FieldChar_2_EquippedAgi:
+SnesWorkRam:05CA:FieldChar_2_EquippedVit:
+SnesWorkRam:05CB:FieldChar_2_EquippedMag:
+SnesWorkRam:05CC:FieldChar_2_Evade:
+SnesWorkRam:05CD:FieldChar_2_Defense:
+SnesWorkRam:05CE:FieldChar_2_MEvade:
+SnesWorkRam:05CF:FieldChar_2_MDefense:
+SnesWorkRam:05D0:FieldChar_2_EAbsorb:
+SnesWorkRam:05D1:FieldChar_2_EBlock:		
+SnesWorkRam:05D2:FieldChar_2_EImmune:
+SnesWorkRam:05D3:FieldChar_2_EHalf:
+SnesWorkRam:05D4:FieldChar_2_EWeak:
+SnesWorkRam:05D5:FieldChar_2_StatusImmune1:
+SnesWorkRam:05D6:FieldChar_2_StatusImmune2:
+SnesWorkRam:05D7:FieldChar_2_StatusImmune3:
+SnesWorkRam:05D8:FieldChar_2_WeaponProperties:
+SnesWorkRam:05D9:FieldChar_2_ArmorProperties:
+SnesWorkRam:05DA:FieldChar_2_JobLevel:
+SnesWorkRam:05DB-05DC:FieldChar_2_AP:
+SnesWorkRam:05DD-05DF:FieldChar_2_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:05E0:FieldChar_2_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:05E2:FieldChar_2_EquipArmor:bitmask for equippable armor
+SnesWorkRam:05E4:FieldChar_2_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:05E5:FieldChar_2_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:05E6-05E9:FieldChar_2_Unused:
+SnesWorkRam:05EA:FieldChar_2_MasteryStr:mastery entries are for freelancer
+SnesWorkRam:05EB:FieldChar_2_MasteryAgi:
+SnesWorkRam:05EC:FieldChar_2_MasteryVit:
+SnesWorkRam:05ED:FieldChar_2_MasteryMag:
+SnesWorkRam:05EE:FieldChar_2_MasteryPassives1:
+SnesWorkRam:05EF:FieldChar_2_MasteryPassives2:
+SnesWorkRam:05F0:FieldChar_3_CharRow:
+SnesWorkRam:05F1:FieldChar_3_Job:
+SnesWorkRam:05F2:FieldChar_3_Level:
+SnesWorkRam:05F3-05F5:FieldChar_3_Exp:
+SnesWorkRam:05F6-05F7:FieldChar_3_CurHP:
+SnesWorkRam:05F8-05F9:FieldChar_3_MaxHP:
+SnesWorkRam:05FA-05FB:FieldChar_3_CurMP:
+SnesWorkRam:05FC-05FD:FieldChar_3_MaxMP:
+SnesWorkRam:05FE:FieldChar_3_Headgear:
+SnesWorkRam:05FF:FieldChar_3_Bodywear:
+SnesWorkRam:0600:FieldChar_3_Accessory:
+SnesWorkRam:0601:FieldChar_3_RHShield:
+SnesWorkRam:0602:FieldChar_3_LHShield:
+SnesWorkRam:0603:FieldChar_3_RHWeapon:
+SnesWorkRam:0604:FieldChar_3_LHWeapon:
+SnesWorkRam:0605:FieldChar_3_CaughtMonster:
+SnesWorkRam:0606-0609:FieldChar_3_BattleCommands:
+SnesWorkRam:060A:FieldChar_3_Status1:
+SnesWorkRam:060B:FieldChar_3_Status2:
+SnesWorkRam:060C:FieldChar_3_Status3: 
+SnesWorkRam:060D:FieldChar_3_Status4:
+SnesWorkRam:060E:FieldChar_3_CmdStatus:
+SnesWorkRam:060F:FieldChar_3_DamageMod:
+SnesWorkRam:0610:FieldChar_3_Passives1:
+SnesWorkRam:0611:FieldChar_3_Passives2:
+SnesWorkRam:0612:FieldChar_3_ElementUp:
+SnesWorkRam:0613:FieldChar_3_EqWeight:
+SnesWorkRam:0614:FieldChar_3_BaseStr:
+SnesWorkRam:0615:FieldChar_3_BaseAgi:
+SnesWorkRam:0616:FieldChar_3_BaseVit:
+SnesWorkRam:0617:FieldChar_3_BaseMag:
+SnesWorkRam:0618:FieldChar_3_EquippedStr:
+SnesWorkRam:0619:FieldChar_3_EquippedAgi:
+SnesWorkRam:061A:FieldChar_3_EquippedVit:
+SnesWorkRam:061B:FieldChar_3_EquippedMag:
+SnesWorkRam:061C:FieldChar_3_Evade:
+SnesWorkRam:061D:FieldChar_3_Defense:
+SnesWorkRam:061E:FieldChar_3_MEvade:
+SnesWorkRam:061F:FieldChar_3_MDefense:
+SnesWorkRam:0620:FieldChar_3_EAbsorb:
+SnesWorkRam:0621:FieldChar_3_EBlock:		
+SnesWorkRam:0622:FieldChar_3_EImmune:
+SnesWorkRam:0623:FieldChar_3_EHalf:
+SnesWorkRam:0624:FieldChar_3_EWeak:
+SnesWorkRam:0625:FieldChar_3_StatusImmune1:
+SnesWorkRam:0626:FieldChar_3_StatusImmune2:
+SnesWorkRam:0627:FieldChar_3_StatusImmune3:
+SnesWorkRam:0628:FieldChar_3_WeaponProperties:
+SnesWorkRam:0629:FieldChar_3_ArmorProperties:
+SnesWorkRam:062A:FieldChar_3_JobLevel:
+SnesWorkRam:062B-062C:FieldChar_3_AP:
+SnesWorkRam:062D-062F:FieldChar_3_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:0630:FieldChar_3_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:0632:FieldChar_3_EquipArmor:bitmask for equippable armor
+SnesWorkRam:0634:FieldChar_3_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:0635:FieldChar_3_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:0636-0639:FieldChar_3_Unused:
+SnesWorkRam:063A:FieldChar_3_MasteryStr:mastery entries are for freelancer
+SnesWorkRam:063B:FieldChar_3_MasteryAgi:
+SnesWorkRam:063C:FieldChar_3_MasteryVit:
+SnesWorkRam:063D:FieldChar_3_MasteryMag:
+SnesWorkRam:063E:FieldChar_3_MasteryPassives1:
+SnesWorkRam:063F:FieldChar_3_MasteryPassives2:
+SnesWorkRam:0640-073F:FieldItems:256 item ids
+SnesWorkRam:0740-083F:FieldItemsQty:256 item qtys
+SnesWorkRam:08F3-08F6:FieldAbilityCount:1 byte per character
+SnesWorkRam:08F7-0946:FieldAbilityList:20 bytes per character in order butz,lenna,galuf,faris
+SnesWorkRam:0947-0949:Gil:3 bytes
+SnesWorkRam:094A-094D:FieldFrameCount:4 bytes, time played (in frames)
+SnesWorkRam:094E-094F:MonsterKillCount:2 bytes
+SnesWorkRam:0950-095C:MagicBits:Learned magic, 12 bytes, 1 bit per spell
+SnesWorkRam:0960-0963:BlueMagicBits:4 bytes (hardcoded to skip first 2 bits of first byte)
+SnesWorkRam:0970:Config1:80h command style, 10h-40h message speed, 08h battle mode, 01h-04h battle speed
+SnesWorkRam:09B4:FieldData_MagicLamp:		
+SnesWorkRam:09B5:FieldData_Escapes:		
+SnesWorkRam:09B6:FieldData_WonderRod:		
+SnesWorkRam:09B7-09BF:FieldData_Unknown:unknown/unused?
+SnesWorkRam:09C0:FieldData_Battles:		
+SnesWorkRam:09C2:FieldData_Saves:		
+SnesWorkRam:09C4:FieldData_EventFlags:		
+SnesWorkRam:0AF9:RNGSeed
+SnesWorkRam:0AFB:FieldTimerEnable
+SnesWorkRam:0AFC-0AFD:FieldTimer:frame count, 16 bit
+SnesWorkRam:0AFE-0AFF:FieldTimerEnd:16 bit
+SnesWorkRam:1D00:MusicData
+SnesWorkRam:2000:CharStruct_0_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2001:CharStruct_0_Job:
+SnesWorkRam:2002:CharStruct_0_Level:
+SnesWorkRam:2003-2005:CharStruct_0_Exp:
+SnesWorkRam:2006-2007:CharStruct_0_CurHP:
+SnesWorkRam:2008-2009:CharStruct_0_MaxHP:
+SnesWorkRam:200A-200B:CharStruct_0_CurMP:
+SnesWorkRam:200C-200D:CharStruct_0_MaxMP:
+SnesWorkRam:200E:CharStruct_0_Headgear:
+SnesWorkRam:200F:CharStruct_0_Bodywear:
+SnesWorkRam:2010:CharStruct_0_Accessory:
+SnesWorkRam:2011:CharStruct_0_RHShield:
+SnesWorkRam:2012:CharStruct_0_LHShield:
+SnesWorkRam:2013:CharStruct_0_RHWeapon:
+SnesWorkRam:2014:CharStruct_0_LHWeapon:
+SnesWorkRam:2015:CharStruct_0_CaughtMonster:
+SnesWorkRam:2016-2019:CharStruct_0_BattleCommands:
+SnesWorkRam:201A:CharStruct_0_Status1:
+SnesWorkRam:201B:CharStruct_0_Status2:
+SnesWorkRam:201C:CharStruct_0_Status3:
+SnesWorkRam:201D:CharStruct_0_Status4:
+SnesWorkRam:201E:CharStruct_0_CmdStatus:
+SnesWorkRam:201F:CharStruct_0_DamageMod:
+SnesWorkRam:2020:CharStruct_0_Passives1:
+SnesWorkRam:2021:CharStruct_0_Passives2:
+SnesWorkRam:2022:CharStruct_0_ElementUp:
+SnesWorkRam:2023:CharStruct_0_EqWeight:
+SnesWorkRam:2024:CharStruct_0_BaseStr:
+SnesWorkRam:2025:CharStruct_0_BaseAgi:
+SnesWorkRam:2026:CharStruct_0_BaseVit:
+SnesWorkRam:2027:CharStruct_0_BaseMag:
+SnesWorkRam:2028:CharStruct_0_EquippedStr:
+SnesWorkRam:2029:CharStruct_0_EquippedAgi:
+SnesWorkRam:202A:CharStruct_0_EquippedVit:
+SnesWorkRam:202B:CharStruct_0_EquippedMag:
+SnesWorkRam:202C:CharStruct_0_Evade:
+SnesWorkRam:202D:CharStruct_0_Defense:
+SnesWorkRam:202E:CharStruct_0_MEvade:
+SnesWorkRam:202F:CharStruct_0_MDefense:
+SnesWorkRam:2030:CharStruct_0_EAbsorb:
+SnesWorkRam:2031:CharStruct_0_EBlock:likely unused but seems functional?
+SnesWorkRam:2032:CharStruct_0_EImmune:
+SnesWorkRam:2033:CharStruct_0_EHalf:
+SnesWorkRam:2034:CharStruct_0_EWeak:
+SnesWorkRam:2035:CharStruct_0_StatusImmune1:
+SnesWorkRam:2036:CharStruct_0_StatusImmune2:
+SnesWorkRam:2037:CharStruct_0_StatusImmune3:
+SnesWorkRam:2038:CharStruct_0_WeaponProperties:
+SnesWorkRam:2039:CharStruct_0_ArmorProperties:
+SnesWorkRam:203A:CharStruct_0_JobLevel:
+SnesWorkRam:203B-203C:CharStruct_0_AP:
+SnesWorkRam:203D-203F:CharStruct_0_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2040-2041:CharStruct_0_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2042-2043:CharStruct_0_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2044:CharStruct_0_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2045:CharStruct_0_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2046:CharStruct_0_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2047:CharStruct_0_Reaction1Magic:
+SnesWorkRam:2048:CharStruct_0_Reaction1Item:
+SnesWorkRam:2049:CharStruct_0_Reaction1Element:
+SnesWorkRam:204A:CharStruct_0_Reaction1Category:
+SnesWorkRam:204B:CharStruct_0_Reaction1Targets:
+SnesWorkRam:204C:CharStruct_0_Reaction1Damage:
+SnesWorkRam:204D:CharStruct_0_Reaction2Command:
+SnesWorkRam:204E:CharStruct_0_Reaction2Magic:
+SnesWorkRam:204F:CharStruct_0_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2050:CharStruct_0_MSwordElemental1:
+SnesWorkRam:2051:CharStruct_0_MSwordElemental2:
+SnesWorkRam:2052:CharStruct_0_MSwordElemental3:
+SnesWorkRam:2053:CharStruct_0_MSwordStatus1:
+SnesWorkRam:2054:CharStruct_0_MSwordStatus2:
+SnesWorkRam:2055:CharStruct_0_MSwordStatusSpecial:
+SnesWorkRam:2056:CharStruct_0_ActionFlag:
+SnesWorkRam:2057:CharStruct_0_Command:queued command, premapping
+SnesWorkRam:2058:CharStruct_0_MonsterTargets:Monster Target
+SnesWorkRam:2059:CharStruct_0_PartyTargets:Character Target
+SnesWorkRam:205A:CharStruct_0_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:205B:CharStruct_0_SecondActionFlag:
+SnesWorkRam:205C:CharStruct_0_SecondCommand:
+SnesWorkRam:205D:CharStruct_0_SecondMonsterTargets:
+SnesWorkRam:205E:CharStruct_0_SecondPartyTargets:
+SnesWorkRam:205F:CharStruct_0_SecondSelectedItem:
+SnesWorkRam:2060:CharStruct_0_Unused1:Unused?
+SnesWorkRam:2061:CharStruct_0_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2062:CharStruct_0_MonsterM:
+SnesWorkRam:2063:CharStruct_0_Unused2:Unused?
+SnesWorkRam:2064:CharStruct_0_CantEvade:
+SnesWorkRam:2065:CharStruct_0_CreatureType:
+SnesWorkRam:2066:CharStruct_0_CmdImmunity:Command Immunity
+SnesWorkRam:2067-2068:CharStruct_0_RewardExp:
+SnesWorkRam:2069-206A:CharStruct_0_RewardGil:
+SnesWorkRam:206B:CharStruct_0_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:206C:CharStruct_0_RHCategory:these are initialized but never used
+SnesWorkRam:206D:CharStruct_0_LHCategory:
+SnesWorkRam:206E:CharStruct_0_Specialty:
+SnesWorkRam:206F:CharStruct_0_Song:
+SnesWorkRam:2070:CharStruct_0_AlwaysStatus1:
+SnesWorkRam:2071:CharStruct_0_AlwaysStatus2:
+SnesWorkRam:2072:CharStruct_0_AlwaysStatus3:
+SnesWorkRam:2073:CharStruct_0_AlwaysStatus4:
+SnesWorkRam:2074:CharStruct_0_BonusStr:For Songs
+SnesWorkRam:2075:CharStruct_0_BonusAgi:
+SnesWorkRam:2076:CharStruct_0_BonusVit:No song affects this, likely unused
+SnesWorkRam:2077:CharStruct_0_BonusMag:
+SnesWorkRam:2078:CharStruct_0_BonusLevel:
+SnesWorkRam:2079:CharStruct_0_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:207A:CharStruct_0_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:207B:CharStruct_0_Reaction2Element:
+SnesWorkRam:207C:CharStruct_0_Reaction2Category:
+SnesWorkRam:207D:CharStruct_0_Reaction2Targets:
+SnesWorkRam:207E:CharStruct_0_Reaction2Damage:
+SnesWorkRam:207F:CharStruct_0_SpecialtyName:
+SnesWorkRam:2080:CharStruct_1_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2081:CharStruct_1_Job:
+SnesWorkRam:2082:CharStruct_1_Level:
+SnesWorkRam:2083-2085:CharStruct_1_Exp:
+SnesWorkRam:2086-2087:CharStruct_1_CurHP:
+SnesWorkRam:2088-2089:CharStruct_1_MaxHP:
+SnesWorkRam:208A-208B:CharStruct_1_CurMP:
+SnesWorkRam:208C-208D:CharStruct_1_MaxMP:
+SnesWorkRam:208E:CharStruct_1_Headgear:
+SnesWorkRam:208F:CharStruct_1_Bodywear:
+SnesWorkRam:2090:CharStruct_1_Accessory:
+SnesWorkRam:2091:CharStruct_1_RHShield:
+SnesWorkRam:2092:CharStruct_1_LHShield:
+SnesWorkRam:2093:CharStruct_1_RHWeapon:
+SnesWorkRam:2094:CharStruct_1_LHWeapon:
+SnesWorkRam:2095:CharStruct_1_CaughtMonster:
+SnesWorkRam:2096-2099:CharStruct_1_BattleCommands:
+SnesWorkRam:209A:CharStruct_1_Status1:
+SnesWorkRam:209B:CharStruct_1_Status2:
+SnesWorkRam:209C:CharStruct_1_Status3:
+SnesWorkRam:209D:CharStruct_1_Status4:
+SnesWorkRam:209E:CharStruct_1_CmdStatus:
+SnesWorkRam:209F:CharStruct_1_DamageMod:
+SnesWorkRam:20A0:CharStruct_1_Passives1:
+SnesWorkRam:20A1:CharStruct_1_Passives2:
+SnesWorkRam:20A2:CharStruct_1_ElementUp:
+SnesWorkRam:20A3:CharStruct_1_EqWeight:
+SnesWorkRam:20A4:CharStruct_1_BaseStr:
+SnesWorkRam:20A5:CharStruct_1_BaseAgi:
+SnesWorkRam:20A6:CharStruct_1_BaseVit:
+SnesWorkRam:20A7:CharStruct_1_BaseMag:
+SnesWorkRam:20A8:CharStruct_1_EquippedStr:
+SnesWorkRam:20A9:CharStruct_1_EquippedAgi:
+SnesWorkRam:20AA:CharStruct_1_EquippedVit:
+SnesWorkRam:20AB:CharStruct_1_EquippedMag:
+SnesWorkRam:20AC:CharStruct_1_Evade:
+SnesWorkRam:20AD:CharStruct_1_Defense:
+SnesWorkRam:20AE:CharStruct_1_MEvade:
+SnesWorkRam:20AF:CharStruct_1_MDefense:
+SnesWorkRam:20B0:CharStruct_1_EAbsorb:
+SnesWorkRam:20B1:CharStruct_1_EBlock:likely unused but seems functional?
+SnesWorkRam:20B2:CharStruct_1_EImmune:
+SnesWorkRam:20B3:CharStruct_1_EHalf:
+SnesWorkRam:20B4:CharStruct_1_EWeak:
+SnesWorkRam:20B5:CharStruct_1_StatusImmune1:
+SnesWorkRam:20B6:CharStruct_1_StatusImmune2:
+SnesWorkRam:20B7:CharStruct_1_StatusImmune3:
+SnesWorkRam:20B8:CharStruct_1_WeaponProperties:
+SnesWorkRam:20B9:CharStruct_1_ArmorProperties:
+SnesWorkRam:20BA:CharStruct_1_JobLevel:
+SnesWorkRam:20BB-20BC:CharStruct_1_AP:
+SnesWorkRam:20BD-20BF:CharStruct_1_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:20C0-20C1:CharStruct_1_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:20C2-20C3:CharStruct_1_EquipArmor:bitmask for equippable armor
+SnesWorkRam:20C4:CharStruct_1_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:20C5:CharStruct_1_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:20C6:CharStruct_1_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:20C7:CharStruct_1_Reaction1Magic:
+SnesWorkRam:20C8:CharStruct_1_Reaction1Item:
+SnesWorkRam:20C9:CharStruct_1_Reaction1Element:
+SnesWorkRam:20CA:CharStruct_1_Reaction1Category:
+SnesWorkRam:20CB:CharStruct_1_Reaction1Targets:
+SnesWorkRam:20CC:CharStruct_1_Reaction1Damage:
+SnesWorkRam:20CD:CharStruct_1_Reaction2Command:
+SnesWorkRam:20CE:CharStruct_1_Reaction2Magic:
+SnesWorkRam:20CF:CharStruct_1_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:20D0:CharStruct_1_MSwordElemental1:
+SnesWorkRam:20D1:CharStruct_1_MSwordElemental2:
+SnesWorkRam:20D2:CharStruct_1_MSwordElemental3:
+SnesWorkRam:20D3:CharStruct_1_MSwordStatus1:
+SnesWorkRam:20D4:CharStruct_1_MSwordStatus2:
+SnesWorkRam:20D5:CharStruct_1_MSwordStatusSpecial:
+SnesWorkRam:20D6:CharStruct_1_ActionFlag:
+SnesWorkRam:20D7:CharStruct_1_Command:queued command, premapping
+SnesWorkRam:20D8:CharStruct_1_MonsterTargets:Monster Target
+SnesWorkRam:20D9:CharStruct_1_PartyTargets:Character Target
+SnesWorkRam:20DA:CharStruct_1_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:20DB:CharStruct_1_SecondActionFlag:
+SnesWorkRam:20DC:CharStruct_1_SecondCommand:
+SnesWorkRam:20DD:CharStruct_1_SecondMonsterTargets:
+SnesWorkRam:20DE:CharStruct_1_SecondPartyTargets:
+SnesWorkRam:20DF:CharStruct_1_SecondSelectedItem:
+SnesWorkRam:20E0:CharStruct_1_Unused1:Unused?
+SnesWorkRam:20E1:CharStruct_1_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:20E2:CharStruct_1_MonsterM:
+SnesWorkRam:20E3:CharStruct_1_Unused2:Unused?
+SnesWorkRam:20E4:CharStruct_1_CantEvade:
+SnesWorkRam:20E5:CharStruct_1_CreatureType:
+SnesWorkRam:20E6:CharStruct_1_CmdImmunity:Command Immunity
+SnesWorkRam:20E7-20E8:CharStruct_1_RewardExp:
+SnesWorkRam:20E9-20EA:CharStruct_1_RewardGil:
+SnesWorkRam:20EB:CharStruct_1_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:20EC:CharStruct_1_RHCategory:these are initialized but never used
+SnesWorkRam:20ED:CharStruct_1_LHCategory:
+SnesWorkRam:20EE:CharStruct_1_Specialty:
+SnesWorkRam:20EF:CharStruct_1_Song:
+SnesWorkRam:20F0:CharStruct_1_AlwaysStatus1:
+SnesWorkRam:20F1:CharStruct_1_AlwaysStatus2:
+SnesWorkRam:20F2:CharStruct_1_AlwaysStatus3:
+SnesWorkRam:20F3:CharStruct_1_AlwaysStatus4:
+SnesWorkRam:20F4:CharStruct_1_BonusStr:For Songs
+SnesWorkRam:20F5:CharStruct_1_BonusAgi:
+SnesWorkRam:20F6:CharStruct_1_BonusVit:No song affects this, likely unused
+SnesWorkRam:20F7:CharStruct_1_BonusMag:
+SnesWorkRam:20F8:CharStruct_1_BonusLevel:
+SnesWorkRam:20F9:CharStruct_1_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:20FA:CharStruct_1_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:20FB:CharStruct_1_Reaction2Element:
+SnesWorkRam:20FC:CharStruct_1_Reaction2Category:
+SnesWorkRam:20FD:CharStruct_1_Reaction2Targets:
+SnesWorkRam:20FE:CharStruct_1_Reaction2Damage:
+SnesWorkRam:20FF:CharStruct_1_SpecialtyName:
+SnesWorkRam:2100:CharStruct_2_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2101:CharStruct_2_Job:
+SnesWorkRam:2102:CharStruct_2_Level:
+SnesWorkRam:2103-2105:CharStruct_2_Exp:
+SnesWorkRam:2106-2107:CharStruct_2_CurHP:
+SnesWorkRam:2108-2109:CharStruct_2_MaxHP:
+SnesWorkRam:210A-210B:CharStruct_2_CurMP:
+SnesWorkRam:210C-210D:CharStruct_2_MaxMP:
+SnesWorkRam:210E:CharStruct_2_Headgear:
+SnesWorkRam:210F:CharStruct_2_Bodywear:
+SnesWorkRam:2110:CharStruct_2_Accessory:
+SnesWorkRam:2111:CharStruct_2_RHShield:
+SnesWorkRam:2112:CharStruct_2_LHShield:
+SnesWorkRam:2113:CharStruct_2_RHWeapon:
+SnesWorkRam:2114:CharStruct_2_LHWeapon:
+SnesWorkRam:2115:CharStruct_2_CaughtMonster:
+SnesWorkRam:2116-2119:CharStruct_2_BattleCommands:
+SnesWorkRam:211A:CharStruct_2_Status1:
+SnesWorkRam:211B:CharStruct_2_Status2:
+SnesWorkRam:211C:CharStruct_2_Status3:
+SnesWorkRam:211D:CharStruct_2_Status4:
+SnesWorkRam:211E:CharStruct_2_CmdStatus:
+SnesWorkRam:211F:CharStruct_2_DamageMod:
+SnesWorkRam:2120:CharStruct_2_Passives1:
+SnesWorkRam:2121:CharStruct_2_Passives2:
+SnesWorkRam:2122:CharStruct_2_ElementUp:
+SnesWorkRam:2123:CharStruct_2_EqWeight:
+SnesWorkRam:2124:CharStruct_2_BaseStr:
+SnesWorkRam:2125:CharStruct_2_BaseAgi:
+SnesWorkRam:2126:CharStruct_2_BaseVit:
+SnesWorkRam:2127:CharStruct_2_BaseMag:
+SnesWorkRam:2128:CharStruct_2_EquippedStr:
+SnesWorkRam:2129:CharStruct_2_EquippedAgi:
+SnesWorkRam:212A:CharStruct_2_EquippedVit:
+SnesWorkRam:212B:CharStruct_2_EquippedMag:
+SnesWorkRam:212C:CharStruct_2_Evade:
+SnesWorkRam:212D:CharStruct_2_Defense:
+SnesWorkRam:212E:CharStruct_2_MEvade:
+SnesWorkRam:212F:CharStruct_2_MDefense:
+SnesWorkRam:2130:CharStruct_2_EAbsorb:
+SnesWorkRam:2131:CharStruct_2_EBlock:likely unused but seems functional?
+SnesWorkRam:2132:CharStruct_2_EImmune:
+SnesWorkRam:2133:CharStruct_2_EHalf:
+SnesWorkRam:2134:CharStruct_2_EWeak:
+SnesWorkRam:2135:CharStruct_2_StatusImmune1:
+SnesWorkRam:2136:CharStruct_2_StatusImmune2:
+SnesWorkRam:2137:CharStruct_2_StatusImmune3:
+SnesWorkRam:2138:CharStruct_2_WeaponProperties:
+SnesWorkRam:2139:CharStruct_2_ArmorProperties:
+SnesWorkRam:213A:CharStruct_2_JobLevel:
+SnesWorkRam:213B-213C:CharStruct_2_AP:
+SnesWorkRam:213D-213F:CharStruct_2_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2140-2141:CharStruct_2_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2142-2143:CharStruct_2_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2144:CharStruct_2_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2145:CharStruct_2_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2146:CharStruct_2_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2147:CharStruct_2_Reaction1Magic:
+SnesWorkRam:2148:CharStruct_2_Reaction1Item:
+SnesWorkRam:2149:CharStruct_2_Reaction1Element:
+SnesWorkRam:214A:CharStruct_2_Reaction1Category:
+SnesWorkRam:214B:CharStruct_2_Reaction1Targets:
+SnesWorkRam:214C:CharStruct_2_Reaction1Damage:
+SnesWorkRam:214D:CharStruct_2_Reaction2Command:
+SnesWorkRam:214E:CharStruct_2_Reaction2Magic:
+SnesWorkRam:214F:CharStruct_2_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2150:CharStruct_2_MSwordElemental1:
+SnesWorkRam:2151:CharStruct_2_MSwordElemental2:
+SnesWorkRam:2152:CharStruct_2_MSwordElemental3:
+SnesWorkRam:2153:CharStruct_2_MSwordStatus1:
+SnesWorkRam:2154:CharStruct_2_MSwordStatus2:
+SnesWorkRam:2155:CharStruct_2_MSwordStatusSpecial:
+SnesWorkRam:2156:CharStruct_2_ActionFlag:
+SnesWorkRam:2157:CharStruct_2_Command:queued command, premapping
+SnesWorkRam:2158:CharStruct_2_MonsterTargets:Monster Target
+SnesWorkRam:2159:CharStruct_2_PartyTargets:Character Target
+SnesWorkRam:215A:CharStruct_2_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:215B:CharStruct_2_SecondActionFlag:
+SnesWorkRam:215C:CharStruct_2_SecondCommand:
+SnesWorkRam:215D:CharStruct_2_SecondMonsterTargets:
+SnesWorkRam:215E:CharStruct_2_SecondPartyTargets:
+SnesWorkRam:215F:CharStruct_2_SecondSelectedItem:
+SnesWorkRam:2160:CharStruct_2_Unused1:Unused?
+SnesWorkRam:2161:CharStruct_2_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2162:CharStruct_2_MonsterM:
+SnesWorkRam:2163:CharStruct_2_Unused2:Unused?
+SnesWorkRam:2164:CharStruct_2_CantEvade:
+SnesWorkRam:2165:CharStruct_2_CreatureType:
+SnesWorkRam:2166:CharStruct_2_CmdImmunity:Command Immunity
+SnesWorkRam:2167-2168:CharStruct_2_RewardExp:
+SnesWorkRam:2169-216A:CharStruct_2_RewardGil:
+SnesWorkRam:216B:CharStruct_2_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:216C:CharStruct_2_RHCategory:these are initialized but never used
+SnesWorkRam:216D:CharStruct_2_LHCategory:
+SnesWorkRam:216E:CharStruct_2_Specialty:
+SnesWorkRam:216F:CharStruct_2_Song:
+SnesWorkRam:2170:CharStruct_2_AlwaysStatus1:
+SnesWorkRam:2171:CharStruct_2_AlwaysStatus2:
+SnesWorkRam:2172:CharStruct_2_AlwaysStatus3:
+SnesWorkRam:2173:CharStruct_2_AlwaysStatus4:
+SnesWorkRam:2174:CharStruct_2_BonusStr:For Songs
+SnesWorkRam:2175:CharStruct_2_BonusAgi:
+SnesWorkRam:2176:CharStruct_2_BonusVit:No song affects this, likely unused
+SnesWorkRam:2177:CharStruct_2_BonusMag:
+SnesWorkRam:2178:CharStruct_2_BonusLevel:
+SnesWorkRam:2179:CharStruct_2_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:217A:CharStruct_2_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:217B:CharStruct_2_Reaction2Element:
+SnesWorkRam:217C:CharStruct_2_Reaction2Category:
+SnesWorkRam:217D:CharStruct_2_Reaction2Targets:
+SnesWorkRam:217E:CharStruct_2_Reaction2Damage:
+SnesWorkRam:217F:CharStruct_2_SpecialtyName:
+SnesWorkRam:2180:CharStruct_3_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2181:CharStruct_3_Job:
+SnesWorkRam:2182:CharStruct_3_Level:
+SnesWorkRam:2183-2185:CharStruct_3_Exp:
+SnesWorkRam:2186-2187:CharStruct_3_CurHP:
+SnesWorkRam:2188-2189:CharStruct_3_MaxHP:
+SnesWorkRam:218A-218B:CharStruct_3_CurMP:
+SnesWorkRam:218C-218D:CharStruct_3_MaxMP:
+SnesWorkRam:218E:CharStruct_3_Headgear:
+SnesWorkRam:218F:CharStruct_3_Bodywear:
+SnesWorkRam:2190:CharStruct_3_Accessory:
+SnesWorkRam:2191:CharStruct_3_RHShield:
+SnesWorkRam:2192:CharStruct_3_LHShield:
+SnesWorkRam:2193:CharStruct_3_RHWeapon:
+SnesWorkRam:2194:CharStruct_3_LHWeapon:
+SnesWorkRam:2195:CharStruct_3_CaughtMonster:
+SnesWorkRam:2196-2199:CharStruct_3_BattleCommands:
+SnesWorkRam:219A:CharStruct_3_Status1:
+SnesWorkRam:219B:CharStruct_3_Status2:
+SnesWorkRam:219C:CharStruct_3_Status3:
+SnesWorkRam:219D:CharStruct_3_Status4:
+SnesWorkRam:219E:CharStruct_3_CmdStatus:
+SnesWorkRam:219F:CharStruct_3_DamageMod:
+SnesWorkRam:21A0:CharStruct_3_Passives1:
+SnesWorkRam:21A1:CharStruct_3_Passives2:
+SnesWorkRam:21A2:CharStruct_3_ElementUp:
+SnesWorkRam:21A3:CharStruct_3_EqWeight:
+SnesWorkRam:21A4:CharStruct_3_BaseStr:
+SnesWorkRam:21A5:CharStruct_3_BaseAgi:
+SnesWorkRam:21A6:CharStruct_3_BaseVit:
+SnesWorkRam:21A7:CharStruct_3_BaseMag:
+SnesWorkRam:21A8:CharStruct_3_EquippedStr:
+SnesWorkRam:21A9:CharStruct_3_EquippedAgi:
+SnesWorkRam:21AA:CharStruct_3_EquippedVit:
+SnesWorkRam:21AB:CharStruct_3_EquippedMag:
+SnesWorkRam:21AC:CharStruct_3_Evade:
+SnesWorkRam:21AD:CharStruct_3_Defense:
+SnesWorkRam:21AE:CharStruct_3_MEvade:
+SnesWorkRam:21AF:CharStruct_3_MDefense:
+SnesWorkRam:21B0:CharStruct_3_EAbsorb:
+SnesWorkRam:21B1:CharStruct_3_EBlock:likely unused but seems functional?
+SnesWorkRam:21B2:CharStruct_3_EImmune:
+SnesWorkRam:21B3:CharStruct_3_EHalf:
+SnesWorkRam:21B4:CharStruct_3_EWeak:
+SnesWorkRam:21B5:CharStruct_3_StatusImmune1:
+SnesWorkRam:21B6:CharStruct_3_StatusImmune2:
+SnesWorkRam:21B7:CharStruct_3_StatusImmune3:
+SnesWorkRam:21B8:CharStruct_3_WeaponProperties:
+SnesWorkRam:21B9:CharStruct_3_ArmorProperties:
+SnesWorkRam:21BA:CharStruct_3_JobLevel:
+SnesWorkRam:21BB-21BC:CharStruct_3_AP:
+SnesWorkRam:21BD-21BF:CharStruct_3_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:21C0-21C1:CharStruct_3_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:21C2-21C3:CharStruct_3_EquipArmor:bitmask for equippable armor
+SnesWorkRam:21C4:CharStruct_3_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:21C5:CharStruct_3_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:21C6:CharStruct_3_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:21C7:CharStruct_3_Reaction1Magic:
+SnesWorkRam:21C8:CharStruct_3_Reaction1Item:
+SnesWorkRam:21C9:CharStruct_3_Reaction1Element:
+SnesWorkRam:21CA:CharStruct_3_Reaction1Category:
+SnesWorkRam:21CB:CharStruct_3_Reaction1Targets:
+SnesWorkRam:21CC:CharStruct_3_Reaction1Damage:
+SnesWorkRam:21CD:CharStruct_3_Reaction2Command:
+SnesWorkRam:21CE:CharStruct_3_Reaction2Magic:
+SnesWorkRam:21CF:CharStruct_3_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:21D0:CharStruct_3_MSwordElemental1:
+SnesWorkRam:21D1:CharStruct_3_MSwordElemental2:
+SnesWorkRam:21D2:CharStruct_3_MSwordElemental3:
+SnesWorkRam:21D3:CharStruct_3_MSwordStatus1:
+SnesWorkRam:21D4:CharStruct_3_MSwordStatus2:
+SnesWorkRam:21D5:CharStruct_3_MSwordStatusSpecial:
+SnesWorkRam:21D6:CharStruct_3_ActionFlag:
+SnesWorkRam:21D7:CharStruct_3_Command:queued command, premapping
+SnesWorkRam:21D8:CharStruct_3_MonsterTargets:Monster Target
+SnesWorkRam:21D9:CharStruct_3_PartyTargets:Character Target
+SnesWorkRam:21DA:CharStruct_3_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:21DB:CharStruct_3_SecondActionFlag:
+SnesWorkRam:21DC:CharStruct_3_SecondCommand:
+SnesWorkRam:21DD:CharStruct_3_SecondMonsterTargets:
+SnesWorkRam:21DE:CharStruct_3_SecondPartyTargets:
+SnesWorkRam:21DF:CharStruct_3_SecondSelectedItem:
+SnesWorkRam:21E0:CharStruct_3_Unused1:Unused?
+SnesWorkRam:21E1:CharStruct_3_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:21E2:CharStruct_3_MonsterM:
+SnesWorkRam:21E3:CharStruct_3_Unused2:Unused?
+SnesWorkRam:21E4:CharStruct_3_CantEvade:
+SnesWorkRam:21E5:CharStruct_3_CreatureType:
+SnesWorkRam:21E6:CharStruct_3_CmdImmunity:Command Immunity
+SnesWorkRam:21E7-21E8:CharStruct_3_RewardExp:
+SnesWorkRam:21E9-21EA:CharStruct_3_RewardGil:
+SnesWorkRam:21EB:CharStruct_3_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:21EC:CharStruct_3_RHCategory:these are initialized but never used
+SnesWorkRam:21ED:CharStruct_3_LHCategory:
+SnesWorkRam:21EE:CharStruct_3_Specialty:
+SnesWorkRam:21EF:CharStruct_3_Song:
+SnesWorkRam:21F0:CharStruct_3_AlwaysStatus1:
+SnesWorkRam:21F1:CharStruct_3_AlwaysStatus2:
+SnesWorkRam:21F2:CharStruct_3_AlwaysStatus3:
+SnesWorkRam:21F3:CharStruct_3_AlwaysStatus4:
+SnesWorkRam:21F4:CharStruct_3_BonusStr:For Songs
+SnesWorkRam:21F5:CharStruct_3_BonusAgi:
+SnesWorkRam:21F6:CharStruct_3_BonusVit:No song affects this, likely unused
+SnesWorkRam:21F7:CharStruct_3_BonusMag:
+SnesWorkRam:21F8:CharStruct_3_BonusLevel:
+SnesWorkRam:21F9:CharStruct_3_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:21FA:CharStruct_3_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:21FB:CharStruct_3_Reaction2Element:
+SnesWorkRam:21FC:CharStruct_3_Reaction2Category:
+SnesWorkRam:21FD:CharStruct_3_Reaction2Targets:
+SnesWorkRam:21FE:CharStruct_3_Reaction2Damage:
+SnesWorkRam:21FF:CharStruct_3_SpecialtyName:
+SnesWorkRam:2200:CharStruct_4_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2201:CharStruct_4_Job:
+SnesWorkRam:2202:CharStruct_4_Level:
+SnesWorkRam:2203-2205:CharStruct_4_Exp:
+SnesWorkRam:2206-2207:CharStruct_4_CurHP:
+SnesWorkRam:2208-2209:CharStruct_4_MaxHP:
+SnesWorkRam:220A-220B:CharStruct_4_CurMP:
+SnesWorkRam:220C-220D:CharStruct_4_MaxMP:
+SnesWorkRam:220E:CharStruct_4_Headgear:
+SnesWorkRam:220F:CharStruct_4_Bodywear:
+SnesWorkRam:2210:CharStruct_4_Accessory:
+SnesWorkRam:2211:CharStruct_4_RHShield:
+SnesWorkRam:2212:CharStruct_4_LHShield:
+SnesWorkRam:2213:CharStruct_4_RHWeapon:
+SnesWorkRam:2214:CharStruct_4_LHWeapon:
+SnesWorkRam:2215:CharStruct_4_CaughtMonster:
+SnesWorkRam:2216-2219:CharStruct_4_BattleCommands:
+SnesWorkRam:221A:CharStruct_4_Status1:
+SnesWorkRam:221B:CharStruct_4_Status2:
+SnesWorkRam:221C:CharStruct_4_Status3:
+SnesWorkRam:221D:CharStruct_4_Status4:
+SnesWorkRam:221E:CharStruct_4_CmdStatus:
+SnesWorkRam:221F:CharStruct_4_DamageMod:
+SnesWorkRam:2220:CharStruct_4_Passives1:
+SnesWorkRam:2221:CharStruct_4_Passives2:
+SnesWorkRam:2222:CharStruct_4_ElementUp:
+SnesWorkRam:2223:CharStruct_4_EqWeight:
+SnesWorkRam:2224:CharStruct_4_BaseStr:
+SnesWorkRam:2225:CharStruct_4_BaseAgi:
+SnesWorkRam:2226:CharStruct_4_BaseVit:
+SnesWorkRam:2227:CharStruct_4_BaseMag:
+SnesWorkRam:2228:CharStruct_4_EquippedStr:
+SnesWorkRam:2229:CharStruct_4_EquippedAgi:
+SnesWorkRam:222A:CharStruct_4_EquippedVit:
+SnesWorkRam:222B:CharStruct_4_EquippedMag:
+SnesWorkRam:222C:CharStruct_4_Evade:
+SnesWorkRam:222D:CharStruct_4_Defense:
+SnesWorkRam:222E:CharStruct_4_MEvade:
+SnesWorkRam:222F:CharStruct_4_MDefense:
+SnesWorkRam:2230:CharStruct_4_EAbsorb:
+SnesWorkRam:2231:CharStruct_4_EBlock:likely unused but seems functional?
+SnesWorkRam:2232:CharStruct_4_EImmune:
+SnesWorkRam:2233:CharStruct_4_EHalf:
+SnesWorkRam:2234:CharStruct_4_EWeak:
+SnesWorkRam:2235:CharStruct_4_StatusImmune1:
+SnesWorkRam:2236:CharStruct_4_StatusImmune2:
+SnesWorkRam:2237:CharStruct_4_StatusImmune3:
+SnesWorkRam:2238:CharStruct_4_WeaponProperties:
+SnesWorkRam:2239:CharStruct_4_ArmorProperties:
+SnesWorkRam:223A:CharStruct_4_JobLevel:
+SnesWorkRam:223B-223C:CharStruct_4_AP:
+SnesWorkRam:223D-223F:CharStruct_4_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2240-2241:CharStruct_4_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2242-2243:CharStruct_4_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2244:CharStruct_4_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2245:CharStruct_4_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2246:CharStruct_4_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2247:CharStruct_4_Reaction1Magic:
+SnesWorkRam:2248:CharStruct_4_Reaction1Item:
+SnesWorkRam:2249:CharStruct_4_Reaction1Element:
+SnesWorkRam:224A:CharStruct_4_Reaction1Category:
+SnesWorkRam:224B:CharStruct_4_Reaction1Targets:
+SnesWorkRam:224C:CharStruct_4_Reaction1Damage:
+SnesWorkRam:224D:CharStruct_4_Reaction2Command:
+SnesWorkRam:224E:CharStruct_4_Reaction2Magic:
+SnesWorkRam:224F:CharStruct_4_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2250:CharStruct_4_MSwordElemental1:
+SnesWorkRam:2251:CharStruct_4_MSwordElemental2:
+SnesWorkRam:2252:CharStruct_4_MSwordElemental3:
+SnesWorkRam:2253:CharStruct_4_MSwordStatus1:
+SnesWorkRam:2254:CharStruct_4_MSwordStatus2:
+SnesWorkRam:2255:CharStruct_4_MSwordStatusSpecial:
+SnesWorkRam:2256:CharStruct_4_ActionFlag:
+SnesWorkRam:2257:CharStruct_4_Command:queued command, premapping
+SnesWorkRam:2258:CharStruct_4_MonsterTargets:Monster Target
+SnesWorkRam:2259:CharStruct_4_PartyTargets:Character Target
+SnesWorkRam:225A:CharStruct_4_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:225B:CharStruct_4_SecondActionFlag:
+SnesWorkRam:225C:CharStruct_4_SecondCommand:
+SnesWorkRam:225D:CharStruct_4_SecondMonsterTargets:
+SnesWorkRam:225E:CharStruct_4_SecondPartyTargets:
+SnesWorkRam:225F:CharStruct_4_SecondSelectedItem:
+SnesWorkRam:2260:CharStruct_4_Unused1:Unused?
+SnesWorkRam:2261:CharStruct_4_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2262:CharStruct_4_MonsterM:
+SnesWorkRam:2263:CharStruct_4_Unused2:Unused?
+SnesWorkRam:2264:CharStruct_4_CantEvade:
+SnesWorkRam:2265:CharStruct_4_CreatureType:
+SnesWorkRam:2266:CharStruct_4_CmdImmunity:Command Immunity
+SnesWorkRam:2267-2268:CharStruct_4_RewardExp:
+SnesWorkRam:2269-226A:CharStruct_4_RewardGil:
+SnesWorkRam:226B:CharStruct_4_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:226C:CharStruct_4_RHCategory:these are initialized but never used
+SnesWorkRam:226D:CharStruct_4_LHCategory:
+SnesWorkRam:226E:CharStruct_4_Specialty:
+SnesWorkRam:226F:CharStruct_4_Song:
+SnesWorkRam:2270:CharStruct_4_AlwaysStatus1:
+SnesWorkRam:2271:CharStruct_4_AlwaysStatus2:
+SnesWorkRam:2272:CharStruct_4_AlwaysStatus3:
+SnesWorkRam:2273:CharStruct_4_AlwaysStatus4:
+SnesWorkRam:2274:CharStruct_4_BonusStr:For Songs
+SnesWorkRam:2275:CharStruct_4_BonusAgi:
+SnesWorkRam:2276:CharStruct_4_BonusVit:No song affects this, likely unused
+SnesWorkRam:2277:CharStruct_4_BonusMag:
+SnesWorkRam:2278:CharStruct_4_BonusLevel:
+SnesWorkRam:2279:CharStruct_4_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:227A:CharStruct_4_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:227B:CharStruct_4_Reaction2Element:
+SnesWorkRam:227C:CharStruct_4_Reaction2Category:
+SnesWorkRam:227D:CharStruct_4_Reaction2Targets:
+SnesWorkRam:227E:CharStruct_4_Reaction2Damage:
+SnesWorkRam:227F:CharStruct_4_SpecialtyName:
+SnesWorkRam:2280:CharStruct_5_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2281:CharStruct_5_Job:
+SnesWorkRam:2282:CharStruct_5_Level:
+SnesWorkRam:2283-2285:CharStruct_5_Exp:
+SnesWorkRam:2286-2287:CharStruct_5_CurHP:
+SnesWorkRam:2288-2289:CharStruct_5_MaxHP:
+SnesWorkRam:228A-228B:CharStruct_5_CurMP:
+SnesWorkRam:228C-228D:CharStruct_5_MaxMP:
+SnesWorkRam:228E:CharStruct_5_Headgear:
+SnesWorkRam:228F:CharStruct_5_Bodywear:
+SnesWorkRam:2290:CharStruct_5_Accessory:
+SnesWorkRam:2291:CharStruct_5_RHShield:
+SnesWorkRam:2292:CharStruct_5_LHShield:
+SnesWorkRam:2293:CharStruct_5_RHWeapon:
+SnesWorkRam:2294:CharStruct_5_LHWeapon:
+SnesWorkRam:2295:CharStruct_5_CaughtMonster:
+SnesWorkRam:2296-2299:CharStruct_5_BattleCommands:
+SnesWorkRam:229A:CharStruct_5_Status1:
+SnesWorkRam:229B:CharStruct_5_Status2:
+SnesWorkRam:229C:CharStruct_5_Status3:
+SnesWorkRam:229D:CharStruct_5_Status4:
+SnesWorkRam:229E:CharStruct_5_CmdStatus:
+SnesWorkRam:229F:CharStruct_5_DamageMod:
+SnesWorkRam:22A0:CharStruct_5_Passives1:
+SnesWorkRam:22A1:CharStruct_5_Passives2:
+SnesWorkRam:22A2:CharStruct_5_ElementUp:
+SnesWorkRam:22A3:CharStruct_5_EqWeight:
+SnesWorkRam:22A4:CharStruct_5_BaseStr:
+SnesWorkRam:22A5:CharStruct_5_BaseAgi:
+SnesWorkRam:22A6:CharStruct_5_BaseVit:
+SnesWorkRam:22A7:CharStruct_5_BaseMag:
+SnesWorkRam:22A8:CharStruct_5_EquippedStr:
+SnesWorkRam:22A9:CharStruct_5_EquippedAgi:
+SnesWorkRam:22AA:CharStruct_5_EquippedVit:
+SnesWorkRam:22AB:CharStruct_5_EquippedMag:
+SnesWorkRam:22AC:CharStruct_5_Evade:
+SnesWorkRam:22AD:CharStruct_5_Defense:
+SnesWorkRam:22AE:CharStruct_5_MEvade:
+SnesWorkRam:22AF:CharStruct_5_MDefense:
+SnesWorkRam:22B0:CharStruct_5_EAbsorb:
+SnesWorkRam:22B1:CharStruct_5_EBlock:likely unused but seems functional?
+SnesWorkRam:22B2:CharStruct_5_EImmune:
+SnesWorkRam:22B3:CharStruct_5_EHalf:
+SnesWorkRam:22B4:CharStruct_5_EWeak:
+SnesWorkRam:22B5:CharStruct_5_StatusImmune1:
+SnesWorkRam:22B6:CharStruct_5_StatusImmune2:
+SnesWorkRam:22B7:CharStruct_5_StatusImmune3:
+SnesWorkRam:22B8:CharStruct_5_WeaponProperties:
+SnesWorkRam:22B9:CharStruct_5_ArmorProperties:
+SnesWorkRam:22BA:CharStruct_5_JobLevel:
+SnesWorkRam:22BB-22BC:CharStruct_5_AP:
+SnesWorkRam:22BD-22BF:CharStruct_5_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:22C0-22C1:CharStruct_5_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:22C2-22C3:CharStruct_5_EquipArmor:bitmask for equippable armor
+SnesWorkRam:22C4:CharStruct_5_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:22C5:CharStruct_5_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:22C6:CharStruct_5_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:22C7:CharStruct_5_Reaction1Magic:
+SnesWorkRam:22C8:CharStruct_5_Reaction1Item:
+SnesWorkRam:22C9:CharStruct_5_Reaction1Element:
+SnesWorkRam:22CA:CharStruct_5_Reaction1Category:
+SnesWorkRam:22CB:CharStruct_5_Reaction1Targets:
+SnesWorkRam:22CC:CharStruct_5_Reaction1Damage:
+SnesWorkRam:22CD:CharStruct_5_Reaction2Command:
+SnesWorkRam:22CE:CharStruct_5_Reaction2Magic:
+SnesWorkRam:22CF:CharStruct_5_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:22D0:CharStruct_5_MSwordElemental1:
+SnesWorkRam:22D1:CharStruct_5_MSwordElemental2:
+SnesWorkRam:22D2:CharStruct_5_MSwordElemental3:
+SnesWorkRam:22D3:CharStruct_5_MSwordStatus1:
+SnesWorkRam:22D4:CharStruct_5_MSwordStatus2:
+SnesWorkRam:22D5:CharStruct_5_MSwordStatusSpecial:
+SnesWorkRam:22D6:CharStruct_5_ActionFlag:
+SnesWorkRam:22D7:CharStruct_5_Command:queued command, premapping
+SnesWorkRam:22D8:CharStruct_5_MonsterTargets:Monster Target
+SnesWorkRam:22D9:CharStruct_5_PartyTargets:Character Target
+SnesWorkRam:22DA:CharStruct_5_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:22DB:CharStruct_5_SecondActionFlag:
+SnesWorkRam:22DC:CharStruct_5_SecondCommand:
+SnesWorkRam:22DD:CharStruct_5_SecondMonsterTargets:
+SnesWorkRam:22DE:CharStruct_5_SecondPartyTargets:
+SnesWorkRam:22DF:CharStruct_5_SecondSelectedItem:
+SnesWorkRam:22E0:CharStruct_5_Unused1:Unused?
+SnesWorkRam:22E1:CharStruct_5_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:22E2:CharStruct_5_MonsterM:
+SnesWorkRam:22E3:CharStruct_5_Unused2:Unused?
+SnesWorkRam:22E4:CharStruct_5_CantEvade:
+SnesWorkRam:22E5:CharStruct_5_CreatureType:
+SnesWorkRam:22E6:CharStruct_5_CmdImmunity:Command Immunity
+SnesWorkRam:22E7-22E8:CharStruct_5_RewardExp:
+SnesWorkRam:22E9-22EA:CharStruct_5_RewardGil:
+SnesWorkRam:22EB:CharStruct_5_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:22EC:CharStruct_5_RHCategory:these are initialized but never used
+SnesWorkRam:22ED:CharStruct_5_LHCategory:
+SnesWorkRam:22EE:CharStruct_5_Specialty:
+SnesWorkRam:22EF:CharStruct_5_Song:
+SnesWorkRam:22F0:CharStruct_5_AlwaysStatus1:
+SnesWorkRam:22F1:CharStruct_5_AlwaysStatus2:
+SnesWorkRam:22F2:CharStruct_5_AlwaysStatus3:
+SnesWorkRam:22F3:CharStruct_5_AlwaysStatus4:
+SnesWorkRam:22F4:CharStruct_5_BonusStr:For Songs
+SnesWorkRam:22F5:CharStruct_5_BonusAgi:
+SnesWorkRam:22F6:CharStruct_5_BonusVit:No song affects this, likely unused
+SnesWorkRam:22F7:CharStruct_5_BonusMag:
+SnesWorkRam:22F8:CharStruct_5_BonusLevel:
+SnesWorkRam:22F9:CharStruct_5_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:22FA:CharStruct_5_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:22FB:CharStruct_5_Reaction2Element:
+SnesWorkRam:22FC:CharStruct_5_Reaction2Category:
+SnesWorkRam:22FD:CharStruct_5_Reaction2Targets:
+SnesWorkRam:22FE:CharStruct_5_Reaction2Damage:
+SnesWorkRam:22FF:CharStruct_5_SpecialtyName:
+SnesWorkRam:2300:CharStruct_6_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2301:CharStruct_6_Job:
+SnesWorkRam:2302:CharStruct_6_Level:
+SnesWorkRam:2303-2305:CharStruct_6_Exp:
+SnesWorkRam:2306-2307:CharStruct_6_CurHP:
+SnesWorkRam:2308-2309:CharStruct_6_MaxHP:
+SnesWorkRam:230A-230B:CharStruct_6_CurMP:
+SnesWorkRam:230C-230D:CharStruct_6_MaxMP:
+SnesWorkRam:230E:CharStruct_6_Headgear:
+SnesWorkRam:230F:CharStruct_6_Bodywear:
+SnesWorkRam:2310:CharStruct_6_Accessory:
+SnesWorkRam:2311:CharStruct_6_RHShield:
+SnesWorkRam:2312:CharStruct_6_LHShield:
+SnesWorkRam:2313:CharStruct_6_RHWeapon:
+SnesWorkRam:2314:CharStruct_6_LHWeapon:
+SnesWorkRam:2315:CharStruct_6_CaughtMonster:
+SnesWorkRam:2316-2319:CharStruct_6_BattleCommands:
+SnesWorkRam:231A:CharStruct_6_Status1:
+SnesWorkRam:231B:CharStruct_6_Status2:
+SnesWorkRam:231C:CharStruct_6_Status3:
+SnesWorkRam:231D:CharStruct_6_Status4:
+SnesWorkRam:231E:CharStruct_6_CmdStatus:
+SnesWorkRam:231F:CharStruct_6_DamageMod:
+SnesWorkRam:2320:CharStruct_6_Passives1:
+SnesWorkRam:2321:CharStruct_6_Passives2:
+SnesWorkRam:2322:CharStruct_6_ElementUp:
+SnesWorkRam:2323:CharStruct_6_EqWeight:
+SnesWorkRam:2324:CharStruct_6_BaseStr:
+SnesWorkRam:2325:CharStruct_6_BaseAgi:
+SnesWorkRam:2326:CharStruct_6_BaseVit:
+SnesWorkRam:2327:CharStruct_6_BaseMag:
+SnesWorkRam:2328:CharStruct_6_EquippedStr:
+SnesWorkRam:2329:CharStruct_6_EquippedAgi:
+SnesWorkRam:232A:CharStruct_6_EquippedVit:
+SnesWorkRam:232B:CharStruct_6_EquippedMag:
+SnesWorkRam:232C:CharStruct_6_Evade:
+SnesWorkRam:232D:CharStruct_6_Defense:
+SnesWorkRam:232E:CharStruct_6_MEvade:
+SnesWorkRam:232F:CharStruct_6_MDefense:
+SnesWorkRam:2330:CharStruct_6_EAbsorb:
+SnesWorkRam:2331:CharStruct_6_EBlock:likely unused but seems functional?
+SnesWorkRam:2332:CharStruct_6_EImmune:
+SnesWorkRam:2333:CharStruct_6_EHalf:
+SnesWorkRam:2334:CharStruct_6_EWeak:
+SnesWorkRam:2335:CharStruct_6_StatusImmune1:
+SnesWorkRam:2336:CharStruct_6_StatusImmune2:
+SnesWorkRam:2337:CharStruct_6_StatusImmune3:
+SnesWorkRam:2338:CharStruct_6_WeaponProperties:
+SnesWorkRam:2339:CharStruct_6_ArmorProperties:
+SnesWorkRam:233A:CharStruct_6_JobLevel:
+SnesWorkRam:233B-233C:CharStruct_6_AP:
+SnesWorkRam:233D-233F:CharStruct_6_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2340-2341:CharStruct_6_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2342-2343:CharStruct_6_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2344:CharStruct_6_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2345:CharStruct_6_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2346:CharStruct_6_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2347:CharStruct_6_Reaction1Magic:
+SnesWorkRam:2348:CharStruct_6_Reaction1Item:
+SnesWorkRam:2349:CharStruct_6_Reaction1Element:
+SnesWorkRam:234A:CharStruct_6_Reaction1Category:
+SnesWorkRam:234B:CharStruct_6_Reaction1Targets:
+SnesWorkRam:234C:CharStruct_6_Reaction1Damage:
+SnesWorkRam:234D:CharStruct_6_Reaction2Command:
+SnesWorkRam:234E:CharStruct_6_Reaction2Magic:
+SnesWorkRam:234F:CharStruct_6_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2350:CharStruct_6_MSwordElemental1:
+SnesWorkRam:2351:CharStruct_6_MSwordElemental2:
+SnesWorkRam:2352:CharStruct_6_MSwordElemental3:
+SnesWorkRam:2353:CharStruct_6_MSwordStatus1:
+SnesWorkRam:2354:CharStruct_6_MSwordStatus2:
+SnesWorkRam:2355:CharStruct_6_MSwordStatusSpecial:
+SnesWorkRam:2356:CharStruct_6_ActionFlag:
+SnesWorkRam:2357:CharStruct_6_Command:queued command, premapping
+SnesWorkRam:2358:CharStruct_6_MonsterTargets:Monster Target
+SnesWorkRam:2359:CharStruct_6_PartyTargets:Character Target
+SnesWorkRam:235A:CharStruct_6_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:235B:CharStruct_6_SecondActionFlag:
+SnesWorkRam:235C:CharStruct_6_SecondCommand:
+SnesWorkRam:235D:CharStruct_6_SecondMonsterTargets:
+SnesWorkRam:235E:CharStruct_6_SecondPartyTargets:
+SnesWorkRam:235F:CharStruct_6_SecondSelectedItem:
+SnesWorkRam:2360:CharStruct_6_Unused1:Unused?
+SnesWorkRam:2361:CharStruct_6_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2362:CharStruct_6_MonsterM:
+SnesWorkRam:2363:CharStruct_6_Unused2:Unused?
+SnesWorkRam:2364:CharStruct_6_CantEvade:
+SnesWorkRam:2365:CharStruct_6_CreatureType:
+SnesWorkRam:2366:CharStruct_6_CmdImmunity:Command Immunity
+SnesWorkRam:2367-2368:CharStruct_6_RewardExp:
+SnesWorkRam:2369-236A:CharStruct_6_RewardGil:
+SnesWorkRam:236B:CharStruct_6_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:236C:CharStruct_6_RHCategory:these are initialized but never used
+SnesWorkRam:236D:CharStruct_6_LHCategory:
+SnesWorkRam:236E:CharStruct_6_Specialty:
+SnesWorkRam:236F:CharStruct_6_Song:
+SnesWorkRam:2370:CharStruct_6_AlwaysStatus1:
+SnesWorkRam:2371:CharStruct_6_AlwaysStatus2:
+SnesWorkRam:2372:CharStruct_6_AlwaysStatus3:
+SnesWorkRam:2373:CharStruct_6_AlwaysStatus4:
+SnesWorkRam:2374:CharStruct_6_BonusStr:For Songs
+SnesWorkRam:2375:CharStruct_6_BonusAgi:
+SnesWorkRam:2376:CharStruct_6_BonusVit:No song affects this, likely unused
+SnesWorkRam:2377:CharStruct_6_BonusMag:
+SnesWorkRam:2378:CharStruct_6_BonusLevel:
+SnesWorkRam:2379:CharStruct_6_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:237A:CharStruct_6_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:237B:CharStruct_6_Reaction2Element:
+SnesWorkRam:237C:CharStruct_6_Reaction2Category:
+SnesWorkRam:237D:CharStruct_6_Reaction2Targets:
+SnesWorkRam:237E:CharStruct_6_Reaction2Damage:
+SnesWorkRam:237F:CharStruct_6_SpecialtyName:
+SnesWorkRam:2380:CharStruct_7_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2381:CharStruct_7_Job:
+SnesWorkRam:2382:CharStruct_7_Level:
+SnesWorkRam:2383-2385:CharStruct_7_Exp:
+SnesWorkRam:2386-2387:CharStruct_7_CurHP:
+SnesWorkRam:2388-2389:CharStruct_7_MaxHP:
+SnesWorkRam:238A-238B:CharStruct_7_CurMP:
+SnesWorkRam:238C-238D:CharStruct_7_MaxMP:
+SnesWorkRam:238E:CharStruct_7_Headgear:
+SnesWorkRam:238F:CharStruct_7_Bodywear:
+SnesWorkRam:2390:CharStruct_7_Accessory:
+SnesWorkRam:2391:CharStruct_7_RHShield:
+SnesWorkRam:2392:CharStruct_7_LHShield:
+SnesWorkRam:2393:CharStruct_7_RHWeapon:
+SnesWorkRam:2394:CharStruct_7_LHWeapon:
+SnesWorkRam:2395:CharStruct_7_CaughtMonster:
+SnesWorkRam:2396-2399:CharStruct_7_BattleCommands:
+SnesWorkRam:239A:CharStruct_7_Status1:
+SnesWorkRam:239B:CharStruct_7_Status2:
+SnesWorkRam:239C:CharStruct_7_Status3:
+SnesWorkRam:239D:CharStruct_7_Status4:
+SnesWorkRam:239E:CharStruct_7_CmdStatus:
+SnesWorkRam:239F:CharStruct_7_DamageMod:
+SnesWorkRam:23A0:CharStruct_7_Passives1:
+SnesWorkRam:23A1:CharStruct_7_Passives2:
+SnesWorkRam:23A2:CharStruct_7_ElementUp:
+SnesWorkRam:23A3:CharStruct_7_EqWeight:
+SnesWorkRam:23A4:CharStruct_7_BaseStr:
+SnesWorkRam:23A5:CharStruct_7_BaseAgi:
+SnesWorkRam:23A6:CharStruct_7_BaseVit:
+SnesWorkRam:23A7:CharStruct_7_BaseMag:
+SnesWorkRam:23A8:CharStruct_7_EquippedStr:
+SnesWorkRam:23A9:CharStruct_7_EquippedAgi:
+SnesWorkRam:23AA:CharStruct_7_EquippedVit:
+SnesWorkRam:23AB:CharStruct_7_EquippedMag:
+SnesWorkRam:23AC:CharStruct_7_Evade:
+SnesWorkRam:23AD:CharStruct_7_Defense:
+SnesWorkRam:23AE:CharStruct_7_MEvade:
+SnesWorkRam:23AF:CharStruct_7_MDefense:
+SnesWorkRam:23B0:CharStruct_7_EAbsorb:
+SnesWorkRam:23B1:CharStruct_7_EBlock:likely unused but seems functional?
+SnesWorkRam:23B2:CharStruct_7_EImmune:
+SnesWorkRam:23B3:CharStruct_7_EHalf:
+SnesWorkRam:23B4:CharStruct_7_EWeak:
+SnesWorkRam:23B5:CharStruct_7_StatusImmune1:
+SnesWorkRam:23B6:CharStruct_7_StatusImmune2:
+SnesWorkRam:23B7:CharStruct_7_StatusImmune3:
+SnesWorkRam:23B8:CharStruct_7_WeaponProperties:
+SnesWorkRam:23B9:CharStruct_7_ArmorProperties:
+SnesWorkRam:23BA:CharStruct_7_JobLevel:
+SnesWorkRam:23BB-23BC:CharStruct_7_AP:
+SnesWorkRam:23BD-23BF:CharStruct_7_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:23C0-23C1:CharStruct_7_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:23C2-23C3:CharStruct_7_EquipArmor:bitmask for equippable armor
+SnesWorkRam:23C4:CharStruct_7_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:23C5:CharStruct_7_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:23C6:CharStruct_7_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:23C7:CharStruct_7_Reaction1Magic:
+SnesWorkRam:23C8:CharStruct_7_Reaction1Item:
+SnesWorkRam:23C9:CharStruct_7_Reaction1Element:
+SnesWorkRam:23CA:CharStruct_7_Reaction1Category:
+SnesWorkRam:23CB:CharStruct_7_Reaction1Targets:
+SnesWorkRam:23CC:CharStruct_7_Reaction1Damage:
+SnesWorkRam:23CD:CharStruct_7_Reaction2Command:
+SnesWorkRam:23CE:CharStruct_7_Reaction2Magic:
+SnesWorkRam:23CF:CharStruct_7_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:23D0:CharStruct_7_MSwordElemental1:
+SnesWorkRam:23D1:CharStruct_7_MSwordElemental2:
+SnesWorkRam:23D2:CharStruct_7_MSwordElemental3:
+SnesWorkRam:23D3:CharStruct_7_MSwordStatus1:
+SnesWorkRam:23D4:CharStruct_7_MSwordStatus2:
+SnesWorkRam:23D5:CharStruct_7_MSwordStatusSpecial:
+SnesWorkRam:23D6:CharStruct_7_ActionFlag:
+SnesWorkRam:23D7:CharStruct_7_Command:queued command, premapping
+SnesWorkRam:23D8:CharStruct_7_MonsterTargets:Monster Target
+SnesWorkRam:23D9:CharStruct_7_PartyTargets:Character Target
+SnesWorkRam:23DA:CharStruct_7_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:23DB:CharStruct_7_SecondActionFlag:
+SnesWorkRam:23DC:CharStruct_7_SecondCommand:
+SnesWorkRam:23DD:CharStruct_7_SecondMonsterTargets:
+SnesWorkRam:23DE:CharStruct_7_SecondPartyTargets:
+SnesWorkRam:23DF:CharStruct_7_SecondSelectedItem:
+SnesWorkRam:23E0:CharStruct_7_Unused1:Unused?
+SnesWorkRam:23E1:CharStruct_7_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:23E2:CharStruct_7_MonsterM:
+SnesWorkRam:23E3:CharStruct_7_Unused2:Unused?
+SnesWorkRam:23E4:CharStruct_7_CantEvade:
+SnesWorkRam:23E5:CharStruct_7_CreatureType:
+SnesWorkRam:23E6:CharStruct_7_CmdImmunity:Command Immunity
+SnesWorkRam:23E7-23E8:CharStruct_7_RewardExp:
+SnesWorkRam:23E9-23EA:CharStruct_7_RewardGil:
+SnesWorkRam:23EB:CharStruct_7_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:23EC:CharStruct_7_RHCategory:these are initialized but never used
+SnesWorkRam:23ED:CharStruct_7_LHCategory:
+SnesWorkRam:23EE:CharStruct_7_Specialty:
+SnesWorkRam:23EF:CharStruct_7_Song:
+SnesWorkRam:23F0:CharStruct_7_AlwaysStatus1:
+SnesWorkRam:23F1:CharStruct_7_AlwaysStatus2:
+SnesWorkRam:23F2:CharStruct_7_AlwaysStatus3:
+SnesWorkRam:23F3:CharStruct_7_AlwaysStatus4:
+SnesWorkRam:23F4:CharStruct_7_BonusStr:For Songs
+SnesWorkRam:23F5:CharStruct_7_BonusAgi:
+SnesWorkRam:23F6:CharStruct_7_BonusVit:No song affects this, likely unused
+SnesWorkRam:23F7:CharStruct_7_BonusMag:
+SnesWorkRam:23F8:CharStruct_7_BonusLevel:
+SnesWorkRam:23F9:CharStruct_7_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:23FA:CharStruct_7_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:23FB:CharStruct_7_Reaction2Element:
+SnesWorkRam:23FC:CharStruct_7_Reaction2Category:
+SnesWorkRam:23FD:CharStruct_7_Reaction2Targets:
+SnesWorkRam:23FE:CharStruct_7_Reaction2Damage:
+SnesWorkRam:23FF:CharStruct_7_SpecialtyName:
+SnesWorkRam:2400:CharStruct_8_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2401:CharStruct_8_Job:
+SnesWorkRam:2402:CharStruct_8_Level:
+SnesWorkRam:2403-2405:CharStruct_8_Exp:
+SnesWorkRam:2406-2407:CharStruct_8_CurHP:
+SnesWorkRam:2408-2409:CharStruct_8_MaxHP:
+SnesWorkRam:240A-240B:CharStruct_8_CurMP:
+SnesWorkRam:240C-240D:CharStruct_8_MaxMP:
+SnesWorkRam:240E:CharStruct_8_Headgear:
+SnesWorkRam:240F:CharStruct_8_Bodywear:
+SnesWorkRam:2410:CharStruct_8_Accessory:
+SnesWorkRam:2411:CharStruct_8_RHShield:
+SnesWorkRam:2412:CharStruct_8_LHShield:
+SnesWorkRam:2413:CharStruct_8_RHWeapon:
+SnesWorkRam:2414:CharStruct_8_LHWeapon:
+SnesWorkRam:2415:CharStruct_8_CaughtMonster:
+SnesWorkRam:2416-2419:CharStruct_8_BattleCommands:
+SnesWorkRam:241A:CharStruct_8_Status1:
+SnesWorkRam:241B:CharStruct_8_Status2:
+SnesWorkRam:241C:CharStruct_8_Status3:
+SnesWorkRam:241D:CharStruct_8_Status4:
+SnesWorkRam:241E:CharStruct_8_CmdStatus:
+SnesWorkRam:241F:CharStruct_8_DamageMod:
+SnesWorkRam:2420:CharStruct_8_Passives1:
+SnesWorkRam:2421:CharStruct_8_Passives2:
+SnesWorkRam:2422:CharStruct_8_ElementUp:
+SnesWorkRam:2423:CharStruct_8_EqWeight:
+SnesWorkRam:2424:CharStruct_8_BaseStr:
+SnesWorkRam:2425:CharStruct_8_BaseAgi:
+SnesWorkRam:2426:CharStruct_8_BaseVit:
+SnesWorkRam:2427:CharStruct_8_BaseMag:
+SnesWorkRam:2428:CharStruct_8_EquippedStr:
+SnesWorkRam:2429:CharStruct_8_EquippedAgi:
+SnesWorkRam:242A:CharStruct_8_EquippedVit:
+SnesWorkRam:242B:CharStruct_8_EquippedMag:
+SnesWorkRam:242C:CharStruct_8_Evade:
+SnesWorkRam:242D:CharStruct_8_Defense:
+SnesWorkRam:242E:CharStruct_8_MEvade:
+SnesWorkRam:242F:CharStruct_8_MDefense:
+SnesWorkRam:2430:CharStruct_8_EAbsorb:
+SnesWorkRam:2431:CharStruct_8_EBlock:likely unused but seems functional?
+SnesWorkRam:2432:CharStruct_8_EImmune:
+SnesWorkRam:2433:CharStruct_8_EHalf:
+SnesWorkRam:2434:CharStruct_8_EWeak:
+SnesWorkRam:2435:CharStruct_8_StatusImmune1:
+SnesWorkRam:2436:CharStruct_8_StatusImmune2:
+SnesWorkRam:2437:CharStruct_8_StatusImmune3:
+SnesWorkRam:2438:CharStruct_8_WeaponProperties:
+SnesWorkRam:2439:CharStruct_8_ArmorProperties:
+SnesWorkRam:243A:CharStruct_8_JobLevel:
+SnesWorkRam:243B-243C:CharStruct_8_AP:
+SnesWorkRam:243D-243F:CharStruct_8_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2440-2441:CharStruct_8_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2442-2443:CharStruct_8_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2444:CharStruct_8_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2445:CharStruct_8_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2446:CharStruct_8_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2447:CharStruct_8_Reaction1Magic:
+SnesWorkRam:2448:CharStruct_8_Reaction1Item:
+SnesWorkRam:2449:CharStruct_8_Reaction1Element:
+SnesWorkRam:244A:CharStruct_8_Reaction1Category:
+SnesWorkRam:244B:CharStruct_8_Reaction1Targets:
+SnesWorkRam:244C:CharStruct_8_Reaction1Damage:
+SnesWorkRam:244D:CharStruct_8_Reaction2Command:
+SnesWorkRam:244E:CharStruct_8_Reaction2Magic:
+SnesWorkRam:244F:CharStruct_8_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2450:CharStruct_8_MSwordElemental1:
+SnesWorkRam:2451:CharStruct_8_MSwordElemental2:
+SnesWorkRam:2452:CharStruct_8_MSwordElemental3:
+SnesWorkRam:2453:CharStruct_8_MSwordStatus1:
+SnesWorkRam:2454:CharStruct_8_MSwordStatus2:
+SnesWorkRam:2455:CharStruct_8_MSwordStatusSpecial:
+SnesWorkRam:2456:CharStruct_8_ActionFlag:
+SnesWorkRam:2457:CharStruct_8_Command:queued command, premapping
+SnesWorkRam:2458:CharStruct_8_MonsterTargets:Monster Target
+SnesWorkRam:2459:CharStruct_8_PartyTargets:Character Target
+SnesWorkRam:245A:CharStruct_8_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:245B:CharStruct_8_SecondActionFlag:
+SnesWorkRam:245C:CharStruct_8_SecondCommand:
+SnesWorkRam:245D:CharStruct_8_SecondMonsterTargets:
+SnesWorkRam:245E:CharStruct_8_SecondPartyTargets:
+SnesWorkRam:245F:CharStruct_8_SecondSelectedItem:
+SnesWorkRam:2460:CharStruct_8_Unused1:Unused?
+SnesWorkRam:2461:CharStruct_8_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2462:CharStruct_8_MonsterM:
+SnesWorkRam:2463:CharStruct_8_Unused2:Unused?
+SnesWorkRam:2464:CharStruct_8_CantEvade:
+SnesWorkRam:2465:CharStruct_8_CreatureType:
+SnesWorkRam:2466:CharStruct_8_CmdImmunity:Command Immunity
+SnesWorkRam:2467-2468:CharStruct_8_RewardExp:
+SnesWorkRam:2469-246A:CharStruct_8_RewardGil:
+SnesWorkRam:246B:CharStruct_8_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:246C:CharStruct_8_RHCategory:these are initialized but never used
+SnesWorkRam:246D:CharStruct_8_LHCategory:
+SnesWorkRam:246E:CharStruct_8_Specialty:
+SnesWorkRam:246F:CharStruct_8_Song:
+SnesWorkRam:2470:CharStruct_8_AlwaysStatus1:
+SnesWorkRam:2471:CharStruct_8_AlwaysStatus2:
+SnesWorkRam:2472:CharStruct_8_AlwaysStatus3:
+SnesWorkRam:2473:CharStruct_8_AlwaysStatus4:
+SnesWorkRam:2474:CharStruct_8_BonusStr:For Songs
+SnesWorkRam:2475:CharStruct_8_BonusAgi:
+SnesWorkRam:2476:CharStruct_8_BonusVit:No song affects this, likely unused
+SnesWorkRam:2477:CharStruct_8_BonusMag:
+SnesWorkRam:2478:CharStruct_8_BonusLevel:
+SnesWorkRam:2479:CharStruct_8_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:247A:CharStruct_8_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:247B:CharStruct_8_Reaction2Element:
+SnesWorkRam:247C:CharStruct_8_Reaction2Category:
+SnesWorkRam:247D:CharStruct_8_Reaction2Targets:
+SnesWorkRam:247E:CharStruct_8_Reaction2Damage:
+SnesWorkRam:247F:CharStruct_8_SpecialtyName:
+SnesWorkRam:2480:CharStruct_9_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2481:CharStruct_9_Job:
+SnesWorkRam:2482:CharStruct_9_Level:
+SnesWorkRam:2483-2485:CharStruct_9_Exp:
+SnesWorkRam:2486-2487:CharStruct_9_CurHP:
+SnesWorkRam:2488-2489:CharStruct_9_MaxHP:
+SnesWorkRam:248A-248B:CharStruct_9_CurMP:
+SnesWorkRam:248C-248D:CharStruct_9_MaxMP:
+SnesWorkRam:248E:CharStruct_9_Headgear:
+SnesWorkRam:248F:CharStruct_9_Bodywear:
+SnesWorkRam:2490:CharStruct_9_Accessory:
+SnesWorkRam:2491:CharStruct_9_RHShield:
+SnesWorkRam:2492:CharStruct_9_LHShield:
+SnesWorkRam:2493:CharStruct_9_RHWeapon:
+SnesWorkRam:2494:CharStruct_9_LHWeapon:
+SnesWorkRam:2495:CharStruct_9_CaughtMonster:
+SnesWorkRam:2496-2499:CharStruct_9_BattleCommands:
+SnesWorkRam:249A:CharStruct_9_Status1:
+SnesWorkRam:249B:CharStruct_9_Status2:
+SnesWorkRam:249C:CharStruct_9_Status3:
+SnesWorkRam:249D:CharStruct_9_Status4:
+SnesWorkRam:249E:CharStruct_9_CmdStatus:
+SnesWorkRam:249F:CharStruct_9_DamageMod:
+SnesWorkRam:24A0:CharStruct_9_Passives1:
+SnesWorkRam:24A1:CharStruct_9_Passives2:
+SnesWorkRam:24A2:CharStruct_9_ElementUp:
+SnesWorkRam:24A3:CharStruct_9_EqWeight:
+SnesWorkRam:24A4:CharStruct_9_BaseStr:
+SnesWorkRam:24A5:CharStruct_9_BaseAgi:
+SnesWorkRam:24A6:CharStruct_9_BaseVit:
+SnesWorkRam:24A7:CharStruct_9_BaseMag:
+SnesWorkRam:24A8:CharStruct_9_EquippedStr:
+SnesWorkRam:24A9:CharStruct_9_EquippedAgi:
+SnesWorkRam:24AA:CharStruct_9_EquippedVit:
+SnesWorkRam:24AB:CharStruct_9_EquippedMag:
+SnesWorkRam:24AC:CharStruct_9_Evade:
+SnesWorkRam:24AD:CharStruct_9_Defense:
+SnesWorkRam:24AE:CharStruct_9_MEvade:
+SnesWorkRam:24AF:CharStruct_9_MDefense:
+SnesWorkRam:24B0:CharStruct_9_EAbsorb:
+SnesWorkRam:24B1:CharStruct_9_EBlock:likely unused but seems functional?
+SnesWorkRam:24B2:CharStruct_9_EImmune:
+SnesWorkRam:24B3:CharStruct_9_EHalf:
+SnesWorkRam:24B4:CharStruct_9_EWeak:
+SnesWorkRam:24B5:CharStruct_9_StatusImmune1:
+SnesWorkRam:24B6:CharStruct_9_StatusImmune2:
+SnesWorkRam:24B7:CharStruct_9_StatusImmune3:
+SnesWorkRam:24B8:CharStruct_9_WeaponProperties:
+SnesWorkRam:24B9:CharStruct_9_ArmorProperties:
+SnesWorkRam:24BA:CharStruct_9_JobLevel:
+SnesWorkRam:24BB-24BC:CharStruct_9_AP:
+SnesWorkRam:24BD-24BF:CharStruct_9_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:24C0-24C1:CharStruct_9_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:24C2-24C3:CharStruct_9_EquipArmor:bitmask for equippable armor
+SnesWorkRam:24C4:CharStruct_9_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:24C5:CharStruct_9_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:24C6:CharStruct_9_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:24C7:CharStruct_9_Reaction1Magic:
+SnesWorkRam:24C8:CharStruct_9_Reaction1Item:
+SnesWorkRam:24C9:CharStruct_9_Reaction1Element:
+SnesWorkRam:24CA:CharStruct_9_Reaction1Category:
+SnesWorkRam:24CB:CharStruct_9_Reaction1Targets:
+SnesWorkRam:24CC:CharStruct_9_Reaction1Damage:
+SnesWorkRam:24CD:CharStruct_9_Reaction2Command:
+SnesWorkRam:24CE:CharStruct_9_Reaction2Magic:
+SnesWorkRam:24CF:CharStruct_9_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:24D0:CharStruct_9_MSwordElemental1:
+SnesWorkRam:24D1:CharStruct_9_MSwordElemental2:
+SnesWorkRam:24D2:CharStruct_9_MSwordElemental3:
+SnesWorkRam:24D3:CharStruct_9_MSwordStatus1:
+SnesWorkRam:24D4:CharStruct_9_MSwordStatus2:
+SnesWorkRam:24D5:CharStruct_9_MSwordStatusSpecial:
+SnesWorkRam:24D6:CharStruct_9_ActionFlag:
+SnesWorkRam:24D7:CharStruct_9_Command:queued command, premapping
+SnesWorkRam:24D8:CharStruct_9_MonsterTargets:Monster Target
+SnesWorkRam:24D9:CharStruct_9_PartyTargets:Character Target
+SnesWorkRam:24DA:CharStruct_9_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:24DB:CharStruct_9_SecondActionFlag:
+SnesWorkRam:24DC:CharStruct_9_SecondCommand:
+SnesWorkRam:24DD:CharStruct_9_SecondMonsterTargets:
+SnesWorkRam:24DE:CharStruct_9_SecondPartyTargets:
+SnesWorkRam:24DF:CharStruct_9_SecondSelectedItem:
+SnesWorkRam:24E0:CharStruct_9_Unused1:Unused?
+SnesWorkRam:24E1:CharStruct_9_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:24E2:CharStruct_9_MonsterM:
+SnesWorkRam:24E3:CharStruct_9_Unused2:Unused?
+SnesWorkRam:24E4:CharStruct_9_CantEvade:
+SnesWorkRam:24E5:CharStruct_9_CreatureType:
+SnesWorkRam:24E6:CharStruct_9_CmdImmunity:Command Immunity
+SnesWorkRam:24E7-24E8:CharStruct_9_RewardExp:
+SnesWorkRam:24E9-24EA:CharStruct_9_RewardGil:
+SnesWorkRam:24EB:CharStruct_9_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:24EC:CharStruct_9_RHCategory:these are initialized but never used
+SnesWorkRam:24ED:CharStruct_9_LHCategory:
+SnesWorkRam:24EE:CharStruct_9_Specialty:
+SnesWorkRam:24EF:CharStruct_9_Song:
+SnesWorkRam:24F0:CharStruct_9_AlwaysStatus1:
+SnesWorkRam:24F1:CharStruct_9_AlwaysStatus2:
+SnesWorkRam:24F2:CharStruct_9_AlwaysStatus3:
+SnesWorkRam:24F3:CharStruct_9_AlwaysStatus4:
+SnesWorkRam:24F4:CharStruct_9_BonusStr:For Songs
+SnesWorkRam:24F5:CharStruct_9_BonusAgi:
+SnesWorkRam:24F6:CharStruct_9_BonusVit:No song affects this, likely unused
+SnesWorkRam:24F7:CharStruct_9_BonusMag:
+SnesWorkRam:24F8:CharStruct_9_BonusLevel:
+SnesWorkRam:24F9:CharStruct_9_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:24FA:CharStruct_9_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:24FB:CharStruct_9_Reaction2Element:
+SnesWorkRam:24FC:CharStruct_9_Reaction2Category:
+SnesWorkRam:24FD:CharStruct_9_Reaction2Targets:
+SnesWorkRam:24FE:CharStruct_9_Reaction2Damage:
+SnesWorkRam:24FF:CharStruct_9_SpecialtyName:
+SnesWorkRam:2500:CharStruct_10_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2501:CharStruct_10_Job:
+SnesWorkRam:2502:CharStruct_10_Level:
+SnesWorkRam:2503-2505:CharStruct_10_Exp:
+SnesWorkRam:2506-2507:CharStruct_10_CurHP:
+SnesWorkRam:2508-2509:CharStruct_10_MaxHP:
+SnesWorkRam:250A-250B:CharStruct_10_CurMP:
+SnesWorkRam:250C-250D:CharStruct_10_MaxMP:
+SnesWorkRam:250E:CharStruct_10_Headgear:
+SnesWorkRam:250F:CharStruct_10_Bodywear:
+SnesWorkRam:2510:CharStruct_10_Accessory:
+SnesWorkRam:2511:CharStruct_10_RHShield:
+SnesWorkRam:2512:CharStruct_10_LHShield:
+SnesWorkRam:2513:CharStruct_10_RHWeapon:
+SnesWorkRam:2514:CharStruct_10_LHWeapon:
+SnesWorkRam:2515:CharStruct_10_CaughtMonster:
+SnesWorkRam:2516-2519:CharStruct_10_BattleCommands:
+SnesWorkRam:251A:CharStruct_10_Status1:
+SnesWorkRam:251B:CharStruct_10_Status2:
+SnesWorkRam:251C:CharStruct_10_Status3:
+SnesWorkRam:251D:CharStruct_10_Status4:
+SnesWorkRam:251E:CharStruct_10_CmdStatus:
+SnesWorkRam:251F:CharStruct_10_DamageMod:
+SnesWorkRam:2520:CharStruct_10_Passives1:
+SnesWorkRam:2521:CharStruct_10_Passives2:
+SnesWorkRam:2522:CharStruct_10_ElementUp:
+SnesWorkRam:2523:CharStruct_10_EqWeight:
+SnesWorkRam:2524:CharStruct_10_BaseStr:
+SnesWorkRam:2525:CharStruct_10_BaseAgi:
+SnesWorkRam:2526:CharStruct_10_BaseVit:
+SnesWorkRam:2527:CharStruct_10_BaseMag:
+SnesWorkRam:2528:CharStruct_10_EquippedStr:
+SnesWorkRam:2529:CharStruct_10_EquippedAgi:
+SnesWorkRam:252A:CharStruct_10_EquippedVit:
+SnesWorkRam:252B:CharStruct_10_EquippedMag:
+SnesWorkRam:252C:CharStruct_10_Evade:
+SnesWorkRam:252D:CharStruct_10_Defense:
+SnesWorkRam:252E:CharStruct_10_MEvade:
+SnesWorkRam:252F:CharStruct_10_MDefense:
+SnesWorkRam:2530:CharStruct_10_EAbsorb:
+SnesWorkRam:2531:CharStruct_10_EBlock:likely unused but seems functional?
+SnesWorkRam:2532:CharStruct_10_EImmune:
+SnesWorkRam:2533:CharStruct_10_EHalf:
+SnesWorkRam:2534:CharStruct_10_EWeak:
+SnesWorkRam:2535:CharStruct_10_StatusImmune1:
+SnesWorkRam:2536:CharStruct_10_StatusImmune2:
+SnesWorkRam:2537:CharStruct_10_StatusImmune3:
+SnesWorkRam:2538:CharStruct_10_WeaponProperties:
+SnesWorkRam:2539:CharStruct_10_ArmorProperties:
+SnesWorkRam:253A:CharStruct_10_JobLevel:
+SnesWorkRam:253B-253C:CharStruct_10_AP:
+SnesWorkRam:253D-253F:CharStruct_10_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:2540-2541:CharStruct_10_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:2542-2543:CharStruct_10_EquipArmor:bitmask for equippable armor
+SnesWorkRam:2544:CharStruct_10_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:2545:CharStruct_10_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:2546:CharStruct_10_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:2547:CharStruct_10_Reaction1Magic:
+SnesWorkRam:2548:CharStruct_10_Reaction1Item:
+SnesWorkRam:2549:CharStruct_10_Reaction1Element:
+SnesWorkRam:254A:CharStruct_10_Reaction1Category:
+SnesWorkRam:254B:CharStruct_10_Reaction1Targets:
+SnesWorkRam:254C:CharStruct_10_Reaction1Damage:
+SnesWorkRam:254D:CharStruct_10_Reaction2Command:
+SnesWorkRam:254E:CharStruct_10_Reaction2Magic:
+SnesWorkRam:254F:CharStruct_10_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:2550:CharStruct_10_MSwordElemental1:
+SnesWorkRam:2551:CharStruct_10_MSwordElemental2:
+SnesWorkRam:2552:CharStruct_10_MSwordElemental3:
+SnesWorkRam:2553:CharStruct_10_MSwordStatus1:
+SnesWorkRam:2554:CharStruct_10_MSwordStatus2:
+SnesWorkRam:2555:CharStruct_10_MSwordStatusSpecial:
+SnesWorkRam:2556:CharStruct_10_ActionFlag:
+SnesWorkRam:2557:CharStruct_10_Command:queued command, premapping
+SnesWorkRam:2558:CharStruct_10_MonsterTargets:Monster Target
+SnesWorkRam:2559:CharStruct_10_PartyTargets:Character Target
+SnesWorkRam:255A:CharStruct_10_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:255B:CharStruct_10_SecondActionFlag:
+SnesWorkRam:255C:CharStruct_10_SecondCommand:
+SnesWorkRam:255D:CharStruct_10_SecondMonsterTargets:
+SnesWorkRam:255E:CharStruct_10_SecondPartyTargets:
+SnesWorkRam:255F:CharStruct_10_SecondSelectedItem:
+SnesWorkRam:2560:CharStruct_10_Unused1:Unused?
+SnesWorkRam:2561:CharStruct_10_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:2562:CharStruct_10_MonsterM:
+SnesWorkRam:2563:CharStruct_10_Unused2:Unused?
+SnesWorkRam:2564:CharStruct_10_CantEvade:
+SnesWorkRam:2565:CharStruct_10_CreatureType:
+SnesWorkRam:2566:CharStruct_10_CmdImmunity:Command Immunity
+SnesWorkRam:2567-2568:CharStruct_10_RewardExp:
+SnesWorkRam:2569-256A:CharStruct_10_RewardGil:
+SnesWorkRam:256B:CharStruct_10_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:256C:CharStruct_10_RHCategory:these are initialized but never used
+SnesWorkRam:256D:CharStruct_10_LHCategory:
+SnesWorkRam:256E:CharStruct_10_Specialty:
+SnesWorkRam:256F:CharStruct_10_Song:
+SnesWorkRam:2570:CharStruct_10_AlwaysStatus1:
+SnesWorkRam:2571:CharStruct_10_AlwaysStatus2:
+SnesWorkRam:2572:CharStruct_10_AlwaysStatus3:
+SnesWorkRam:2573:CharStruct_10_AlwaysStatus4:
+SnesWorkRam:2574:CharStruct_10_BonusStr:For Songs
+SnesWorkRam:2575:CharStruct_10_BonusAgi:
+SnesWorkRam:2576:CharStruct_10_BonusVit:No song affects this, likely unused
+SnesWorkRam:2577:CharStruct_10_BonusMag:
+SnesWorkRam:2578:CharStruct_10_BonusLevel:
+SnesWorkRam:2579:CharStruct_10_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:257A:CharStruct_10_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:257B:CharStruct_10_Reaction2Element:
+SnesWorkRam:257C:CharStruct_10_Reaction2Category:
+SnesWorkRam:257D:CharStruct_10_Reaction2Targets:
+SnesWorkRam:257E:CharStruct_10_Reaction2Damage:
+SnesWorkRam:257F:CharStruct_10_SpecialtyName:
+SnesWorkRam:2580:CharStruct_11_CharRow:first 3 bits indicate who it is(Butz, etc.) as a list, 08h Gender, 40h Not in the team, 80h Back Row
+SnesWorkRam:2581:CharStruct_11_Job:
+SnesWorkRam:2582:CharStruct_11_Level:
+SnesWorkRam:2583-2585:CharStruct_11_Exp:
+SnesWorkRam:2586-2587:CharStruct_11_CurHP:
+SnesWorkRam:2588-2589:CharStruct_11_MaxHP:
+SnesWorkRam:258A-258B:CharStruct_11_CurMP:
+SnesWorkRam:258C-258D:CharStruct_11_MaxMP:
+SnesWorkRam:258E:CharStruct_11_Headgear:
+SnesWorkRam:258F:CharStruct_11_Bodywear:
+SnesWorkRam:2590:CharStruct_11_Accessory:
+SnesWorkRam:2591:CharStruct_11_RHShield:
+SnesWorkRam:2592:CharStruct_11_LHShield:
+SnesWorkRam:2593:CharStruct_11_RHWeapon:
+SnesWorkRam:2594:CharStruct_11_LHWeapon:
+SnesWorkRam:2595:CharStruct_11_CaughtMonster:
+SnesWorkRam:2596-2599:CharStruct_11_BattleCommands:
+SnesWorkRam:259A:CharStruct_11_Status1:
+SnesWorkRam:259B:CharStruct_11_Status2:
+SnesWorkRam:259C:CharStruct_11_Status3:
+SnesWorkRam:259D:CharStruct_11_Status4:
+SnesWorkRam:259E:CharStruct_11_CmdStatus:
+SnesWorkRam:259F:CharStruct_11_DamageMod:
+SnesWorkRam:25A0:CharStruct_11_Passives1:
+SnesWorkRam:25A1:CharStruct_11_Passives2:
+SnesWorkRam:25A2:CharStruct_11_ElementUp:
+SnesWorkRam:25A3:CharStruct_11_EqWeight:
+SnesWorkRam:25A4:CharStruct_11_BaseStr:
+SnesWorkRam:25A5:CharStruct_11_BaseAgi:
+SnesWorkRam:25A6:CharStruct_11_BaseVit:
+SnesWorkRam:25A7:CharStruct_11_BaseMag:
+SnesWorkRam:25A8:CharStruct_11_EquippedStr:
+SnesWorkRam:25A9:CharStruct_11_EquippedAgi:
+SnesWorkRam:25AA:CharStruct_11_EquippedVit:
+SnesWorkRam:25AB:CharStruct_11_EquippedMag:
+SnesWorkRam:25AC:CharStruct_11_Evade:
+SnesWorkRam:25AD:CharStruct_11_Defense:
+SnesWorkRam:25AE:CharStruct_11_MEvade:
+SnesWorkRam:25AF:CharStruct_11_MDefense:
+SnesWorkRam:25B0:CharStruct_11_EAbsorb:
+SnesWorkRam:25B1:CharStruct_11_EBlock:likely unused but seems functional?
+SnesWorkRam:25B2:CharStruct_11_EImmune:
+SnesWorkRam:25B3:CharStruct_11_EHalf:
+SnesWorkRam:25B4:CharStruct_11_EWeak:
+SnesWorkRam:25B5:CharStruct_11_StatusImmune1:
+SnesWorkRam:25B6:CharStruct_11_StatusImmune2:
+SnesWorkRam:25B7:CharStruct_11_StatusImmune3:
+SnesWorkRam:25B8:CharStruct_11_WeaponProperties:
+SnesWorkRam:25B9:CharStruct_11_ArmorProperties:
+SnesWorkRam:25BA:CharStruct_11_JobLevel:
+SnesWorkRam:25BB-25BC:CharStruct_11_AP:
+SnesWorkRam:25BD-25BF:CharStruct_11_EnableSpells:Sword/White then Black/Time then Summon/Misc
+SnesWorkRam:25C0-25C1:CharStruct_11_EquipWeapons:bitmask for equippable weapons
+SnesWorkRam:25C2-25C3:CharStruct_11_EquipArmor:bitmask for equippable armor
+SnesWorkRam:25C4:CharStruct_11_MonsterAttack:Only used for Goblin Punch and Monsters
+SnesWorkRam:25C5:CharStruct_11_MonsterAttackLH:Only used for Goblin Punch
+SnesWorkRam:25C6:CharStruct_11_Reaction1Command:post-remap command table values, unlike .Command
+SnesWorkRam:25C7:CharStruct_11_Reaction1Magic:
+SnesWorkRam:25C8:CharStruct_11_Reaction1Item:
+SnesWorkRam:25C9:CharStruct_11_Reaction1Element:
+SnesWorkRam:25CA:CharStruct_11_Reaction1Category:
+SnesWorkRam:25CB:CharStruct_11_Reaction1Targets:
+SnesWorkRam:25CC:CharStruct_11_Reaction1Damage:
+SnesWorkRam:25CD:CharStruct_11_Reaction2Command:
+SnesWorkRam:25CE:CharStruct_11_Reaction2Magic:
+SnesWorkRam:25CF:CharStruct_11_Reaction2Item:remaining 2nd counter attacks are at $207B
+SnesWorkRam:25D0:CharStruct_11_MSwordElemental1:
+SnesWorkRam:25D1:CharStruct_11_MSwordElemental2:
+SnesWorkRam:25D2:CharStruct_11_MSwordElemental3:
+SnesWorkRam:25D3:CharStruct_11_MSwordStatus1:
+SnesWorkRam:25D4:CharStruct_11_MSwordStatus2:
+SnesWorkRam:25D5:CharStruct_11_MSwordStatusSpecial:
+SnesWorkRam:25D6:CharStruct_11_ActionFlag:
+SnesWorkRam:25D7:CharStruct_11_Command:queued command, premapping
+SnesWorkRam:25D8:CharStruct_11_MonsterTargets:Monster Target
+SnesWorkRam:25D9:CharStruct_11_PartyTargets:Character Target
+SnesWorkRam:25DA:CharStruct_11_SelectedItem:Chosen Item (for throw, etc), or spell (for magic), initially this is a menu selection index then later replaced by the item/spell id
+SnesWorkRam:25DB:CharStruct_11_SecondActionFlag:
+SnesWorkRam:25DC:CharStruct_11_SecondCommand:
+SnesWorkRam:25DD:CharStruct_11_SecondMonsterTargets:
+SnesWorkRam:25DE:CharStruct_11_SecondPartyTargets:
+SnesWorkRam:25DF:CharStruct_11_SecondSelectedItem:
+SnesWorkRam:25E0:CharStruct_11_Unused1:Unused?
+SnesWorkRam:25E1:CharStruct_11_CmdCancelled:set to 1 when zombie/charm/berserk cancels a player command
+SnesWorkRam:25E2:CharStruct_11_MonsterM:
+SnesWorkRam:25E3:CharStruct_11_Unused2:Unused?
+SnesWorkRam:25E4:CharStruct_11_CantEvade:
+SnesWorkRam:25E5:CharStruct_11_CreatureType:
+SnesWorkRam:25E6:CharStruct_11_CmdImmunity:Command Immunity
+SnesWorkRam:25E7-25E8:CharStruct_11_RewardExp:
+SnesWorkRam:25E9-25EA:CharStruct_11_RewardGil:
+SnesWorkRam:25EB:CharStruct_11_StolenItem:When an item is stolen from a monster the item id is recorded here
+SnesWorkRam:25EC:CharStruct_11_RHCategory:these are initialized but never used
+SnesWorkRam:25ED:CharStruct_11_LHCategory:
+SnesWorkRam:25EE:CharStruct_11_Specialty:
+SnesWorkRam:25EF:CharStruct_11_Song:
+SnesWorkRam:25F0:CharStruct_11_AlwaysStatus1:
+SnesWorkRam:25F1:CharStruct_11_AlwaysStatus2:
+SnesWorkRam:25F2:CharStruct_11_AlwaysStatus3:
+SnesWorkRam:25F3:CharStruct_11_AlwaysStatus4:
+SnesWorkRam:25F4:CharStruct_11_BonusStr:For Songs
+SnesWorkRam:25F5:CharStruct_11_BonusAgi:
+SnesWorkRam:25F6:CharStruct_11_BonusVit:No song affects this, likely unused
+SnesWorkRam:25F7:CharStruct_11_BonusMag:
+SnesWorkRam:25F8:CharStruct_11_BonusLevel:
+SnesWorkRam:25F9:CharStruct_11_DrinkAtk_Bugfix:Only used in Atk Type 5B which is itself unused, Optional power drink fix uses this byte
+SnesWorkRam:25FA:CharStruct_11_MSwordAnim:Used for Magic Sword Animations, high bit is hand
+SnesWorkRam:25FB:CharStruct_11_Reaction2Element:
+SnesWorkRam:25FC:CharStruct_11_Reaction2Category:
+SnesWorkRam:25FD:CharStruct_11_Reaction2Targets:
+SnesWorkRam:25FE:CharStruct_11_Reaction2Damage:
+SnesWorkRam:25FF:CharStruct_11_SpecialtyName:
+SnesWorkRam:2600:SavedCharStats_Level:saved before releasing a monster (which overwrites stats), then later restored
+SnesWorkRam:2601:SavedCharStats_MonsterAttack:
+SnesWorkRam:2602:SavedCharStats_MonsterM:
+SnesWorkRam:2603:SavedCharStats_EquippedMag:
+SnesWorkRam:2604:SavedCharStats_CharRow:
+SnesWorkRam:2605:SavedCharStats_Status1:
+SnesWorkRam:2606:SavedCharStats_Status2:
+SnesWorkRam:2607:SavedCharStats_Status3:
+SnesWorkRam:2608:SavedCharStats_Status4:
+SnesWorkRam:2609:SavedCharStats_CmdStatus:
+SnesWorkRam:260A:SavedCharStats_DamageMod:
+SnesWorkRam:260B:SavedCharStats_Passives1:
+SnesWorkRam:260C:SavedCharStats_Passives2:
+SnesWorkRam:260D:SavedCharStats_ElementUp:
+SnesWorkRam:260E:SavedCharStats_MSwordElemental1:
+SnesWorkRam:260F:SavedCharStats_MSwordElemental2:
+SnesWorkRam:2610:SavedCharStats_MSwordElemental3:
+SnesWorkRam:2611:SavedCharStats_MSwordStatus1:
+SnesWorkRam:2612:SavedCharStats_MSwordStatus2:
+SnesWorkRam:2613:SavedCharStats_MSwordStatusSpecial:
+SnesWorkRam:2614:SavedCharStats_AlwaysStatus1:
+SnesWorkRam:2615:SavedCharStats_AlwaysStatus2:
+SnesWorkRam:2616:SavedCharStats_AlwaysStatus3:
+SnesWorkRam:2617:SavedCharStats_AlwaysStatus4:
+SnesWorkRam:2618:SavedCharStats_BonusStr:
+SnesWorkRam:2619:SavedCharStats_BonusAgi:
+SnesWorkRam:261A:SavedCharStats_BonusVit:
+SnesWorkRam:261B:SavedCharStats_BonusMag:
+SnesWorkRam:261C:SavedCharStats_BonusLevel:SnesWorkRam:261D:SavedCharStats_Unused3:this byte is saved/restored even though it is never usedSnesWorkRam:261E:SavedCharStats_MSwordAnim:SnesWorkRam:261F:SavedCharStats_UnusedSave:there's space for a 20th byte to be saved, but it is never used
+SnesWorkRam:2620:Temp2620:also AITargetOffsets and other things
+SnesWorkRam:2622:TempStats:within scratch area
+SnesWorkRam:262A:TempMagicInfo_Targetting:0
+SnesWorkRam:262B:TempMagicInfo_Category:1
+SnesWorkRam:262C:TempMagicInfo_Misc_CmdStatus:2
+SnesWorkRam:262D:TempMagicInfo_MPCost_DamageMod:3
+SnesWorkRam:262E:TempMagicInfo_AtkType:4
+SnesWorkRam:262F:TempMagicInfo_Param1:5
+SnesWorkRam:2630:TempMagicInfo_Param2:6
+SnesWorkRam:2631:TempMagicInfo_Param3:7
+SnesWorkRam:2640:AIBuffer:(within an often used scratch area) AI buffer for monsters, max 64 bytes, ends with $FF
+SnesWorkRam:26A0:TempTargetting:(within an often used scratch area) sometimes is number of targets minus 1, sometimes is ability targetting information (a bitfield)
+SnesWorkRam:26F0:TempMStats_Speed:	
+SnesWorkRam:26F1:TempMStats_AttackPower:	
+SnesWorkRam:26F2:TempMStats_AttackMult:	
+SnesWorkRam:26F3:TempMStats_Evade:	
+SnesWorkRam:26F4:TempMStats_Defense:	
+SnesWorkRam:26F5:TempMStats_MagicPower:	
+SnesWorkRam:26F6:TempMStats_MDefense:	
+SnesWorkRam:26F7:TempMStats_MEvade:	
+SnesWorkRam:26F8-26F9:TempMStats_HP:sets max and current HP
+SnesWorkRam:26FA-26FB:TempMStats_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:26FC-26FD:TempMStats_Exp:	
+SnesWorkRam:26FE-26FF:TempMStats_Gil:	
+SnesWorkRam:2700:TempMStats_AttackFX:	
+SnesWorkRam:2701:TempMStats_EImmune:	
+SnesWorkRam:2702:TempMStats_StatusImmune1:	
+SnesWorkRam:2703:TempMStats_StatusImmune2:	
+SnesWorkRam:2704:TempMStats_StatusImmune3:	
+SnesWorkRam:2705:TempMStats_EAbsorb:	
+SnesWorkRam:2706:TempMStats_CantEvade:	
+SnesWorkRam:2707:TempMStats_EWeak:	
+SnesWorkRam:2708:TempMStats_CreatureType:	
+SnesWorkRam:2709:TempMStats_CmdImmunity:	
+SnesWorkRam:270A:TempMStats_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:270B:TempMStats_Status2:	
+SnesWorkRam:270C:TempMStats_Status3:	
+SnesWorkRam:270D:TempMStats_Status4:	
+SnesWorkRam:270E:TempMStats_EnemyNameID:	
+SnesWorkRam:270F:TempMStats_Level:	
+SnesWorkRam:2720:Temp2720:TempTargetBitmask or TempStartIndex or TempEquippable_Weapons
+SnesWorkRam:2721:Temp2721:AIParam1 or TempStopIndex or TempEquippable_Weapons
+SnesWorkRam:2722:Temp2722:AIParam2 or TempIsMonster or TempSpell or TempEquippable_Armor
+SnesWorkRam:2723:Temp2723:AIParam3 or TempIsEffect or TempEquippable_Armor
+SnesWorkRam:2724:AIMultiTarget:(within an often used scratch area) ;if 0, a random target in AITargetOffsets should be used, ;if 1, all targets in AITargetOffsets should be used
+SnesWorkRam:2725:AITargetCount:(within an often used scratch area)
+SnesWorkRam:2733:TempDance:(within an often used scratch area)
+SnesWorkRam:2733:TempEffect:(within an often used scratch area)
+SnesWorkRam:2734-2833:InventoryItems
+SnesWorkRam:2834-2933:InventoryQuantities
+SnesWorkRam:2A34-2A33:InventoryTargetting:only set for weapons and consumables
+SnesWorkRam:2B34-2B33:InventoryFlags:256 bytes, bitfield initialized to $80 (not usable)
+SnesWorkRam:2C34-2C33:InventoryUsable:	2 bits per character (256 items), 10 for not usable, 00 for usable, $AA means not usable for anyone
+SnesWorkRam:2D34-2D33:CharSpells_ID:
+SnesWorkRam:2DB6-2E37:CharSpells_Level:init to $81
+SnesWorkRam:2E38-2EB9:CharSpells_MP:
+SnesWorkRam:2EBA-2F3B:CharSpells_Targetting:
+SnesWorkRam:2F3C-2FBD:CharSpells_Flags:init to $81, 0 when void, 80h spell disabled, 01h skips mp/status checks
+SnesWorkRam:375C-375F:CharCommands_0_ID:command ids (such as Fight, Mug, Item, etc)
+SnesWorkRam:3760-3763:CharCommands_0_Level:probably unused
+SnesWorkRam:3764-3767:CharCommands_0_MP:probably unused
+SnesWorkRam:3768-376B:CharCommands_0_Targetting:
+SnesWorkRam:376C-376F:CharCommands_0_Flags:init to $80, disabled
+SnesWorkRam:3770-3773:CharCommands_1_ID:command ids (such as Fight, Mug, Item, etc)
+SnesWorkRam:3774-3777:CharCommands_1_Level:probably unused
+SnesWorkRam:3778-377B:CharCommands_1_MP:probably unused
+SnesWorkRam:377C-377F:CharCommands_1_Targetting:
+SnesWorkRam:3780-3783:CharCommands_1_Flags:init to $80, disabled
+SnesWorkRam:3784-3787:CharCommands_2_ID:command ids (such as Fight, Mug, Item, etc)
+SnesWorkRam:3788-378B:CharCommands_2_Level:probably unused
+SnesWorkRam:378C-378F:CharCommands_2_MP:probably unused
+SnesWorkRam:3790-3793:CharCommands_2_Targetting:
+SnesWorkRam:3794-3797:CharCommands_2_Flags:init to $80, disabled
+SnesWorkRam:3798-379B:CharCommands_3_ID:command ids (such as Fight, Mug, Item, etc)
+SnesWorkRam:379C-379F:CharCommands_3_Level:probably unused
+SnesWorkRam:37A0-37A3:CharCommands_3_MP:probably unused
+SnesWorkRam:37A4-37A7:CharCommands_3_Targetting:
+SnesWorkRam:37A8-37AB:CharCommands_3_Flags:init to $80, disabled
+SnesWorkRam:37AC-37AD:HandItems_0_ID:
+SnesWorkRam:37AE-37AF:HandItems_0_Level:probably unused?, init to 1 when there's something in your hand tho
+SnesWorkRam:37B0-37B1:HandItems_0_MP:probably unused
+SnesWorkRam:37B2-37B3:HandItems_0_Targetting:
+SnesWorkRam:37B4-37B5:HandItems_0_Flags:init to $80
+SnesWorkRam:37B6-37B7:HandItems_0_Usable:same style as InventoryUsable, 2 bits per char
+SnesWorkRam:37B8-37B9:HandItems_1_ID:
+SnesWorkRam:37BA-37BB:HandItems_1_Level:probably unused?, init to 1 when there's something in your hand tho
+SnesWorkRam:37BC-37BD:HandItems_1_MP:probably unused
+SnesWorkRam:37BE-37BF:HandItems_1_Targetting:
+SnesWorkRam:37C0-37C1:HandItems_1_Flags:init to $80
+SnesWorkRam:37C2-37C3:HandItems_1_Usable:same style as InventoryUsable, 2 bits per char
+SnesWorkRam:37C4-37C5:HandItems_2_ID:
+SnesWorkRam:37C6-37C7:HandItems_2_Level:probably unused?, init to 1 when there's something in your hand tho
+SnesWorkRam:37C8-37C9:HandItems_2_MP:probably unused
+SnesWorkRam:37CA-37CB:HandItems_2_Targetting:
+SnesWorkRam:37CC-37CD:HandItems_2_Flags:init to $80
+SnesWorkRam:37CE-37CF:HandItems_2_Usable:same style as InventoryUsable, 2 bits per char
+SnesWorkRam:37D0-37D1:HandItems_3_ID:
+SnesWorkRam:37D2-37D3:HandItems_3_Level:probably unused?, init to 1 when there's something in your hand tho
+SnesWorkRam:37D4-37D5:HandItems_3_MP:probably unused
+SnesWorkRam:37D6-37D7:HandItems_3_Targetting:
+SnesWorkRam:37D8-37D9:HandItems_3_Flags:init to $80
+SnesWorkRam:37DA-37DB:HandItems_3_Usable:same style as InventoryUsable, 2 bits per char
+SnesWorkRam:37DC-37DF:CharControl_0_Actions:monster commands
+SnesWorkRam:37E0-37E3:CharControl_0_Level:probably unused
+SnesWorkRam:37E4-37E7:CharControl_0_MP:probably unused
+SnesWorkRam:37E8-37EB:CharControl_0_Targetting:monster command targetting info
+SnesWorkRam:37EC-37EF:CharControl_0_Flags:monster command flags
+SnesWorkRam:37F0-37F3:CharControl_1_Actions:monster commands
+SnesWorkRam:37F4-37F7:CharControl_1_Level:probably unused
+SnesWorkRam:37F8-37FB:CharControl_1_MP:probably unused
+SnesWorkRam:37FC-37FF:CharControl_1_Targetting:monster command targetting info
+SnesWorkRam:3800-3803:CharControl_1_Flags:monster command flags
+SnesWorkRam:3804-3807:CharControl_2_Actions:monster commands
+SnesWorkRam:3808-380B:CharControl_2_Level:probably unused
+SnesWorkRam:380C-380F:CharControl_2_MP:probably unused
+SnesWorkRam:3810-3813:CharControl_2_Targetting:monster command targetting info
+SnesWorkRam:3814-3817:CharControl_2_Flags:monster command flags
+SnesWorkRam:3818-381B:CharControl_3_Actions:monster commands
+SnesWorkRam:381C-381F:CharControl_3_Level:probably unused
+SnesWorkRam:3820-3823:CharControl_3_MP:probably unused
+SnesWorkRam:3824-3827:CharControl_3_Targetting:monster command targetting info
+SnesWorkRam:3828-382B:CharControl_3_Flags:monster command flags
+SnesWorkRam:382C-382D:CharVitals_0_CurHP:
+SnesWorkRam:382E-382F:CharVitals_0_MaxHP:
+SnesWorkRam:3830-3831:CharVitals_0_CurMP:
+SnesWorkRam:3832-3833:CharVitals_0_MaxMP:
+SnesWorkRam:3834-3835:CharVitals_1_CurHP:
+SnesWorkRam:3836-3837:CharVitals_1_MaxHP:
+SnesWorkRam:3838-3839:CharVitals_1_CurMP:
+SnesWorkRam:383A-383B:CharVitals_1_MaxMP:
+SnesWorkRam:383C-383D:CharVitals_2_CurHP:
+SnesWorkRam:383E-383F:CharVitals_2_MaxHP:
+SnesWorkRam:3840-3841:CharVitals_2_CurMP:
+SnesWorkRam:3842-3843:CharVitals_2_MaxMP:
+SnesWorkRam:3844-3845:CharVitals_3_CurHP:
+SnesWorkRam:3846-3847:CharVitals_3_MaxHP:
+SnesWorkRam:3848-3849:CharVitals_3_CurMP:
+SnesWorkRam:384A-384B:CharVitals_3_MaxMP:
+SnesWorkRam:384C-3A4B:GFXQueue:5 byte*102 structure used for monster AI and graphics commands like animation and messages
+;SnesWorkRam:384C:GFXQueue_Flag:00 for valid actions, $FF for empty
+;SnesWorkRam:384D:GFXQueue_Cmd:Command Value, usually $FC for graphics
+;SnesWorkRam:384E:GFXQueue_Type:Command Type (for Command $FC)                 
+;SnesWorkRam:384F:GFXQueue_Data1:use varies by command type
+;SnesWorkRam:3850:GFXQueue_Data2:use varies by command type
+SnesWorkRam:3A4C-3BCB:DisplayDamage:displayed damage numbers table (16 bit), high bit set indicates healing, another flag in 40h, monsters then party, 16*24 bytes
+SnesWorkRam:3BCC:ActionAnim_0_Flags:
+SnesWorkRam:3BCD:ActionAnim_0_OrigAttacker:party or monster index
+SnesWorkRam:3BCE:ActionAnim_0_OrigTargetBits:
+SnesWorkRam:3BCF:ActionAnim_0_TargetBits:
+SnesWorkRam:3BD0:ActionAnim_0_ReflectorBits:
+SnesWorkRam:3BD1:ActionAnim_0_ReflecteeBits:
+SnesWorkRam:3BD2:ActionAnim_0_CoveredBits:
+SnesWorkRam:3BD3:ActionAnim_1_Flags:
+SnesWorkRam:3BD4:ActionAnim_1_OrigAttacker:party or monster index
+SnesWorkRam:3BD5:ActionAnim_1_OrigTargetBits:
+SnesWorkRam:3BD6:ActionAnim_1_TargetBits:
+SnesWorkRam:3BD7:ActionAnim_1_ReflectorBits:
+SnesWorkRam:3BD8:ActionAnim_1_ReflecteeBits:
+SnesWorkRam:3BD9:ActionAnim_1_CoveredBits:
+SnesWorkRam:3BDA:ActionAnim_2_Flags:
+SnesWorkRam:3BDB:ActionAnim_2_OrigAttacker:party or monster index
+SnesWorkRam:3BDC:ActionAnim_2_OrigTargetBits:
+SnesWorkRam:3BDD:ActionAnim_2_TargetBits:
+SnesWorkRam:3BDE:ActionAnim_2_ReflectorBits:
+SnesWorkRam:3BDF:ActionAnim_2_ReflecteeBits:
+SnesWorkRam:3BE0:ActionAnim_2_CoveredBits:
+SnesWorkRam:3BE1:ActionAnim_3_Flags:
+SnesWorkRam:3BE2:ActionAnim_3_OrigAttacker:party or monster index
+SnesWorkRam:3BE3:ActionAnim_3_OrigTargetBits:
+SnesWorkRam:3BE4:ActionAnim_3_TargetBits:
+SnesWorkRam:3BE5:ActionAnim_3_ReflectorBits:
+SnesWorkRam:3BE6:ActionAnim_3_ReflecteeBits:
+SnesWorkRam:3BE7:ActionAnim_3_CoveredBits:
+SnesWorkRam:3BE8:ActionAnim_4_Flags:
+SnesWorkRam:3BE9:ActionAnim_4_OrigAttacker:party or monster index
+SnesWorkRam:3BEA:ActionAnim_4_OrigTargetBits:
+SnesWorkRam:3BEB:ActionAnim_4_TargetBits:
+SnesWorkRam:3BEC:ActionAnim_4_ReflectorBits:
+SnesWorkRam:3BED:ActionAnim_4_ReflecteeBits:
+SnesWorkRam:3BEE:ActionAnim_4_CoveredBits:
+SnesWorkRam:3BEF:ActionAnim_5_Flags:
+SnesWorkRam:3BF0:ActionAnim_5_OrigAttacker:party or monster index
+SnesWorkRam:3BF1:ActionAnim_5_OrigTargetBits:
+SnesWorkRam:3BF2:ActionAnim_5_TargetBits:
+SnesWorkRam:3BF3:ActionAnim_5_ReflectorBits:
+SnesWorkRam:3BF4:ActionAnim_5_ReflecteeBits:
+SnesWorkRam:3BF5:ActionAnim_5_CoveredBits:
+SnesWorkRam:3BF6:ActionAnim_6_Flags:
+SnesWorkRam:3BF7:ActionAnim_6_OrigAttacker:party or monster index
+SnesWorkRam:3BF8:ActionAnim_6_OrigTargetBits:
+SnesWorkRam:3BF9:ActionAnim_6_TargetBits:
+SnesWorkRam:3BFA:ActionAnim_6_ReflectorBits:
+SnesWorkRam:3BFB:ActionAnim_6_ReflecteeBits:
+SnesWorkRam:3BFC:ActionAnim_6_CoveredBits:
+SnesWorkRam:3BFD:ActionAnim_7_Flags:
+SnesWorkRam:3BFE:ActionAnim_7_OrigAttacker:party or monster index
+SnesWorkRam:3BFF:ActionAnim_7_OrigTargetBits:
+SnesWorkRam:3C00:ActionAnim_7_TargetBits:
+SnesWorkRam:3C01:ActionAnim_7_ReflectorBits:
+SnesWorkRam:3C02:ActionAnim_7_ReflecteeBits:
+SnesWorkRam:3C03:ActionAnim_7_CoveredBits:
+SnesWorkRam:3C04:ActionAnim_8_Flags:
+SnesWorkRam:3C05:ActionAnim_8_OrigAttacker:party or monster index
+SnesWorkRam:3C06:ActionAnim_8_OrigTargetBits:
+SnesWorkRam:3C07:ActionAnim_8_TargetBits:
+SnesWorkRam:3C08:ActionAnim_8_ReflectorBits:
+SnesWorkRam:3C09:ActionAnim_8_ReflecteeBits:
+SnesWorkRam:3C0A:ActionAnim_8_CoveredBits:
+SnesWorkRam:3C0B:ActionAnim_9_Flags:
+SnesWorkRam:3C0C:ActionAnim_9_OrigAttacker:party or monster index
+SnesWorkRam:3C0D:ActionAnim_9_OrigTargetBits:
+SnesWorkRam:3C0E:ActionAnim_9_TargetBits:
+SnesWorkRam:3C0F:ActionAnim_9_ReflectorBits:
+SnesWorkRam:3C10:ActionAnim_9_ReflecteeBits:
+SnesWorkRam:3C11:ActionAnim_9_CoveredBits:
+SnesWorkRam:3C12:ActionAnim_10_Flags:
+SnesWorkRam:3C13:ActionAnim_10_OrigAttacker:party or monster index
+SnesWorkRam:3C14:ActionAnim_10_OrigTargetBits:
+SnesWorkRam:3C15:ActionAnim_10_TargetBits:
+SnesWorkRam:3C16:ActionAnim_10_ReflectorBits:
+SnesWorkRam:3C17:ActionAnim_10_ReflecteeBits:
+SnesWorkRam:3C18:ActionAnim_10_CoveredBits:
+SnesWorkRam:3C19:ActionAnim_11_Flags:
+SnesWorkRam:3C1A:ActionAnim_11_OrigAttacker:party or monster index
+SnesWorkRam:3C1B:ActionAnim_11_OrigTargetBits:
+SnesWorkRam:3C1C:ActionAnim_11_TargetBits:
+SnesWorkRam:3C1D:ActionAnim_11_ReflectorBits:
+SnesWorkRam:3C1E:ActionAnim_11_ReflecteeBits:
+SnesWorkRam:3C1F:ActionAnim_11_CoveredBits:
+SnesWorkRam:3C20:ActionAnim_12_Flags:
+SnesWorkRam:3C21:ActionAnim_12_OrigAttacker:party or monster index
+SnesWorkRam:3C22:ActionAnim_12_OrigTargetBits:
+SnesWorkRam:3C23:ActionAnim_12_TargetBits:
+SnesWorkRam:3C24:ActionAnim_12_ReflectorBits:
+SnesWorkRam:3C25:ActionAnim_12_ReflecteeBits:
+SnesWorkRam:3C26:ActionAnim_12_CoveredBits:
+SnesWorkRam:3C27:ActionAnim_13_Flags:
+SnesWorkRam:3C28:ActionAnim_13_OrigAttacker:party or monster index
+SnesWorkRam:3C29:ActionAnim_13_OrigTargetBits:
+SnesWorkRam:3C2A:ActionAnim_13_TargetBits:
+SnesWorkRam:3C2B:ActionAnim_13_ReflectorBits:
+SnesWorkRam:3C2C:ActionAnim_13_ReflecteeBits:
+SnesWorkRam:3C2D:ActionAnim_13_CoveredBits:
+SnesWorkRam:3C2E:ActionAnim_14_Flags:
+SnesWorkRam:3C2F:ActionAnim_14_OrigAttacker:party or monster index
+SnesWorkRam:3C30:ActionAnim_14_OrigTargetBits:
+SnesWorkRam:3C31:ActionAnim_14_TargetBits:
+SnesWorkRam:3C32:ActionAnim_14_ReflectorBits:
+SnesWorkRam:3C33:ActionAnim_14_ReflecteeBits:
+SnesWorkRam:3C34:ActionAnim_14_CoveredBits:
+SnesWorkRam:3C35:ActionAnim_15_Flags:
+SnesWorkRam:3C36:ActionAnim_15_OrigAttacker:party or monster index
+SnesWorkRam:3C37:ActionAnim_15_OrigTargetBits:
+SnesWorkRam:3C38:ActionAnim_15_TargetBits:
+SnesWorkRam:3C39:ActionAnim_15_ReflectorBits:
+SnesWorkRam:3C3A:ActionAnim_15_ReflecteeBits:
+SnesWorkRam:3C3B:ActionAnim_15_CoveredBits:
+SnesWorkRam:3C3C-3C4B:BlockType:type of block which occured (knife,cape,shield,etc)
+SnesWorkRam:3C4C-3C5B:AegisBlockTarget:bit set for aegis-blocking target
+SnesWorkRam:3C5D:TempDisplayDamage:temporarily holds damage amount for poison/regen (16 bit)
+SnesWorkRam:3C5F-3C76:MessageBoxes:24 bytes of messages to display, uses single byte constants for each message, multiple of these structs for multicommand
+SnesWorkRam:3CBF-3CCA:MessageBoxData:12 bytes of numbers to use in message boxes, 4x 3 byte numbers, multiple of these structs for multicommand
+SnesWorkRam:3CEF:MessageBoxOffset
+SnesWorkRam:3CF0:MessageBoxDataOffset
+SnesWorkRam:3CF1:EnableTimer_0_Stop:
+SnesWorkRam:3CF2:EnableTimer_0_Poison:
+SnesWorkRam:3CF3:EnableTimer_0_Reflect:
+SnesWorkRam:3CF4:EnableTimer_0_Countdown:
+SnesWorkRam:3CF5:EnableTimer_0_Mute:
+SnesWorkRam:3CF6:EnableTimer_0_HPLeak:
+SnesWorkRam:3CF7:EnableTimer_0_Old:
+SnesWorkRam:3CF8:EnableTimer_0_Regen:
+SnesWorkRam:3CF9:EnableTimer_0_Sing:
+SnesWorkRam:3CFA:EnableTimer_0_Paralyze:
+SnesWorkRam:3CFB:EnableTimer_0_ATB:tends to be used differently than status timers
+SnesWorkRam:3CFC:EnableTimer_1_Stop:
+SnesWorkRam:3CFD:EnableTimer_1_Poison:
+SnesWorkRam:3CFE:EnableTimer_1_Reflect:
+SnesWorkRam:3CFF:EnableTimer_1_Countdown:
+SnesWorkRam:3D00:EnableTimer_1_Mute:
+SnesWorkRam:3D01:EnableTimer_1_HPLeak:
+SnesWorkRam:3D02:EnableTimer_1_Old:
+SnesWorkRam:3D03:EnableTimer_1_Regen:
+SnesWorkRam:3D04:EnableTimer_1_Sing:
+SnesWorkRam:3D05:EnableTimer_1_Paralyze:
+SnesWorkRam:3D06:EnableTimer_1_ATB:tends to be used differently than status timers
+SnesWorkRam:3D07:EnableTimer_2_Stop:
+SnesWorkRam:3D08:EnableTimer_2_Poison:
+SnesWorkRam:3D09:EnableTimer_2_Reflect:
+SnesWorkRam:3D0A:EnableTimer_2_Countdown:
+SnesWorkRam:3D0B:EnableTimer_2_Mute:
+SnesWorkRam:3D0C:EnableTimer_2_HPLeak:
+SnesWorkRam:3D0D:EnableTimer_2_Old:
+SnesWorkRam:3D0E:EnableTimer_2_Regen:
+SnesWorkRam:3D0F:EnableTimer_2_Sing:
+SnesWorkRam:3D10:EnableTimer_2_Paralyze:
+SnesWorkRam:3D11:EnableTimer_2_ATB:tends to be used differently than status timers
+SnesWorkRam:3D12:EnableTimer_3_Stop:
+SnesWorkRam:3D13:EnableTimer_3_Poison:
+SnesWorkRam:3D14:EnableTimer_3_Reflect:
+SnesWorkRam:3D15:EnableTimer_3_Countdown:
+SnesWorkRam:3D16:EnableTimer_3_Mute:
+SnesWorkRam:3D17:EnableTimer_3_HPLeak:
+SnesWorkRam:3D18:EnableTimer_3_Old:
+SnesWorkRam:3D19:EnableTimer_3_Regen:
+SnesWorkRam:3D1A:EnableTimer_3_Sing:
+SnesWorkRam:3D1B:EnableTimer_3_Paralyze:
+SnesWorkRam:3D1C:EnableTimer_3_ATB:tends to be used differently than status timers
+SnesWorkRam:3D1D:EnableTimer_4_Stop:
+SnesWorkRam:3D1E:EnableTimer_4_Poison:
+SnesWorkRam:3D1F:EnableTimer_4_Reflect:
+SnesWorkRam:3D20:EnableTimer_4_Countdown:
+SnesWorkRam:3D21:EnableTimer_4_Mute:
+SnesWorkRam:3D22:EnableTimer_4_HPLeak:
+SnesWorkRam:3D23:EnableTimer_4_Old:
+SnesWorkRam:3D24:EnableTimer_4_Regen:
+SnesWorkRam:3D25:EnableTimer_4_Sing:
+SnesWorkRam:3D26:EnableTimer_4_Paralyze:
+SnesWorkRam:3D27:EnableTimer_4_ATB:tends to be used differently than status timers
+SnesWorkRam:3D28:EnableTimer_5_Stop:
+SnesWorkRam:3D29:EnableTimer_5_Poison:
+SnesWorkRam:3D2A:EnableTimer_5_Reflect:
+SnesWorkRam:3D2B:EnableTimer_5_Countdown:
+SnesWorkRam:3D2C:EnableTimer_5_Mute:
+SnesWorkRam:3D2D:EnableTimer_5_HPLeak:
+SnesWorkRam:3D2E:EnableTimer_5_Old:
+SnesWorkRam:3D2F:EnableTimer_5_Regen:
+SnesWorkRam:3D30:EnableTimer_5_Sing:
+SnesWorkRam:3D31:EnableTimer_5_Paralyze:
+SnesWorkRam:3D32:EnableTimer_5_ATB:tends to be used differently than status timers
+SnesWorkRam:3D33:EnableTimer_6_Stop:
+SnesWorkRam:3D34:EnableTimer_6_Poison:
+SnesWorkRam:3D35:EnableTimer_6_Reflect:
+SnesWorkRam:3D36:EnableTimer_6_Countdown:
+SnesWorkRam:3D37:EnableTimer_6_Mute:
+SnesWorkRam:3D38:EnableTimer_6_HPLeak:
+SnesWorkRam:3D39:EnableTimer_6_Old:
+SnesWorkRam:3D3A:EnableTimer_6_Regen:
+SnesWorkRam:3D3B:EnableTimer_6_Sing:
+SnesWorkRam:3D3C:EnableTimer_6_Paralyze:
+SnesWorkRam:3D3D:EnableTimer_6_ATB:tends to be used differently than status timers
+SnesWorkRam:3D3E:EnableTimer_7_Stop:
+SnesWorkRam:3D3F:EnableTimer_7_Poison:
+SnesWorkRam:3D40:EnableTimer_7_Reflect:
+SnesWorkRam:3D41:EnableTimer_7_Countdown:
+SnesWorkRam:3D42:EnableTimer_7_Mute:
+SnesWorkRam:3D43:EnableTimer_7_HPLeak:
+SnesWorkRam:3D44:EnableTimer_7_Old:
+SnesWorkRam:3D45:EnableTimer_7_Regen:
+SnesWorkRam:3D46:EnableTimer_7_Sing:
+SnesWorkRam:3D47:EnableTimer_7_Paralyze:
+SnesWorkRam:3D48:EnableTimer_7_ATB:tends to be used differently than status timers
+SnesWorkRam:3D49:EnableTimer_8_Stop:
+SnesWorkRam:3D4A:EnableTimer_8_Poison:
+SnesWorkRam:3D4B:EnableTimer_8_Reflect:
+SnesWorkRam:3D4C:EnableTimer_8_Countdown:
+SnesWorkRam:3D4D:EnableTimer_8_Mute:
+SnesWorkRam:3D4E:EnableTimer_8_HPLeak:
+SnesWorkRam:3D4F:EnableTimer_8_Old:
+SnesWorkRam:3D50:EnableTimer_8_Regen:
+SnesWorkRam:3D51:EnableTimer_8_Sing:
+SnesWorkRam:3D52:EnableTimer_8_Paralyze:
+SnesWorkRam:3D53:EnableTimer_8_ATB:tends to be used differently than status timers
+SnesWorkRam:3D54:EnableTimer_9_Stop:
+SnesWorkRam:3D55:EnableTimer_9_Poison:
+SnesWorkRam:3D56:EnableTimer_9_Reflect:
+SnesWorkRam:3D57:EnableTimer_9_Countdown:
+SnesWorkRam:3D58:EnableTimer_9_Mute:
+SnesWorkRam:3D59:EnableTimer_9_HPLeak:
+SnesWorkRam:3D5A:EnableTimer_9_Old:
+SnesWorkRam:3D5B:EnableTimer_9_Regen:
+SnesWorkRam:3D5C:EnableTimer_9_Sing:
+SnesWorkRam:3D5D:EnableTimer_9_Paralyze:
+SnesWorkRam:3D5E:EnableTimer_9_ATB:tends to be used differently than status timers
+SnesWorkRam:3D5F:EnableTimer_10_Stop:
+SnesWorkRam:3D60:EnableTimer_10_Poison:
+SnesWorkRam:3D61:EnableTimer_10_Reflect:
+SnesWorkRam:3D62:EnableTimer_10_Countdown:
+SnesWorkRam:3D63:EnableTimer_10_Mute:
+SnesWorkRam:3D64:EnableTimer_10_HPLeak:
+SnesWorkRam:3D65:EnableTimer_10_Old:
+SnesWorkRam:3D66:EnableTimer_10_Regen:
+SnesWorkRam:3D67:EnableTimer_10_Sing:
+SnesWorkRam:3D68:EnableTimer_10_Paralyze:
+SnesWorkRam:3D69:EnableTimer_10_ATB:tends to be used differently than status timers
+SnesWorkRam:3D6A:EnableTimer_11_Stop:
+SnesWorkRam:3D6B:EnableTimer_11_Poison:
+SnesWorkRam:3D6C:EnableTimer_11_Reflect:
+SnesWorkRam:3D6D:EnableTimer_11_Countdown:
+SnesWorkRam:3D6E:EnableTimer_11_Mute:
+SnesWorkRam:3D6F:EnableTimer_11_HPLeak:
+SnesWorkRam:3D70:EnableTimer_11_Old:
+SnesWorkRam:3D71:EnableTimer_11_Regen:
+SnesWorkRam:3D72:EnableTimer_11_Sing:
+SnesWorkRam:3D73:EnableTimer_11_Paralyze:
+SnesWorkRam:3D74:EnableTimer_11_ATB:tends to be used differently than status timers
+SnesWorkRam:3D75:CurrentTimer_0_Stop:
+SnesWorkRam:3D76:CurrentTimer_0_Poison:
+SnesWorkRam:3D77:CurrentTimer_0_Reflect:
+SnesWorkRam:3D78:CurrentTimer_0_Countdown:
+SnesWorkRam:3D79:CurrentTimer_0_Mute:
+SnesWorkRam:3D7A:CurrentTimer_0_HPLeak:
+SnesWorkRam:3D7B:CurrentTimer_0_Old:
+SnesWorkRam:3D7C:CurrentTimer_0_Regen:
+SnesWorkRam:3D7D:CurrentTimer_0_Sing:
+SnesWorkRam:3D7E:CurrentTimer_0_Paralyze:
+SnesWorkRam:3D7F:CurrentTimer_0_ATB:tends to be used differently than status timers
+SnesWorkRam:3D80:CurrentTimer_1_Stop:
+SnesWorkRam:3D81:CurrentTimer_1_Poison:
+SnesWorkRam:3D82:CurrentTimer_1_Reflect:
+SnesWorkRam:3D83:CurrentTimer_1_Countdown:
+SnesWorkRam:3D84:CurrentTimer_1_Mute:
+SnesWorkRam:3D85:CurrentTimer_1_HPLeak:
+SnesWorkRam:3D86:CurrentTimer_1_Old:
+SnesWorkRam:3D87:CurrentTimer_1_Regen:
+SnesWorkRam:3D88:CurrentTimer_1_Sing:
+SnesWorkRam:3D89:CurrentTimer_1_Paralyze:
+SnesWorkRam:3D8A:CurrentTimer_1_ATB:tends to be used differently than status timers
+SnesWorkRam:3D8B:CurrentTimer_2_Stop:
+SnesWorkRam:3D8C:CurrentTimer_2_Poison:
+SnesWorkRam:3D8D:CurrentTimer_2_Reflect:
+SnesWorkRam:3D8E:CurrentTimer_2_Countdown:
+SnesWorkRam:3D8F:CurrentTimer_2_Mute:
+SnesWorkRam:3D90:CurrentTimer_2_HPLeak:
+SnesWorkRam:3D91:CurrentTimer_2_Old:
+SnesWorkRam:3D92:CurrentTimer_2_Regen:
+SnesWorkRam:3D93:CurrentTimer_2_Sing:
+SnesWorkRam:3D94:CurrentTimer_2_Paralyze:
+SnesWorkRam:3D95:CurrentTimer_2_ATB:tends to be used differently than status timers
+SnesWorkRam:3D96:CurrentTimer_3_Stop:
+SnesWorkRam:3D97:CurrentTimer_3_Poison:
+SnesWorkRam:3D98:CurrentTimer_3_Reflect:
+SnesWorkRam:3D99:CurrentTimer_3_Countdown:
+SnesWorkRam:3D9A:CurrentTimer_3_Mute:
+SnesWorkRam:3D9B:CurrentTimer_3_HPLeak:
+SnesWorkRam:3D9C:CurrentTimer_3_Old:
+SnesWorkRam:3D9D:CurrentTimer_3_Regen:
+SnesWorkRam:3D9E:CurrentTimer_3_Sing:
+SnesWorkRam:3D9F:CurrentTimer_3_Paralyze:
+SnesWorkRam:3DA0:CurrentTimer_3_ATB:tends to be used differently than status timers
+SnesWorkRam:3DA1:CurrentTimer_4_Stop:
+SnesWorkRam:3DA2:CurrentTimer_4_Poison:
+SnesWorkRam:3DA3:CurrentTimer_4_Reflect:
+SnesWorkRam:3DA4:CurrentTimer_4_Countdown:
+SnesWorkRam:3DA5:CurrentTimer_4_Mute:
+SnesWorkRam:3DA6:CurrentTimer_4_HPLeak:
+SnesWorkRam:3DA7:CurrentTimer_4_Old:
+SnesWorkRam:3DA8:CurrentTimer_4_Regen:
+SnesWorkRam:3DA9:CurrentTimer_4_Sing:
+SnesWorkRam:3DAA:CurrentTimer_4_Paralyze:
+SnesWorkRam:3DAB:CurrentTimer_4_ATB:tends to be used differently than status timers
+SnesWorkRam:3DAC:CurrentTimer_5_Stop:
+SnesWorkRam:3DAD:CurrentTimer_5_Poison:
+SnesWorkRam:3DAE:CurrentTimer_5_Reflect:
+SnesWorkRam:3DAF:CurrentTimer_5_Countdown:
+SnesWorkRam:3DB0:CurrentTimer_5_Mute:
+SnesWorkRam:3DB1:CurrentTimer_5_HPLeak:
+SnesWorkRam:3DB2:CurrentTimer_5_Old:
+SnesWorkRam:3DB3:CurrentTimer_5_Regen:
+SnesWorkRam:3DB4:CurrentTimer_5_Sing:
+SnesWorkRam:3DB5:CurrentTimer_5_Paralyze:
+SnesWorkRam:3DB6:CurrentTimer_5_ATB:tends to be used differently than status timers
+SnesWorkRam:3DB7:CurrentTimer_6_Stop:
+SnesWorkRam:3DB8:CurrentTimer_6_Poison:
+SnesWorkRam:3DB9:CurrentTimer_6_Reflect:
+SnesWorkRam:3DBA:CurrentTimer_6_Countdown:
+SnesWorkRam:3DBB:CurrentTimer_6_Mute:
+SnesWorkRam:3DBC:CurrentTimer_6_HPLeak:
+SnesWorkRam:3DBD:CurrentTimer_6_Old:
+SnesWorkRam:3DBE:CurrentTimer_6_Regen:
+SnesWorkRam:3DBF:CurrentTimer_6_Sing:
+SnesWorkRam:3DC0:CurrentTimer_6_Paralyze:
+SnesWorkRam:3DC1:CurrentTimer_6_ATB:tends to be used differently than status timers
+SnesWorkRam:3DC2:CurrentTimer_7_Stop:
+SnesWorkRam:3DC3:CurrentTimer_7_Poison:
+SnesWorkRam:3DC4:CurrentTimer_7_Reflect:
+SnesWorkRam:3DC5:CurrentTimer_7_Countdown:
+SnesWorkRam:3DC6:CurrentTimer_7_Mute:
+SnesWorkRam:3DC7:CurrentTimer_7_HPLeak:
+SnesWorkRam:3DC8:CurrentTimer_7_Old:
+SnesWorkRam:3DC9:CurrentTimer_7_Regen:
+SnesWorkRam:3DCA:CurrentTimer_7_Sing:
+SnesWorkRam:3DCB:CurrentTimer_7_Paralyze:
+SnesWorkRam:3DCC:CurrentTimer_7_ATB:tends to be used differently than status timers
+SnesWorkRam:3DCD:CurrentTimer_8_Stop:
+SnesWorkRam:3DCE:CurrentTimer_8_Poison:
+SnesWorkRam:3DCF:CurrentTimer_8_Reflect:
+SnesWorkRam:3DD0:CurrentTimer_8_Countdown:
+SnesWorkRam:3DD1:CurrentTimer_8_Mute:
+SnesWorkRam:3DD2:CurrentTimer_8_HPLeak:
+SnesWorkRam:3DD3:CurrentTimer_8_Old:
+SnesWorkRam:3DD4:CurrentTimer_8_Regen:
+SnesWorkRam:3DD5:CurrentTimer_8_Sing:
+SnesWorkRam:3DD6:CurrentTimer_8_Paralyze:
+SnesWorkRam:3DD7:CurrentTimer_8_ATB:tends to be used differently than status timers
+SnesWorkRam:3DD8:CurrentTimer_9_Stop:
+SnesWorkRam:3DD9:CurrentTimer_9_Poison:
+SnesWorkRam:3DDA:CurrentTimer_9_Reflect:
+SnesWorkRam:3DDB:CurrentTimer_9_Countdown:
+SnesWorkRam:3DDC:CurrentTimer_9_Mute:
+SnesWorkRam:3DDD:CurrentTimer_9_HPLeak:
+SnesWorkRam:3DDE:CurrentTimer_9_Old:
+SnesWorkRam:3DDF:CurrentTimer_9_Regen:
+SnesWorkRam:3DE0:CurrentTimer_9_Sing:
+SnesWorkRam:3DE1:CurrentTimer_9_Paralyze:
+SnesWorkRam:3DE2:CurrentTimer_9_ATB:tends to be used differently than status timers
+SnesWorkRam:3DE3:CurrentTimer_10_Stop:
+SnesWorkRam:3DE4:CurrentTimer_10_Poison:
+SnesWorkRam:3DE5:CurrentTimer_10_Reflect:
+SnesWorkRam:3DE6:CurrentTimer_10_Countdown:
+SnesWorkRam:3DE7:CurrentTimer_10_Mute:
+SnesWorkRam:3DE8:CurrentTimer_10_HPLeak:
+SnesWorkRam:3DE9:CurrentTimer_10_Old:
+SnesWorkRam:3DEA:CurrentTimer_10_Regen:
+SnesWorkRam:3DEB:CurrentTimer_10_Sing:
+SnesWorkRam:3DEC:CurrentTimer_10_Paralyze:
+SnesWorkRam:3DED:CurrentTimer_10_ATB:tends to be used differently than status timers
+SnesWorkRam:3DEE:CurrentTimer_11_Stop:
+SnesWorkRam:3DEF:CurrentTimer_11_Poison:
+SnesWorkRam:3DF0:CurrentTimer_11_Reflect:
+SnesWorkRam:3DF1:CurrentTimer_11_Countdown:
+SnesWorkRam:3DF2:CurrentTimer_11_Mute:
+SnesWorkRam:3DF3:CurrentTimer_11_HPLeak:
+SnesWorkRam:3DF4:CurrentTimer_11_Old:
+SnesWorkRam:3DF5:CurrentTimer_11_Regen:
+SnesWorkRam:3DF6:CurrentTimer_11_Sing:
+SnesWorkRam:3DF7:CurrentTimer_11_Paralyze:
+SnesWorkRam:3DF8:CurrentTimer_11_ATB:tends to be used differently than status timers
+SnesWorkRam:3DF9:InitialTimer_0_Stop:
+SnesWorkRam:3DFA:InitialTimer_0_Poison:
+SnesWorkRam:3DFB:InitialTimer_0_Reflect:
+SnesWorkRam:3DFC:InitialTimer_0_Countdown:
+SnesWorkRam:3DFD:InitialTimer_0_Mute:
+SnesWorkRam:3DFE:InitialTimer_0_HPLeak:
+SnesWorkRam:3DFF:InitialTimer_0_Old:
+SnesWorkRam:3E00:InitialTimer_0_Regen:
+SnesWorkRam:3E01:InitialTimer_0_Sing:
+SnesWorkRam:3E02:InitialTimer_0_Paralyze:
+SnesWorkRam:3E03:InitialTimer_0_ATB:tends to be used differently than status timers
+SnesWorkRam:3E04:InitialTimer_1_Stop:
+SnesWorkRam:3E05:InitialTimer_1_Poison:
+SnesWorkRam:3E06:InitialTimer_1_Reflect:
+SnesWorkRam:3E07:InitialTimer_1_Countdown:
+SnesWorkRam:3E08:InitialTimer_1_Mute:
+SnesWorkRam:3E09:InitialTimer_1_HPLeak:
+SnesWorkRam:3E0A:InitialTimer_1_Old:
+SnesWorkRam:3E0B:InitialTimer_1_Regen:
+SnesWorkRam:3E0C:InitialTimer_1_Sing:
+SnesWorkRam:3E0D:InitialTimer_1_Paralyze:
+SnesWorkRam:3E0E:InitialTimer_1_ATB:tends to be used differently than status timers
+SnesWorkRam:3E0F:InitialTimer_2_Stop:
+SnesWorkRam:3E10:InitialTimer_2_Poison:
+SnesWorkRam:3E11:InitialTimer_2_Reflect:
+SnesWorkRam:3E12:InitialTimer_2_Countdown:
+SnesWorkRam:3E13:InitialTimer_2_Mute:
+SnesWorkRam:3E14:InitialTimer_2_HPLeak:
+SnesWorkRam:3E15:InitialTimer_2_Old:
+SnesWorkRam:3E16:InitialTimer_2_Regen:
+SnesWorkRam:3E17:InitialTimer_2_Sing:
+SnesWorkRam:3E18:InitialTimer_2_Paralyze:
+SnesWorkRam:3E19:InitialTimer_2_ATB:tends to be used differently than status timers
+SnesWorkRam:3E1A:InitialTimer_3_Stop:
+SnesWorkRam:3E1B:InitialTimer_3_Poison:
+SnesWorkRam:3E1C:InitialTimer_3_Reflect:
+SnesWorkRam:3E1D:InitialTimer_3_Countdown:
+SnesWorkRam:3E1E:InitialTimer_3_Mute:
+SnesWorkRam:3E1F:InitialTimer_3_HPLeak:
+SnesWorkRam:3E20:InitialTimer_3_Old:
+SnesWorkRam:3E21:InitialTimer_3_Regen:
+SnesWorkRam:3E22:InitialTimer_3_Sing:
+SnesWorkRam:3E23:InitialTimer_3_Paralyze:
+SnesWorkRam:3E24:InitialTimer_3_ATB:tends to be used differently than status timers
+SnesWorkRam:3E25:InitialTimer_4_Stop:
+SnesWorkRam:3E26:InitialTimer_4_Poison:
+SnesWorkRam:3E27:InitialTimer_4_Reflect:
+SnesWorkRam:3E28:InitialTimer_4_Countdown:
+SnesWorkRam:3E29:InitialTimer_4_Mute:
+SnesWorkRam:3E2A:InitialTimer_4_HPLeak:
+SnesWorkRam:3E2B:InitialTimer_4_Old:
+SnesWorkRam:3E2C:InitialTimer_4_Regen:
+SnesWorkRam:3E2D:InitialTimer_4_Sing:
+SnesWorkRam:3E2E:InitialTimer_4_Paralyze:
+SnesWorkRam:3E2F:InitialTimer_4_ATB:tends to be used differently than status timers
+SnesWorkRam:3E30:InitialTimer_5_Stop:
+SnesWorkRam:3E31:InitialTimer_5_Poison:
+SnesWorkRam:3E32:InitialTimer_5_Reflect:
+SnesWorkRam:3E33:InitialTimer_5_Countdown:
+SnesWorkRam:3E34:InitialTimer_5_Mute:
+SnesWorkRam:3E35:InitialTimer_5_HPLeak:
+SnesWorkRam:3E36:InitialTimer_5_Old:
+SnesWorkRam:3E37:InitialTimer_5_Regen:
+SnesWorkRam:3E38:InitialTimer_5_Sing:
+SnesWorkRam:3E39:InitialTimer_5_Paralyze:
+SnesWorkRam:3E3A:InitialTimer_5_ATB:tends to be used differently than status timers
+SnesWorkRam:3E3B:InitialTimer_6_Stop:
+SnesWorkRam:3E3C:InitialTimer_6_Poison:
+SnesWorkRam:3E3D:InitialTimer_6_Reflect:
+SnesWorkRam:3E3E:InitialTimer_6_Countdown:
+SnesWorkRam:3E3F:InitialTimer_6_Mute:
+SnesWorkRam:3E40:InitialTimer_6_HPLeak:
+SnesWorkRam:3E41:InitialTimer_6_Old:
+SnesWorkRam:3E42:InitialTimer_6_Regen:
+SnesWorkRam:3E43:InitialTimer_6_Sing:
+SnesWorkRam:3E44:InitialTimer_6_Paralyze:
+SnesWorkRam:3E45:InitialTimer_6_ATB:tends to be used differently than status timers
+SnesWorkRam:3E46:InitialTimer_7_Stop:
+SnesWorkRam:3E47:InitialTimer_7_Poison:
+SnesWorkRam:3E48:InitialTimer_7_Reflect:
+SnesWorkRam:3E49:InitialTimer_7_Countdown:
+SnesWorkRam:3E4A:InitialTimer_7_Mute:
+SnesWorkRam:3E4B:InitialTimer_7_HPLeak:
+SnesWorkRam:3E4C:InitialTimer_7_Old:
+SnesWorkRam:3E4D:InitialTimer_7_Regen:
+SnesWorkRam:3E4E:InitialTimer_7_Sing:
+SnesWorkRam:3E4F:InitialTimer_7_Paralyze:
+SnesWorkRam:3E50:InitialTimer_7_ATB:tends to be used differently than status timers
+SnesWorkRam:3E51:InitialTimer_8_Stop:
+SnesWorkRam:3E52:InitialTimer_8_Poison:
+SnesWorkRam:3E53:InitialTimer_8_Reflect:
+SnesWorkRam:3E54:InitialTimer_8_Countdown:
+SnesWorkRam:3E55:InitialTimer_8_Mute:
+SnesWorkRam:3E56:InitialTimer_8_HPLeak:
+SnesWorkRam:3E57:InitialTimer_8_Old:
+SnesWorkRam:3E58:InitialTimer_8_Regen:
+SnesWorkRam:3E59:InitialTimer_8_Sing:
+SnesWorkRam:3E5A:InitialTimer_8_Paralyze:
+SnesWorkRam:3E5B:InitialTimer_8_ATB:tends to be used differently than status timers
+SnesWorkRam:3E5C:InitialTimer_9_Stop:
+SnesWorkRam:3E5D:InitialTimer_9_Poison:
+SnesWorkRam:3E5E:InitialTimer_9_Reflect:
+SnesWorkRam:3E5F:InitialTimer_9_Countdown:
+SnesWorkRam:3E60:InitialTimer_9_Mute:
+SnesWorkRam:3E61:InitialTimer_9_HPLeak:
+SnesWorkRam:3E62:InitialTimer_9_Old:
+SnesWorkRam:3E63:InitialTimer_9_Regen:
+SnesWorkRam:3E64:InitialTimer_9_Sing:
+SnesWorkRam:3E65:InitialTimer_9_Paralyze:
+SnesWorkRam:3E66:InitialTimer_9_ATB:tends to be used differently than status timers
+SnesWorkRam:3E67:InitialTimer_10_Stop:
+SnesWorkRam:3E68:InitialTimer_10_Poison:
+SnesWorkRam:3E69:InitialTimer_10_Reflect:
+SnesWorkRam:3E6A:InitialTimer_10_Countdown:
+SnesWorkRam:3E6B:InitialTimer_10_Mute:
+SnesWorkRam:3E6C:InitialTimer_10_HPLeak:
+SnesWorkRam:3E6D:InitialTimer_10_Old:
+SnesWorkRam:3E6E:InitialTimer_10_Regen:
+SnesWorkRam:3E6F:InitialTimer_10_Sing:
+SnesWorkRam:3E70:InitialTimer_10_Paralyze:
+SnesWorkRam:3E71:InitialTimer_10_ATB:tends to be used differently than status timers
+SnesWorkRam:3E72:InitialTimer_11_Stop:
+SnesWorkRam:3E73:InitialTimer_11_Poison:
+SnesWorkRam:3E74:InitialTimer_11_Reflect:
+SnesWorkRam:3E75:InitialTimer_11_Countdown:
+SnesWorkRam:3E76:InitialTimer_11_Mute:
+SnesWorkRam:3E77:InitialTimer_11_HPLeak:
+SnesWorkRam:3E78:InitialTimer_11_Old:
+SnesWorkRam:3E79:InitialTimer_11_Regen:
+SnesWorkRam:3E7A:InitialTimer_11_Sing:
+SnesWorkRam:3E7B:InitialTimer_11_Paralyze:
+SnesWorkRam:3E7C:InitialTimer_11_ATB:tends to be used differently than status timers
+SnesWorkRam:3E7D:RandomOrderIndex_Stop:
+SnesWorkRam:3E7E:RandomOrderIndex_Poison:		
+SnesWorkRam:3E7F:RandomOrderIndex_Reflect:		
+SnesWorkRam:3E80:RandomOrderIndex_Countdown:          
+SnesWorkRam:3E81:RandomOrderIndex_Mute:          
+SnesWorkRam:3E82:RandomOrderIndex_HPLeak:          
+SnesWorkRam:3E83:RandomOrderIndex_Old:          
+SnesWorkRam:3E84:RandomOrderIndex_Regen:          
+SnesWorkRam:3E85:RandomOrderIndex_Sing:		
+SnesWorkRam:3E86:RandomOrderIndex_Paralyze:          
+SnesWorkRam:3E87:RandomOrderIndex_ATB:		
+SnesWorkRam:3E88:TimerEnded_Stop:
+SnesWorkRam:3E89:TimerEnded_Poison:
+SnesWorkRam:3E8A:TimerEnded_Reflect:
+SnesWorkRam:3E8B:TimerEnded_Countdown:
+SnesWorkRam:3E8C:TimerEnded_Mute:
+SnesWorkRam:3E8D:TimerEnded_HPLeak:
+SnesWorkRam:3E8E:TimerEnded_Old:
+SnesWorkRam:3E8F:TimerEnded_Regen:
+SnesWorkRam:3E90:TimerEnded_Sing:
+SnesWorkRam:3E91:TimerEnded_Paralyze:
+SnesWorkRam:3E92:TimerEnded_ATB:
+SnesWorkRam:3E93-3E9E:RandomOrder:12 bytes, randomized list of unique numbers 0-11, (combatant processing order for timers)
+SnesWorkRam:3E9F-3EAA:PauseTimerChecks:12 bytes, cancels timer checking for char when set
+SnesWorkRam:3EAB-3EB6:QuickTimeFrozen:12 bytes, one for each participant, >0 means time frozen (so someone else can be Quick)
+SnesWorkRam:3EB7:TimerReadyChar_Stop:		
+SnesWorkRam:3EB8:TimerReadyChar_Poison:
+SnesWorkRam:3EB9:TimerReadyChar_Reflect:
+SnesWorkRam:3EBA:TimerReadyChar_Countdown:
+SnesWorkRam:3EBB:TimerReadyChar_Mute:
+SnesWorkRam:3EBC:TimerReadyChar_HPLeak:
+SnesWorkRam:3EBD:TimerReadyChar_Old:
+SnesWorkRam:3EBE:TimerReadyChar_Regen:
+SnesWorkRam:3EBF:TimerReadyChar_Sing:
+SnesWorkRam:3EC0:TimerReadyChar_Paralyze:
+SnesWorkRam:3EC1:TimerReadyChar_ATB:tends to be used differently than status timers
+SnesWorkRam:3EC2-3ECD:ActiveParticipants:12 byte table for battle participants
+SnesWorkRam:3ECE:ProcessingTimer:id of the timer which is in the process of being triggered (16 bti)
+SnesWorkRam:3ED0-3ED3:ATB:1 byte * 4 chars, copied from CurrentTimer.ATB
+SnesWorkRam:3ED4:ATBWaiting:set to 1 when ATB is paused due to a character's turn
+SnesWorkRam:3ED5:ATBWaitLeft:number of ticks left on ATBWaiting delay, starts at ATBDelay
+SnesWorkRam:3ED6:ATBWaitTime:ATB Delay when a character's turn comes up, from battle speed and Drag spell
+SnesWorkRam:3ED7:StatusFixedDur:When set, status effects with durations use an alternate formula
+SnesWorkRam:3ED8:StatusDuration
+SnesWorkRam:3ED9:GlobalTimer_Stop: 		
+SnesWorkRam:3EDA:GlobalTimer_Poison:
+SnesWorkRam:3EDB:GlobalTimer_Reflect:
+SnesWorkRam:3EDC:GlobalTimer_Countdown:
+SnesWorkRam:3EDD:GlobalTimer_Mute:
+SnesWorkRam:3EDE:GlobalTimer_HPLeak:
+SnesWorkRam:3EDF:GlobalTimer_Old:
+SnesWorkRam:3EE0:GlobalTimer_Regen:
+SnesWorkRam:3EE1:GlobalTimer_Sing:
+SnesWorkRam:3EE2:GlobalTimer_Paralyze:
+SnesWorkRam:3EE3:GlobalTimer_ATB:tends to be used differently than status timers
+SnesWorkRam:3EE4:ProcessTimer_Stop:
+SnesWorkRam:3EE5:ProcessTimer_Poison:
+SnesWorkRam:3EE6:ProcessTimer_Reflect:
+SnesWorkRam:3EE7:ProcessTimer_Countdown:
+SnesWorkRam:3EE8:ProcessTimer_Mute:
+SnesWorkRam:3EE9:ProcessTimer_HPLeak:
+SnesWorkRam:3EEA:ProcessTimer_Old:
+SnesWorkRam:3EEB:ProcessTimer_Regen:
+SnesWorkRam:3EEC:ProcessTimer_Sing:
+SnesWorkRam:3EED:ProcessTimer_Paralyze:
+SnesWorkRam:3EEE:ProcessTimer_ATB:tends to be used differently than status timers
+SnesWorkRam:3EEF:EncounterInfo_IntroFX:3 Low bits are monster intro animation (0-7), high bits are a bitfield for special effects
+SnesWorkRam:3EF0:EncounterInfo_FleeChance:Flee Chance = 80h if Can't Run
+SnesWorkRam:3EF1:EncounterInfo_AP:
+SnesWorkRam:3EF2:EncounterInfo_Visible:1 bit per monster
+SnesWorkRam:3EF3-3EFA:EncounterInfo_MonsterID:one byte for each monster
+SnesWorkRam:3EFB-3EFC:EncounterInfo_Palettes:2 bits per monster
+SnesWorkRam:3EFD:EncounterInfo_Music:index into $D0EEDF table
+SnesWorkRam:3EFE:EncounterInfo_Flags:		
+SnesWorkRam:3EFF:MonsterStats_0_Speed:
+SnesWorkRam:3F00:MonsterStats_0_AttackPower:
+SnesWorkRam:3F01:MonsterStats_0_AttackMult:
+SnesWorkRam:3F02:MonsterStats_0_Evade:
+SnesWorkRam:3F03:MonsterStats_0_Defense:
+SnesWorkRam:3F04:MonsterStats_0_MagicPower:
+SnesWorkRam:3F05:MonsterStats_0_MDefense:
+SnesWorkRam:3F06:MonsterStats_0_MEvade:
+SnesWorkRam:3F07-3F08:MonsterStats_0_HP:sets max and current HP
+SnesWorkRam:3F09-3F0A:MonsterStats_0_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3F0B-3F0C:MonsterStats_0_Exp:
+SnesWorkRam:3F0D-3F0E:MonsterStats_0_Gil:
+SnesWorkRam:3F0F:MonsterStats_0_AttackFX:
+SnesWorkRam:3F10:MonsterStats_0_EImmune:
+SnesWorkRam:3F11:MonsterStats_0_StatusImmune1:
+SnesWorkRam:3F12:MonsterStats_0_StatusImmune2:
+SnesWorkRam:3F13:MonsterStats_0_StatusImmune3:
+SnesWorkRam:3F14:MonsterStats_0_EAbsorb:
+SnesWorkRam:3F15:MonsterStats_0_CantEvade:
+SnesWorkRam:3F16:MonsterStats_0_EWeak:
+SnesWorkRam:3F17:MonsterStats_0_CreatureType:
+SnesWorkRam:3F18:MonsterStats_0_CmdImmunity:
+SnesWorkRam:3F19:MonsterStats_0_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3F1A:MonsterStats_0_Status2:
+SnesWorkRam:3F1B:MonsterStats_0_Status3:
+SnesWorkRam:3F1C:MonsterStats_0_Status4:
+SnesWorkRam:3F1D:MonsterStats_0_EnemyNameID:
+SnesWorkRam:3F1E:MonsterStats_0_Level:
+SnesWorkRam:3F1F:MonsterStats_1_Speed:
+SnesWorkRam:3F20:MonsterStats_1_AttackPower:
+SnesWorkRam:3F21:MonsterStats_1_AttackMult:
+SnesWorkRam:3F22:MonsterStats_1_Evade:
+SnesWorkRam:3F23:MonsterStats_1_Defense:
+SnesWorkRam:3F24:MonsterStats_1_MagicPower:
+SnesWorkRam:3F25:MonsterStats_1_MDefense:
+SnesWorkRam:3F26:MonsterStats_1_MEvade:
+SnesWorkRam:3F27-3F28:MonsterStats_1_HP:sets max and current HP
+SnesWorkRam:3F29-3F2A:MonsterStats_1_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3F2B-3F2C:MonsterStats_1_Exp:
+SnesWorkRam:3F2D-3F2E:MonsterStats_1_Gil:
+SnesWorkRam:3F2F:MonsterStats_1_AttackFX:
+SnesWorkRam:3F30:MonsterStats_1_EImmune:
+SnesWorkRam:3F31:MonsterStats_1_StatusImmune1:
+SnesWorkRam:3F32:MonsterStats_1_StatusImmune2:
+SnesWorkRam:3F33:MonsterStats_1_StatusImmune3:
+SnesWorkRam:3F34:MonsterStats_1_EAbsorb:
+SnesWorkRam:3F35:MonsterStats_1_CantEvade:
+SnesWorkRam:3F36:MonsterStats_1_EWeak:
+SnesWorkRam:3F37:MonsterStats_1_CreatureType:
+SnesWorkRam:3F38:MonsterStats_1_CmdImmunity:
+SnesWorkRam:3F39:MonsterStats_1_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3F3A:MonsterStats_1_Status2:
+SnesWorkRam:3F3B:MonsterStats_1_Status3:
+SnesWorkRam:3F3C:MonsterStats_1_Status4:
+SnesWorkRam:3F3D:MonsterStats_1_EnemyNameID:
+SnesWorkRam:3F3E:MonsterStats_1_Level:
+SnesWorkRam:3F3F:MonsterStats_2_Speed:
+SnesWorkRam:3F40:MonsterStats_2_AttackPower:
+SnesWorkRam:3F41:MonsterStats_2_AttackMult:
+SnesWorkRam:3F42:MonsterStats_2_Evade:
+SnesWorkRam:3F43:MonsterStats_2_Defense:
+SnesWorkRam:3F44:MonsterStats_2_MagicPower:
+SnesWorkRam:3F45:MonsterStats_2_MDefense:
+SnesWorkRam:3F46:MonsterStats_2_MEvade:
+SnesWorkRam:3F47-3F48:MonsterStats_2_HP:sets max and current HP
+SnesWorkRam:3F49-3F4A:MonsterStats_2_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3F4B-3F4C:MonsterStats_2_Exp:
+SnesWorkRam:3F4D-3F4E:MonsterStats_2_Gil:
+SnesWorkRam:3F4F:MonsterStats_2_AttackFX:
+SnesWorkRam:3F50:MonsterStats_2_EImmune:
+SnesWorkRam:3F51:MonsterStats_2_StatusImmune1:
+SnesWorkRam:3F52:MonsterStats_2_StatusImmune2:
+SnesWorkRam:3F53:MonsterStats_2_StatusImmune3:
+SnesWorkRam:3F54:MonsterStats_2_EAbsorb:
+SnesWorkRam:3F55:MonsterStats_2_CantEvade:
+SnesWorkRam:3F56:MonsterStats_2_EWeak:
+SnesWorkRam:3F57:MonsterStats_2_CreatureType:
+SnesWorkRam:3F58:MonsterStats_2_CmdImmunity:
+SnesWorkRam:3F59:MonsterStats_2_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3F5A:MonsterStats_2_Status2:
+SnesWorkRam:3F5B:MonsterStats_2_Status3:
+SnesWorkRam:3F5C:MonsterStats_2_Status4:
+SnesWorkRam:3F5D:MonsterStats_2_EnemyNameID:
+SnesWorkRam:3F5E:MonsterStats_2_Level:
+SnesWorkRam:3F5F:MonsterStats_3_Speed:
+SnesWorkRam:3F60:MonsterStats_3_AttackPower:
+SnesWorkRam:3F61:MonsterStats_3_AttackMult:
+SnesWorkRam:3F62:MonsterStats_3_Evade:
+SnesWorkRam:3F63:MonsterStats_3_Defense:
+SnesWorkRam:3F64:MonsterStats_3_MagicPower:
+SnesWorkRam:3F65:MonsterStats_3_MDefense:
+SnesWorkRam:3F66:MonsterStats_3_MEvade:
+SnesWorkRam:3F67-3F68:MonsterStats_3_HP:sets max and current HP
+SnesWorkRam:3F69-3F6A:MonsterStats_3_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3F6B-3F6C:MonsterStats_3_Exp:
+SnesWorkRam:3F6D-3F6E:MonsterStats_3_Gil:
+SnesWorkRam:3F6F:MonsterStats_3_AttackFX:
+SnesWorkRam:3F70:MonsterStats_3_EImmune:
+SnesWorkRam:3F71:MonsterStats_3_StatusImmune1:
+SnesWorkRam:3F72:MonsterStats_3_StatusImmune2:
+SnesWorkRam:3F73:MonsterStats_3_StatusImmune3:
+SnesWorkRam:3F74:MonsterStats_3_EAbsorb:
+SnesWorkRam:3F75:MonsterStats_3_CantEvade:
+SnesWorkRam:3F76:MonsterStats_3_EWeak:
+SnesWorkRam:3F77:MonsterStats_3_CreatureType:
+SnesWorkRam:3F78:MonsterStats_3_CmdImmunity:
+SnesWorkRam:3F79:MonsterStats_3_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3F7A:MonsterStats_3_Status2:
+SnesWorkRam:3F7B:MonsterStats_3_Status3:
+SnesWorkRam:3F7C:MonsterStats_3_Status4:
+SnesWorkRam:3F7D:MonsterStats_3_EnemyNameID:
+SnesWorkRam:3F7E:MonsterStats_3_Level:
+SnesWorkRam:3F7F:MonsterStats_4_Speed:
+SnesWorkRam:3F80:MonsterStats_4_AttackPower:
+SnesWorkRam:3F81:MonsterStats_4_AttackMult:
+SnesWorkRam:3F82:MonsterStats_4_Evade:
+SnesWorkRam:3F83:MonsterStats_4_Defense:
+SnesWorkRam:3F84:MonsterStats_4_MagicPower:
+SnesWorkRam:3F85:MonsterStats_4_MDefense:
+SnesWorkRam:3F86:MonsterStats_4_MEvade:
+SnesWorkRam:3F87-3F88:MonsterStats_4_HP:sets max and current HP
+SnesWorkRam:3F89-3F8A:MonsterStats_4_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3F8B-3F8C:MonsterStats_4_Exp:
+SnesWorkRam:3F8D-3F8E:MonsterStats_4_Gil:
+SnesWorkRam:3F8F:MonsterStats_4_AttackFX:
+SnesWorkRam:3F90:MonsterStats_4_EImmune:
+SnesWorkRam:3F91:MonsterStats_4_StatusImmune1:
+SnesWorkRam:3F92:MonsterStats_4_StatusImmune2:
+SnesWorkRam:3F93:MonsterStats_4_StatusImmune3:
+SnesWorkRam:3F94:MonsterStats_4_EAbsorb:
+SnesWorkRam:3F95:MonsterStats_4_CantEvade:
+SnesWorkRam:3F96:MonsterStats_4_EWeak:
+SnesWorkRam:3F97:MonsterStats_4_CreatureType:
+SnesWorkRam:3F98:MonsterStats_4_CmdImmunity:
+SnesWorkRam:3F99:MonsterStats_4_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3F9A:MonsterStats_4_Status2:
+SnesWorkRam:3F9B:MonsterStats_4_Status3:
+SnesWorkRam:3F9C:MonsterStats_4_Status4:
+SnesWorkRam:3F9D:MonsterStats_4_EnemyNameID:
+SnesWorkRam:3F9E:MonsterStats_4_Level:
+SnesWorkRam:3F9F:MonsterStats_5_Speed:
+SnesWorkRam:3FA0:MonsterStats_5_AttackPower:
+SnesWorkRam:3FA1:MonsterStats_5_AttackMult:
+SnesWorkRam:3FA2:MonsterStats_5_Evade:
+SnesWorkRam:3FA3:MonsterStats_5_Defense:
+SnesWorkRam:3FA4:MonsterStats_5_MagicPower:
+SnesWorkRam:3FA5:MonsterStats_5_MDefense:
+SnesWorkRam:3FA6:MonsterStats_5_MEvade:
+SnesWorkRam:3FA7-3FA8:MonsterStats_5_HP:sets max and current HP
+SnesWorkRam:3FA9-3FAA:MonsterStats_5_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3FAB-3FAC:MonsterStats_5_Exp:
+SnesWorkRam:3FAD-3FAE:MonsterStats_5_Gil:
+SnesWorkRam:3FAF:MonsterStats_5_AttackFX:
+SnesWorkRam:3FB0:MonsterStats_5_EImmune:
+SnesWorkRam:3FB1:MonsterStats_5_StatusImmune1:
+SnesWorkRam:3FB2:MonsterStats_5_StatusImmune2:
+SnesWorkRam:3FB3:MonsterStats_5_StatusImmune3:
+SnesWorkRam:3FB4:MonsterStats_5_EAbsorb:
+SnesWorkRam:3FB5:MonsterStats_5_CantEvade:
+SnesWorkRam:3FB6:MonsterStats_5_EWeak:
+SnesWorkRam:3FB7:MonsterStats_5_CreatureType:
+SnesWorkRam:3FB8:MonsterStats_5_CmdImmunity:
+SnesWorkRam:3FB9:MonsterStats_5_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3FBA:MonsterStats_5_Status2:
+SnesWorkRam:3FBB:MonsterStats_5_Status3:
+SnesWorkRam:3FBC:MonsterStats_5_Status4:
+SnesWorkRam:3FBD:MonsterStats_5_EnemyNameID:
+SnesWorkRam:3FBE:MonsterStats_5_Level:
+SnesWorkRam:3FBF:MonsterStats_6_Speed:
+SnesWorkRam:3FC0:MonsterStats_6_AttackPower:
+SnesWorkRam:3FC1:MonsterStats_6_AttackMult:
+SnesWorkRam:3FC2:MonsterStats_6_Evade:
+SnesWorkRam:3FC3:MonsterStats_6_Defense:
+SnesWorkRam:3FC4:MonsterStats_6_MagicPower:
+SnesWorkRam:3FC5:MonsterStats_6_MDefense:
+SnesWorkRam:3FC6:MonsterStats_6_MEvade:
+SnesWorkRam:3FC7-3FC8:MonsterStats_6_HP:sets max and current HP
+SnesWorkRam:3FC9-3FCA:MonsterStats_6_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3FCB-3FCC:MonsterStats_6_Exp:
+SnesWorkRam:3FCD-3FCE:MonsterStats_6_Gil:
+SnesWorkRam:3FCF:MonsterStats_6_AttackFX:
+SnesWorkRam:3FD0:MonsterStats_6_EImmune:
+SnesWorkRam:3FD1:MonsterStats_6_StatusImmune1:
+SnesWorkRam:3FD2:MonsterStats_6_StatusImmune2:
+SnesWorkRam:3FD3:MonsterStats_6_StatusImmune3:
+SnesWorkRam:3FD4:MonsterStats_6_EAbsorb:
+SnesWorkRam:3FD5:MonsterStats_6_CantEvade:
+SnesWorkRam:3FD6:MonsterStats_6_EWeak:
+SnesWorkRam:3FD7:MonsterStats_6_CreatureType:
+SnesWorkRam:3FD8:MonsterStats_6_CmdImmunity:
+SnesWorkRam:3FD9:MonsterStats_6_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3FDA:MonsterStats_6_Status2:
+SnesWorkRam:3FDB:MonsterStats_6_Status3:
+SnesWorkRam:3FDC:MonsterStats_6_Status4:
+SnesWorkRam:3FDD:MonsterStats_6_EnemyNameID:
+SnesWorkRam:3FDE:MonsterStats_6_Level:
+SnesWorkRam:3FDF:MonsterStats_7_Speed:
+SnesWorkRam:3FE0:MonsterStats_7_AttackPower:
+SnesWorkRam:3FE1:MonsterStats_7_AttackMult:
+SnesWorkRam:3FE2:MonsterStats_7_Evade:
+SnesWorkRam:3FE3:MonsterStats_7_Defense:
+SnesWorkRam:3FE4:MonsterStats_7_MagicPower:
+SnesWorkRam:3FE5:MonsterStats_7_MDefense:
+SnesWorkRam:3FE6:MonsterStats_7_MEvade:
+SnesWorkRam:3FE7-3FE8:MonsterStats_7_HP:sets max and current HP
+SnesWorkRam:3FE9-3FEA:MonsterStats_7_MP:monsters always have 9999 max mp, this sets current MP
+SnesWorkRam:3FEB-3FEC:MonsterStats_7_Exp:
+SnesWorkRam:3FED-3FEE:MonsterStats_7_Gil:
+SnesWorkRam:3FEF:MonsterStats_7_AttackFX:
+SnesWorkRam:3FF0:MonsterStats_7_EImmune:
+SnesWorkRam:3FF1:MonsterStats_7_StatusImmune1:
+SnesWorkRam:3FF2:MonsterStats_7_StatusImmune2:
+SnesWorkRam:3FF3:MonsterStats_7_StatusImmune3:
+SnesWorkRam:3FF4:MonsterStats_7_EAbsorb:
+SnesWorkRam:3FF5:MonsterStats_7_CantEvade:
+SnesWorkRam:3FF6:MonsterStats_7_EWeak:
+SnesWorkRam:3FF7:MonsterStats_7_CreatureType:
+SnesWorkRam:3FF8:MonsterStats_7_CmdImmunity:
+SnesWorkRam:3FF9:MonsterStats_7_Status1:high bit here means all status are always instead of initial
+SnesWorkRam:3FFA:MonsterStats_7_Status2:
+SnesWorkRam:3FFB:MonsterStats_7_Status3:
+SnesWorkRam:3FFC:MonsterStats_7_Status4:
+SnesWorkRam:3FFD:MonsterStats_7_EnemyNameID:
+SnesWorkRam:3FFE:MonsterStats_7_Level:
+SnesWorkRam:3FFF:MonstersVisibleUnused:1 bit per monster, copied from EncounterInfo.Visible and doesn't seem to ever get used
+SnesWorkRam:4000-4007:MonsterCoordinates
+SnesWorkRam:4008-4017:MonsterNameID:2 bytes per monster, >255 indicates boss
+SnesWorkRam:4018-401F:InitialMonsters:1 byte per monster, 1 if monster existed at the start of the fight
+SnesWorkRam:4020-402F:BattleMonsterID:2 bytes per monster, >255 indicates boss
+SnesWorkRam:4030-4037:MonsterReactions:1 byte per monster, number of scripted AI reactions
+SnesWorkRam:4038-4039:MonsterSlots_ID:
+SnesWorkRam:403A-403B:MonsterSlots_Count:max 8, despite the 2 bytes
+SnesWorkRam:4048:MonstersVisible:1 bit per monster, copied from EncounterInfo.Visible
+SnesWorkRam:4049:Headgear_0_Targetting:
+SnesWorkRam:404A:Headgear_0_Category:
+SnesWorkRam:404B:Headgear_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:404C:Headgear_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:404D:Headgear_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:404E:Headgear_0_Properties:
+SnesWorkRam:404F:Headgear_0_ItemMagic_ShieldEvade:
+SnesWorkRam:4050:Headgear_0_AtkPower_Defense:
+SnesWorkRam:4051:Headgear_0_AtkType_MEvade:
+SnesWorkRam:4052:Headgear_0_Param1_MDefense:
+SnesWorkRam:4053:Headgear_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4054:Headgear_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4055:Bodywear_0_Targetting:
+SnesWorkRam:4056:Bodywear_0_Category:
+SnesWorkRam:4057:Bodywear_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4058:Bodywear_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4059:Bodywear_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:405A:Bodywear_0_Properties:
+SnesWorkRam:405B:Bodywear_0_ItemMagic_ShieldEvade:
+SnesWorkRam:405C:Bodywear_0_AtkPower_Defense:
+SnesWorkRam:405D:Bodywear_0_AtkType_MEvade:
+SnesWorkRam:405E:Bodywear_0_Param1_MDefense:
+SnesWorkRam:405F:Bodywear_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4060:Bodywear_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4061:Accessory_0_Targetting:
+SnesWorkRam:4062:Accessory_0_Category:
+SnesWorkRam:4063:Accessory_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4064:Accessory_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4065:Accessory_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4066:Accessory_0_Properties:
+SnesWorkRam:4067:Accessory_0_ItemMagic_ShieldEvade:
+SnesWorkRam:4068:Accessory_0_AtkPower_Defense:
+SnesWorkRam:4069:Accessory_0_AtkType_MEvade:
+SnesWorkRam:406A:Accessory_0_Param1_MDefense:
+SnesWorkRam:406B:Accessory_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:406C:Accessory_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:406D:RHShield_0_Targetting:
+SnesWorkRam:406E:RHShield_0_Category:
+SnesWorkRam:406F:RHShield_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4070:RHShield_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4071:RHShield_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4072:RHShield_0_Properties:
+SnesWorkRam:4073:RHShield_0_ItemMagic_ShieldEvade:
+SnesWorkRam:4074:RHShield_0_AtkPower_Defense:
+SnesWorkRam:4075:RHShield_0_AtkType_MEvade:
+SnesWorkRam:4076:RHShield_0_Param1_MDefense:
+SnesWorkRam:4077:RHShield_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4078:RHShield_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4079:LHShield_0_Targetting:
+SnesWorkRam:407A:LHShield_0_Category:
+SnesWorkRam:407B:LHShield_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:407C:LHShield_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:407D:LHShield_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:407E:LHShield_0_Properties:
+SnesWorkRam:407F:LHShield_0_ItemMagic_ShieldEvade:
+SnesWorkRam:4080:LHShield_0_AtkPower_Defense:
+SnesWorkRam:4081:LHShield_0_AtkType_MEvade:
+SnesWorkRam:4082:LHShield_0_Param1_MDefense:
+SnesWorkRam:4083:LHShield_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4084:LHShield_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4085:RHWeapon_0_Targetting:
+SnesWorkRam:4086:RHWeapon_0_Category:
+SnesWorkRam:4087:RHWeapon_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4088:RHWeapon_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4089:RHWeapon_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:408A:RHWeapon_0_Properties:
+SnesWorkRam:408B:RHWeapon_0_ItemMagic_ShieldEvade:
+SnesWorkRam:408C:RHWeapon_0_AtkPower_Defense:
+SnesWorkRam:408D:RHWeapon_0_AtkType_MEvade:
+SnesWorkRam:408E:RHWeapon_0_Param1_MDefense:
+SnesWorkRam:408F:RHWeapon_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4090:RHWeapon_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4091:LHWeapon_0_Targetting:
+SnesWorkRam:4092:LHWeapon_0_Category:
+SnesWorkRam:4093:LHWeapon_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4094:LHWeapon_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4095:LHWeapon_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4096:LHWeapon_0_Properties:
+SnesWorkRam:4097:LHWeapon_0_ItemMagic_ShieldEvade:
+SnesWorkRam:4098:LHWeapon_0_AtkPower_Defense:
+SnesWorkRam:4099:LHWeapon_0_AtkType_MEvade:
+SnesWorkRam:409A:LHWeapon_0_Param1_MDefense:
+SnesWorkRam:409B:LHWeapon_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:409C:LHWeapon_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:409D:Headgear_1_Targetting:
+SnesWorkRam:409E:Headgear_1_Category:
+SnesWorkRam:409F:Headgear_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40A0:Headgear_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40A1:Headgear_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40A2:Headgear_1_Properties:
+SnesWorkRam:40A3:Headgear_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40A4:Headgear_1_AtkPower_Defense:
+SnesWorkRam:40A5:Headgear_1_AtkType_MEvade:
+SnesWorkRam:40A6:Headgear_1_Param1_MDefense:
+SnesWorkRam:40A7:Headgear_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40A8:Headgear_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40A9:Bodywear_1_Targetting:
+SnesWorkRam:40AA:Bodywear_1_Category:
+SnesWorkRam:40AB:Bodywear_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40AC:Bodywear_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40AD:Bodywear_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40AE:Bodywear_1_Properties:
+SnesWorkRam:40AF:Bodywear_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40B0:Bodywear_1_AtkPower_Defense:
+SnesWorkRam:40B1:Bodywear_1_AtkType_MEvade:
+SnesWorkRam:40B2:Bodywear_1_Param1_MDefense:
+SnesWorkRam:40B3:Bodywear_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40B4:Bodywear_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40B5:Accessory_1_Targetting:
+SnesWorkRam:40B6:Accessory_1_Category:
+SnesWorkRam:40B7:Accessory_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40B8:Accessory_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40B9:Accessory_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40BA:Accessory_1_Properties:
+SnesWorkRam:40BB:Accessory_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40BC:Accessory_1_AtkPower_Defense:
+SnesWorkRam:40BD:Accessory_1_AtkType_MEvade:
+SnesWorkRam:40BE:Accessory_1_Param1_MDefense:
+SnesWorkRam:40BF:Accessory_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40C0:Accessory_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40C1:RHShield_1_Targetting:
+SnesWorkRam:40C2:RHShield_1_Category:
+SnesWorkRam:40C3:RHShield_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40C4:RHShield_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40C5:RHShield_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40C6:RHShield_1_Properties:
+SnesWorkRam:40C7:RHShield_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40C8:RHShield_1_AtkPower_Defense:
+SnesWorkRam:40C9:RHShield_1_AtkType_MEvade:
+SnesWorkRam:40CA:RHShield_1_Param1_MDefense:
+SnesWorkRam:40CB:RHShield_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40CC:RHShield_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40CD:LHShield_1_Targetting:
+SnesWorkRam:40CE:LHShield_1_Category:
+SnesWorkRam:40CF:LHShield_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40D0:LHShield_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40D1:LHShield_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40D2:LHShield_1_Properties:
+SnesWorkRam:40D3:LHShield_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40D4:LHShield_1_AtkPower_Defense:
+SnesWorkRam:40D5:LHShield_1_AtkType_MEvade:
+SnesWorkRam:40D6:LHShield_1_Param1_MDefense:
+SnesWorkRam:40D7:LHShield_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40D8:LHShield_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40D9:RHWeapon_1_Targetting:
+SnesWorkRam:40DA:RHWeapon_1_Category:
+SnesWorkRam:40DB:RHWeapon_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40DC:RHWeapon_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40DD:RHWeapon_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40DE:RHWeapon_1_Properties:
+SnesWorkRam:40DF:RHWeapon_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40E0:RHWeapon_1_AtkPower_Defense:
+SnesWorkRam:40E1:RHWeapon_1_AtkType_MEvade:
+SnesWorkRam:40E2:RHWeapon_1_Param1_MDefense:
+SnesWorkRam:40E3:RHWeapon_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40E4:RHWeapon_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40E5:LHWeapon_1_Targetting:
+SnesWorkRam:40E6:LHWeapon_1_Category:
+SnesWorkRam:40E7:LHWeapon_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40E8:LHWeapon_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40E9:LHWeapon_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40EA:LHWeapon_1_Properties:
+SnesWorkRam:40EB:LHWeapon_1_ItemMagic_ShieldEvade:
+SnesWorkRam:40EC:LHWeapon_1_AtkPower_Defense:
+SnesWorkRam:40ED:LHWeapon_1_AtkType_MEvade:
+SnesWorkRam:40EE:LHWeapon_1_Param1_MDefense:
+SnesWorkRam:40EF:LHWeapon_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40F0:LHWeapon_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40F1:Headgear_2_Targetting:
+SnesWorkRam:40F2:Headgear_2_Category:
+SnesWorkRam:40F3:Headgear_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:40F4:Headgear_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:40F5:Headgear_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:40F6:Headgear_2_Properties:
+SnesWorkRam:40F7:Headgear_2_ItemMagic_ShieldEvade:
+SnesWorkRam:40F8:Headgear_2_AtkPower_Defense:
+SnesWorkRam:40F9:Headgear_2_AtkType_MEvade:
+SnesWorkRam:40FA:Headgear_2_Param1_MDefense:
+SnesWorkRam:40FB:Headgear_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:40FC:Headgear_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:40FD:Bodywear_2_Targetting:
+SnesWorkRam:40FE:Bodywear_2_Category:
+SnesWorkRam:40FF:Bodywear_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4100:Bodywear_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4101:Bodywear_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4102:Bodywear_2_Properties:
+SnesWorkRam:4103:Bodywear_2_ItemMagic_ShieldEvade:
+SnesWorkRam:4104:Bodywear_2_AtkPower_Defense:
+SnesWorkRam:4105:Bodywear_2_AtkType_MEvade:
+SnesWorkRam:4106:Bodywear_2_Param1_MDefense:
+SnesWorkRam:4107:Bodywear_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4108:Bodywear_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4109:Accessory_2_Targetting:
+SnesWorkRam:410A:Accessory_2_Category:
+SnesWorkRam:410B:Accessory_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:410C:Accessory_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:410D:Accessory_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:410E:Accessory_2_Properties:
+SnesWorkRam:410F:Accessory_2_ItemMagic_ShieldEvade:
+SnesWorkRam:4110:Accessory_2_AtkPower_Defense:
+SnesWorkRam:4111:Accessory_2_AtkType_MEvade:
+SnesWorkRam:4112:Accessory_2_Param1_MDefense:
+SnesWorkRam:4113:Accessory_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4114:Accessory_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4115:RHShield_2_Targetting:
+SnesWorkRam:4116:RHShield_2_Category:
+SnesWorkRam:4117:RHShield_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4118:RHShield_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4119:RHShield_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:411A:RHShield_2_Properties:
+SnesWorkRam:411B:RHShield_2_ItemMagic_ShieldEvade:
+SnesWorkRam:411C:RHShield_2_AtkPower_Defense:
+SnesWorkRam:411D:RHShield_2_AtkType_MEvade:
+SnesWorkRam:411E:RHShield_2_Param1_MDefense:
+SnesWorkRam:411F:RHShield_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4120:RHShield_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4121:LHShield_2_Targetting:
+SnesWorkRam:4122:LHShield_2_Category:
+SnesWorkRam:4123:LHShield_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4124:LHShield_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4125:LHShield_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4126:LHShield_2_Properties:
+SnesWorkRam:4127:LHShield_2_ItemMagic_ShieldEvade:
+SnesWorkRam:4128:LHShield_2_AtkPower_Defense:
+SnesWorkRam:4129:LHShield_2_AtkType_MEvade:
+SnesWorkRam:412A:LHShield_2_Param1_MDefense:
+SnesWorkRam:412B:LHShield_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:412C:LHShield_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:412D:RHWeapon_2_Targetting:
+SnesWorkRam:412E:RHWeapon_2_Category:
+SnesWorkRam:412F:RHWeapon_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4130:RHWeapon_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4131:RHWeapon_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4132:RHWeapon_2_Properties:
+SnesWorkRam:4133:RHWeapon_2_ItemMagic_ShieldEvade:
+SnesWorkRam:4134:RHWeapon_2_AtkPower_Defense:
+SnesWorkRam:4135:RHWeapon_2_AtkType_MEvade:
+SnesWorkRam:4136:RHWeapon_2_Param1_MDefense:
+SnesWorkRam:4137:RHWeapon_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4138:RHWeapon_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4139:LHWeapon_2_Targetting:
+SnesWorkRam:413A:LHWeapon_2_Category:
+SnesWorkRam:413B:LHWeapon_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:413C:LHWeapon_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:413D:LHWeapon_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:413E:LHWeapon_2_Properties:
+SnesWorkRam:413F:LHWeapon_2_ItemMagic_ShieldEvade:
+SnesWorkRam:4140:LHWeapon_2_AtkPower_Defense:
+SnesWorkRam:4141:LHWeapon_2_AtkType_MEvade:
+SnesWorkRam:4142:LHWeapon_2_Param1_MDefense:
+SnesWorkRam:4143:LHWeapon_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4144:LHWeapon_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4145:Headgear_3_Targetting:
+SnesWorkRam:4146:Headgear_3_Category:
+SnesWorkRam:4147:Headgear_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4148:Headgear_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4149:Headgear_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:414A:Headgear_3_Properties:
+SnesWorkRam:414B:Headgear_3_ItemMagic_ShieldEvade:
+SnesWorkRam:414C:Headgear_3_AtkPower_Defense:
+SnesWorkRam:414D:Headgear_3_AtkType_MEvade:
+SnesWorkRam:414E:Headgear_3_Param1_MDefense:
+SnesWorkRam:414F:Headgear_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4150:Headgear_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4151:Bodywear_3_Targetting:
+SnesWorkRam:4152:Bodywear_3_Category:
+SnesWorkRam:4153:Bodywear_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4154:Bodywear_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4155:Bodywear_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4156:Bodywear_3_Properties:
+SnesWorkRam:4157:Bodywear_3_ItemMagic_ShieldEvade:
+SnesWorkRam:4158:Bodywear_3_AtkPower_Defense:
+SnesWorkRam:4159:Bodywear_3_AtkType_MEvade:
+SnesWorkRam:415A:Bodywear_3_Param1_MDefense:
+SnesWorkRam:415B:Bodywear_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:415C:Bodywear_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:415D:Accessory_3_Targetting:
+SnesWorkRam:415E:Accessory_3_Category:
+SnesWorkRam:415F:Accessory_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4160:Accessory_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4161:Accessory_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4162:Accessory_3_Properties:
+SnesWorkRam:4163:Accessory_3_ItemMagic_ShieldEvade:
+SnesWorkRam:4164:Accessory_3_AtkPower_Defense:
+SnesWorkRam:4165:Accessory_3_AtkType_MEvade:
+SnesWorkRam:4166:Accessory_3_Param1_MDefense:
+SnesWorkRam:4167:Accessory_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4168:Accessory_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4169:RHShield_3_Targetting:
+SnesWorkRam:416A:RHShield_3_Category:
+SnesWorkRam:416B:RHShield_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:416C:RHShield_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:416D:RHShield_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:416E:RHShield_3_Properties:
+SnesWorkRam:416F:RHShield_3_ItemMagic_ShieldEvade:
+SnesWorkRam:4170:RHShield_3_AtkPower_Defense:
+SnesWorkRam:4171:RHShield_3_AtkType_MEvade:
+SnesWorkRam:4172:RHShield_3_Param1_MDefense:
+SnesWorkRam:4173:RHShield_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4174:RHShield_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4175:LHShield_3_Targetting:
+SnesWorkRam:4176:LHShield_3_Category:
+SnesWorkRam:4177:LHShield_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4178:LHShield_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4179:LHShield_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:417A:LHShield_3_Properties:
+SnesWorkRam:417B:LHShield_3_ItemMagic_ShieldEvade:
+SnesWorkRam:417C:LHShield_3_AtkPower_Defense:
+SnesWorkRam:417D:LHShield_3_AtkType_MEvade:
+SnesWorkRam:417E:LHShield_3_Param1_MDefense:
+SnesWorkRam:417F:LHShield_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4180:LHShield_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4181:RHWeapon_3_Targetting:
+SnesWorkRam:4182:RHWeapon_3_Category:
+SnesWorkRam:4183:RHWeapon_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4184:RHWeapon_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4185:RHWeapon_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4186:RHWeapon_3_Properties:
+SnesWorkRam:4187:RHWeapon_3_ItemMagic_ShieldEvade:
+SnesWorkRam:4188:RHWeapon_3_AtkPower_Defense:
+SnesWorkRam:4189:RHWeapon_3_AtkType_MEvade:
+SnesWorkRam:418A:RHWeapon_3_Param1_MDefense:
+SnesWorkRam:418B:RHWeapon_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:418C:RHWeapon_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:418D:LHWeapon_3_Targetting:
+SnesWorkRam:418E:LHWeapon_3_Category:
+SnesWorkRam:418F:LHWeapon_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:4190:LHWeapon_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:4191:LHWeapon_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:4192:LHWeapon_3_Properties:
+SnesWorkRam:4193:LHWeapon_3_ItemMagic_ShieldEvade:
+SnesWorkRam:4194:LHWeapon_3_AtkPower_Defense:
+SnesWorkRam:4195:LHWeapon_3_AtkType_MEvade:
+SnesWorkRam:4196:LHWeapon_3_Param1_MDefense:
+SnesWorkRam:4197:LHWeapon_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:4198:LHWeapon_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:4199-419A:CharEquippable_Weapons:2 bytes weapons, 2 bytes armor, 4*4 byte entries
+SnesWorkRam:419B-419C:CharEquippable_Armor:2 bytes weapons, 2 bytes armor, 4*4 byte entries
+SnesWorkRam:41A9-41AD:ATBReadyQueue:seems to be a queue of character indexes that have their atb ready, 5 bytes, $FF is empty and also the queue terminator
+SnesWorkRam:41AE:ATBReadyCount:count of above queue
+SnesWorkRam:41B0:MenuDataC1_MenuOpen:	
+SnesWorkRam:41B1:MenuDataC1_ActionFlag:	
+SnesWorkRam:41B2:MenuDataC1_Command:	
+SnesWorkRam:41B3:MenuDataC1_CurrentChar:	
+SnesWorkRam:41B4:MenuDataC1_MonsterTargets:	
+SnesWorkRam:41B5:MenuDataC1_PartyTargets:	
+SnesWorkRam:41B6:MenuDataC1_SelectedItem:for weapon-use effects, 0 indicates right hand, otherwise left
+SnesWorkRam:41B7:MenuDataC1_7:	
+SnesWorkRam:41B8:MenuDataC1_SecondActionFlag:	
+SnesWorkRam:41B9:MenuDataC1_SecondCommand:	
+SnesWorkRam:41BA:MenuDataC1_10:	
+SnesWorkRam:41BB:MenuDataC1_SecondMonsterTargets:	
+SnesWorkRam:41BC:MenuDataC1_SecondPartyTargets:	
+SnesWorkRam:41BD:MenuDataC1_SecondSelectedItem:	
+SnesWorkRam:41BE:MenuData_MenuOpen:
+SnesWorkRam:41BF:MenuData_ActionFlag:
+SnesWorkRam:41C0:MenuData_Command:
+SnesWorkRam:41C1:MenuData_CurrentChar:
+SnesWorkRam:41C2:MenuData_MonsterTargets:
+SnesWorkRam:41C3:MenuData_PartyTargets:
+SnesWorkRam:41C4:MenuData_SelectedItem:for weapon-use effects, 0 indicates right hand, otherwise left
+SnesWorkRam:41C5:MenuData_7:
+SnesWorkRam:41C6:MenuData_SecondActionFlag:
+SnesWorkRam:41C7:MenuData_SecondCommand:
+SnesWorkRam:41C8:MenuData_10:
+SnesWorkRam:41C9:MenuData_SecondMonsterTargets:
+SnesWorkRam:41CA:MenuData_SecondPartyTargets:
+SnesWorkRam:41CB:MenuData_SecondSelectedItem:
+SnesWorkRam:41CC:DisplayInfo_CurrentChar:	init to FF, but holds index of character that currently has a menu open
+SnesWorkRam:41CD:DisplayInfo_41CD:	likely unused
+SnesWorkRam:41CE:DisplayInfo_Status1:these status are processed 2 at a time using 16 bits
+SnesWorkRam:41CF:DisplayInfo_Status2:	
+SnesWorkRam:41D0:DisplayInfo_Status3:
+SnesWorkRam:41D1:DisplayInfo_Status4:
+SnesWorkRam:41D2-41D3:DisplayInfo_CurMP:
+SnesWorkRam:41D4:SavedActionMimic_ActionFlag:20h magic, 40h item
+SnesWorkRam:41D5:SavedActionMimic_Command:		
+SnesWorkRam:41D6:SavedActionMimic_MonsterTargets:Monster Target
+SnesWorkRam:41D7:SavedActionMimic_PartyTargets:Character Target
+SnesWorkRam:41D8:SavedActionMimic_SelectedItem:Chosen Item (for throw, etc)
+SnesWorkRam:41D9:SavedActionMimic_SecondActionFlag:		
+SnesWorkRam:41DA:SavedActionMimic_SecondCommand:
+SnesWorkRam:41DB:SavedActionMimic_SecondMonsterTargets:
+SnesWorkRam:41DC:SavedActionMimic_SecondPartyTargets:
+SnesWorkRam:41DD:SavedActionMimic_SecondSelectedItem:
+SnesWorkRam:41DE-41ED:MonsterMagic:spells available to monsters,1 byte * 16 slots (per monster)
+SnesWorkRam:425E:MMTargets_Party:targets of MonsterMagic structure, 16 slots per monster
+SnesWorkRam:425F:MMTargets_Monster:targets of MonsterMagic structure, 16 slots per monster
+SnesWorkRam:435E:MonsterOffset16:monster index *16, used in monster atb/ai
+SnesWorkRam:4360:MonsterOffset32:monster index *32, used in monster atb/ai
+SnesWorkRam:4363-4366:AIVars:variables used by AI condition checks, unsure how many, possibly 4 (0-3)
+SnesWorkRam:4367:MonsterAIScript_Flag:00 for valid actions, $FF for empty
+SnesWorkRam:4368:MonsterAIScript_Cmd:Command Value, usually $FC for graphics
+SnesWorkRam:4369:MonsterAIScript_Type:Command Type (for Command $FC)                 
+SnesWorkRam:436A:MonsterAIScript_Data1:use varies by command type
+SnesWorkRam:436B:MonsterAIScript_Data2:use varies by command type
+SnesWorkRam:4687-468E:AIActiveConditionSet:1 byte per monster, currently active AI condition set for each monster
+SnesWorkRam:468F:AICurrentActiveCondSet:Current AI Condition Set for this monster being processed (copied from above)
+SnesWorkRam:4690:AICurrentCheckedSet:set of conditions currently being checked
+SnesWorkRam:4691:AICheckIndex:this is which of the 4 in a set is currently being checked
+SnesWorkRam:4692-4693:AIConditionOffset:2 bytes, pointer within MonsterAI.Conditions to current 4 byte condition being checked
+SnesWorkRam:4694:AIConditionMet:non-zero if a the last checked condition is met
+SnesWorkRam:4696:AICurrentOffset
+SnesWorkRam:46A6-46B5:SavedMonsterMagic:MonsterMagic post-action (16 bytes) saved and later restored during monster reactions
+SnesWorkRam:46B6-46D5:SavedMMTargets:MMTargets post-action (32 bytes) saved and later restored during monster reactions
+SnesWorkRam:46D6-4739:SavedMonsterAIScript:MonsterAiScript post-action (100 bytes) saved and later restored during monster reactions
+SnesWorkRam:473A:SavedActionReaction_ActionFlag:20h magic, 40h item
+SnesWorkRam:473B:SavedActionReaction_Command:	
+SnesWorkRam:473C:SavedActionReaction_MonsterTargets:Monster Target
+SnesWorkRam:473D:SavedActionReaction_PartyTargets:Character Target
+SnesWorkRam:473E:SavedActionReaction_SelectedItem:Chosen Item (for throw, etc)
+SnesWorkRam:473F:SavedActionReaction_SecondActionFlag:	
+SnesWorkRam:4740:SavedActionReaction_SecondCommand:
+SnesWorkRam:4741:SavedActionReaction_SecondMonsterTargets:
+SnesWorkRam:4742:SavedActionReaction_SecondPartyTargets:
+SnesWorkRam:4743:SavedActionReaction_SecondSelectedItem:
+SnesWorkRam:4744:SavedEnableATB:EnableTimer.ATB and CurrentTimer.ATB are saved to these then later restored
+SnesWorkRam:4745:SavedCurrentATB:EnableTimer.ATB and CurrentTimer.ATB are saved to these then later restored
+SnesWorkRam:4746:CurrentCommand_ID:index into command jump table (Steal, Jump, etc), post remap
+SnesWorkRam:4747:CurrentCommand_Magic:	
+SnesWorkRam:4748:CurrentCommand_Item:	
+SnesWorkRam:4749:CurrentCommand_Element:
+SnesWorkRam:474A:CurrentCommand_Category:Song/Blue/etc
+SnesWorkRam:474B:CurrentCommand_Targets:one byte, either party or monster targets
+SnesWorkRam:474C:CurrentCommand_Damage:both bytes of damage OR'd together
+SnesWorkRam:474D:CommandOffset:Current Command, but adjusted to match the order of the command table
+SnesWorkRam:474E:CurrentlyReacting:indicates that a monster reaction is being processed, which tends to skip things
+SnesWorkRam:474F:FinalTargetBits:targets of the attacks in the last turn, for reactions
+SnesWorkRam:4750:TargetWasParty:targets of the attacks in the last turn, for reactions
+SnesWorkRam:4751:FinalTarget2Bits:targets of the attacks in the last turn, for reactions
+SnesWorkRam:4752:Target2WasParty:targets of the attacks in the last turn, for reactions
+SnesWorkRam:4753:ReactionFlags:low bit determines whether condition checks should use reaction1 or reaction2 fields, 80h set during tick end processing if a turn was proessed, 40h set during tick end processing if a second action happened?
+SnesWorkRam:4754:TurnProcessed:keeps track of whether a turn was processed in the current tick
+SnesWorkRam:4755:ReactingIndex:monster index or char index of the target of the last action, either 0-7 or 0-11 depending on ReactingIndexType $7C56, 80h is a flag
+SnesWorkRam:4756:PendingReactions:indicates PauseTimerChecks had some values set
+SnesWorkRam:4759-4802:MonsterAI_Conditions:10*17 bytes.   4*4byte args then $FE
+SnesWorkRam:4803-4A82:MonsterAI_Actions:10*64 byte entries
+SnesWorkRam:4A83-4BDC:MonsterAI_ReactConditions:10*17 bytes.   4*4byte args then $FE
+SnesWorkRam:4B2D-4DAC:MonsterAI_ReactActions:10*64 byte entries
+SnesWorkRam:79F9:NextGFXQueueSlot:Max 101, though there can be more queued GFXs than that, game works around it by just searching if so
+SnesWorkRam:79FA:ProcSequence:might be which attack out of a multi command sequence that we're on?
+SnesWorkRam:79FB:MultiDamage:Used *24 when calculating the offset for displayed damage numbers
+SnesWorkRam:79FC:AttackInfo_0_Targetting:
+SnesWorkRam:79FD:AttackInfo_0_Category:
+SnesWorkRam:79FE:AttackInfo_0_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:79FF:AttackInfo_0_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A00:AttackInfo_0_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A01:AttackInfo_0_Properties:
+SnesWorkRam:7A02:AttackInfo_0_ItemMagic_ShieldEvade:
+SnesWorkRam:7A03:AttackInfo_0_AtkPower_Defense:
+SnesWorkRam:7A04:AttackInfo_0_AtkType_MEvade:
+SnesWorkRam:7A05:AttackInfo_0_Param1_MDefense:
+SnesWorkRam:7A06:AttackInfo_0_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A07:AttackInfo_0_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A08:AttackInfo_1_Targetting:
+SnesWorkRam:7A09:AttackInfo_1_Category:
+SnesWorkRam:7A0A:AttackInfo_1_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A0B:AttackInfo_1_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A0C:AttackInfo_1_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A0D:AttackInfo_1_Properties:
+SnesWorkRam:7A0E:AttackInfo_1_ItemMagic_ShieldEvade:
+SnesWorkRam:7A0F:AttackInfo_1_AtkPower_Defense:
+SnesWorkRam:7A10:AttackInfo_1_AtkType_MEvade:
+SnesWorkRam:7A11:AttackInfo_1_Param1_MDefense:
+SnesWorkRam:7A12:AttackInfo_1_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A13:AttackInfo_1_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A14:AttackInfo_2_Targetting:
+SnesWorkRam:7A15:AttackInfo_2_Category:
+SnesWorkRam:7A16:AttackInfo_2_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A17:AttackInfo_2_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A18:AttackInfo_2_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A19:AttackInfo_2_Properties:
+SnesWorkRam:7A1A:AttackInfo_2_ItemMagic_ShieldEvade:
+SnesWorkRam:7A1B:AttackInfo_2_AtkPower_Defense:
+SnesWorkRam:7A1C:AttackInfo_2_AtkType_MEvade:
+SnesWorkRam:7A1D:AttackInfo_2_Param1_MDefense:
+SnesWorkRam:7A1E:AttackInfo_2_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A1F:AttackInfo_2_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A20:AttackInfo_3_Targetting:
+SnesWorkRam:7A21:AttackInfo_3_Category:
+SnesWorkRam:7A22:AttackInfo_3_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A23:AttackInfo_3_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A24:AttackInfo_3_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A25:AttackInfo_3_Properties:
+SnesWorkRam:7A26:AttackInfo_3_ItemMagic_ShieldEvade:
+SnesWorkRam:7A27:AttackInfo_3_AtkPower_Defense:
+SnesWorkRam:7A28:AttackInfo_3_AtkType_MEvade:
+SnesWorkRam:7A29:AttackInfo_3_Param1_MDefense:
+SnesWorkRam:7A2A:AttackInfo_3_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A2B:AttackInfo_3_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A2C:AttackInfo_4_Targetting:
+SnesWorkRam:7A2D:AttackInfo_4_Category:
+SnesWorkRam:7A2E:AttackInfo_4_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A2F:AttackInfo_4_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A30:AttackInfo_4_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A31:AttackInfo_4_Properties:
+SnesWorkRam:7A32:AttackInfo_4_ItemMagic_ShieldEvade:
+SnesWorkRam:7A33:AttackInfo_4_AtkPower_Defense:
+SnesWorkRam:7A34:AttackInfo_4_AtkType_MEvade:
+SnesWorkRam:7A35:AttackInfo_4_Param1_MDefense:
+SnesWorkRam:7A36:AttackInfo_4_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A37:AttackInfo_4_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A38:AttackInfo_5_Targetting:
+SnesWorkRam:7A39:AttackInfo_5_Category:
+SnesWorkRam:7A3A:AttackInfo_5_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A3B:AttackInfo_5_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A3C:AttackInfo_5_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A3D:AttackInfo_5_Properties:
+SnesWorkRam:7A3E:AttackInfo_5_ItemMagic_ShieldEvade:
+SnesWorkRam:7A3F:AttackInfo_5_AtkPower_Defense:
+SnesWorkRam:7A40:AttackInfo_5_AtkType_MEvade:
+SnesWorkRam:7A41:AttackInfo_5_Param1_MDefense:
+SnesWorkRam:7A42:AttackInfo_5_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A43:AttackInfo_5_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A44:AttackInfo_6_Targetting:
+SnesWorkRam:7A45:AttackInfo_6_Category:
+SnesWorkRam:7A46:AttackInfo_6_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A47:AttackInfo_6_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A48:AttackInfo_6_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A49:AttackInfo_6_Properties:
+SnesWorkRam:7A4A:AttackInfo_6_ItemMagic_ShieldEvade:
+SnesWorkRam:7A4B:AttackInfo_6_AtkPower_Defense:
+SnesWorkRam:7A4C:AttackInfo_6_AtkType_MEvade:
+SnesWorkRam:7A4D:AttackInfo_6_Param1_MDefense:
+SnesWorkRam:7A4E:AttackInfo_6_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A4F:AttackInfo_6_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A50:AttackInfo_7_Targetting:
+SnesWorkRam:7A51:AttackInfo_7_Category:
+SnesWorkRam:7A52:AttackInfo_7_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A53:AttackInfo_7_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A54:AttackInfo_7_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A55:AttackInfo_7_Properties:
+SnesWorkRam:7A56:AttackInfo_7_ItemMagic_ShieldEvade:
+SnesWorkRam:7A57:AttackInfo_7_AtkPower_Defense:
+SnesWorkRam:7A58:AttackInfo_7_AtkType_MEvade:
+SnesWorkRam:7A59:AttackInfo_7_Param1_MDefense:
+SnesWorkRam:7A5A:AttackInfo_7_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A5B:AttackInfo_7_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A5C:AttackInfo_8_Targetting:
+SnesWorkRam:7A5D:AttackInfo_8_Category:
+SnesWorkRam:7A5E:AttackInfo_8_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A5F:AttackInfo_8_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A60:AttackInfo_8_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A61:AttackInfo_8_Properties:
+SnesWorkRam:7A62:AttackInfo_8_ItemMagic_ShieldEvade:
+SnesWorkRam:7A63:AttackInfo_8_AtkPower_Defense:
+SnesWorkRam:7A64:AttackInfo_8_AtkType_MEvade:
+SnesWorkRam:7A65:AttackInfo_8_Param1_MDefense:
+SnesWorkRam:7A66:AttackInfo_8_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A67:AttackInfo_8_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A68:AttackInfo_9_Targetting:
+SnesWorkRam:7A69:AttackInfo_9_Category:
+SnesWorkRam:7A6A:AttackInfo_9_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A6B:AttackInfo_9_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A6C:AttackInfo_9_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A6D:AttackInfo_9_Properties:
+SnesWorkRam:7A6E:AttackInfo_9_ItemMagic_ShieldEvade:
+SnesWorkRam:7A6F:AttackInfo_9_AtkPower_Defense:
+SnesWorkRam:7A70:AttackInfo_9_AtkType_MEvade:
+SnesWorkRam:7A71:AttackInfo_9_Param1_MDefense:
+SnesWorkRam:7A72:AttackInfo_9_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A73:AttackInfo_9_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A74:AttackInfo_10_Targetting:
+SnesWorkRam:7A75:AttackInfo_10_Category:
+SnesWorkRam:7A76:AttackInfo_10_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A77:AttackInfo_10_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A78:AttackInfo_10_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A79:AttackInfo_10_Properties:
+SnesWorkRam:7A7A:AttackInfo_10_ItemMagic_ShieldEvade:
+SnesWorkRam:7A7B:AttackInfo_10_AtkPower_Defense:
+SnesWorkRam:7A7C:AttackInfo_10_AtkType_MEvade:
+SnesWorkRam:7A7D:AttackInfo_10_Param1_MDefense:
+SnesWorkRam:7A7E:AttackInfo_10_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A7F:AttackInfo_10_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A80:AttackInfo_11_Targetting:
+SnesWorkRam:7A81:AttackInfo_11_Category:
+SnesWorkRam:7A82:AttackInfo_11_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A83:AttackInfo_11_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A84:AttackInfo_11_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A85:AttackInfo_11_Properties:
+SnesWorkRam:7A86:AttackInfo_11_ItemMagic_ShieldEvade:
+SnesWorkRam:7A87:AttackInfo_11_AtkPower_Defense:
+SnesWorkRam:7A88:AttackInfo_11_AtkType_MEvade:
+SnesWorkRam:7A89:AttackInfo_11_Param1_MDefense:
+SnesWorkRam:7A8A:AttackInfo_11_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A8B:AttackInfo_11_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A8C:AttackInfo_12_Targetting:
+SnesWorkRam:7A8D:AttackInfo_12_Category:
+SnesWorkRam:7A8E:AttackInfo_12_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A8F:AttackInfo_12_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A90:AttackInfo_12_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A91:AttackInfo_12_Properties:
+SnesWorkRam:7A92:AttackInfo_12_ItemMagic_ShieldEvade:
+SnesWorkRam:7A93:AttackInfo_12_AtkPower_Defense:
+SnesWorkRam:7A94:AttackInfo_12_AtkType_MEvade:
+SnesWorkRam:7A95:AttackInfo_12_Param1_MDefense:
+SnesWorkRam:7A96:AttackInfo_12_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7A97:AttackInfo_12_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7A98:AttackInfo_13_Targetting:
+SnesWorkRam:7A99:AttackInfo_13_Category:
+SnesWorkRam:7A9A:AttackInfo_13_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7A9B:AttackInfo_13_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7A9C:AttackInfo_13_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7A9D:AttackInfo_13_Properties:
+SnesWorkRam:7A9E:AttackInfo_13_ItemMagic_ShieldEvade:
+SnesWorkRam:7A9F:AttackInfo_13_AtkPower_Defense:
+SnesWorkRam:7AA0:AttackInfo_13_AtkType_MEvade:
+SnesWorkRam:7AA1:AttackInfo_13_Param1_MDefense:
+SnesWorkRam:7AA2:AttackInfo_13_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7AA3:AttackInfo_13_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7AA4:AttackInfo_14_Targetting:
+SnesWorkRam:7AA5:AttackInfo_14_Category:
+SnesWorkRam:7AA6:AttackInfo_14_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7AA7:AttackInfo_14_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7AA8:AttackInfo_14_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7AA9:AttackInfo_14_Properties:
+SnesWorkRam:7AAA:AttackInfo_14_ItemMagic_ShieldEvade:
+SnesWorkRam:7AAB:AttackInfo_14_AtkPower_Defense:
+SnesWorkRam:7AAC:AttackInfo_14_AtkType_MEvade:
+SnesWorkRam:7AAD:AttackInfo_14_Param1_MDefense:
+SnesWorkRam:7AAE:AttackInfo_14_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7AAF:AttackInfo_14_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7AB0:AttackInfo_15_Targetting:
+SnesWorkRam:7AB1:AttackInfo_15_Category:
+SnesWorkRam:7AB2:AttackInfo_15_EquipmentType_CmdStatus_Misc:
+SnesWorkRam:7AB3:AttackInfo_15_ElementOrStatsUp_MPCost_DamageMod:
+SnesWorkRam:7AB4:AttackInfo_15_DoubleGrip_Description_MagicAtkType:
+SnesWorkRam:7AB5:AttackInfo_15_Properties:
+SnesWorkRam:7AB6:AttackInfo_15_ItemMagic_ShieldEvade:
+SnesWorkRam:7AB7:AttackInfo_15_AtkPower_Defense:
+SnesWorkRam:7AB8:AttackInfo_15_AtkType_MEvade:
+SnesWorkRam:7AB9:AttackInfo_15_Param1_MDefense:
+SnesWorkRam:7ABA:AttackInfo_15_Param2_ElementDef:(For many atk types this is Proc chance)
+SnesWorkRam:7ABB:AttackInfo_15_Param3_Status:(For many atk types this is Proc Command/Magic)
+SnesWorkRam:7ABC:TargetAdjust:causes some kind of adjustment to target index, believe it's used to dispatch individual attacks from a multitarget ability
+SnesWorkRam:7ACC-7ADB:TargetType:set to $10 for a weapon proc, 0 for single target item, 80h for multi target item or spell
+SnesWorkRam:7ADC-7AFB:CommandTargetBitmask:16-bit target bitmask just like the one below
+SnesWorkRam:7AFC-7AFD:TargetBitmask:16-bit target bitmask CCCCMMMM MMMM____
+SnesWorkRam:7B0E:CounterData_D0:address of special counter data in D0 Bank
+SnesWorkRam:7B1C-7B2B:MultiTarget:number of targets, except single target = 0
+SnesWorkRam:7B2C:MultiCommand:offset into combat tables such as target bitmask, seems like it could be valid 0-15 in some places, but others only up to 3
+SnesWorkRam:7B2D-7B3F:AtkType:table of attack types indexed by MultiCommand above, High bit is used as a flag, $FF is also a special case that points to the next MultiCommand
+SnesWorkRam:7B40:FightFlag:set to 1 during damage application when command is Fight,Capture,Jump,Aim,X-Fight or any type of magic when selected spell is monster attack/specialty
+SnesWorkRam:7B41:TargetBitMaskSmall:single byte, bits indicate target (can be party or monsters)
+SnesWorkRam:7B42:ReflectorBitmask:single byte, bits indicate who is reflecting a spell (can be party or monsters)
+SnesWorkRam:7B43:ReflecteeBitmask:single byte, bits indicate who getting hit by a reflected spell (can be party or monsters)
+SnesWorkRam:7B44:CoveredBitmask:bit indicating who is covered for an attack
+SnesWorkRam:7B45:AnotherTargetIndex:index indicating who is covering for an attack (strangely, not a bitmask), isn't just used for cover, not sure exactly what it's for yet
+SnesWorkRam:7B46:Reflected:either a flag indicating reflect occuring or a count of reflected spells
+SnesWorkRam:7B49-7B50:CounterReflecteeTable:8 bytes * Multicommand, doesn't seem to ever be used anywhere after being set up
+SnesWorkRam:7B69:BaseDamage:Damage after defense and M
+SnesWorkRam:7B6B:DamageToAttacker:Final Damage to Attacker
+SnesWorkRam:7B6D:DamageToTarget:Target Final Damage
+SnesWorkRam:7B6F:HealingToAttacker:Final Healing to Attacker
+SnesWorkRam:7B71:HealingToTarget:Target Final Healing
+SnesWorkRam:7B73:HealingToAttackerMP
+SnesWorkRam:7B75:HealingToTargetMP
+SnesWorkRam:7B77:DamageToAttackerMP
+SnesWorkRam:7B79:DamageToTargetMP
+SnesWorkRam:7B7B:CurrentChar:used in some routines to keep track of the current character being processed
+SnesWorkRam:7B7D:GearChanged:>0 means equipment was changed in the battle item menu
+SnesWorkRam:7B7E:CombinedStatus_Party_S1:combines status and always status
+SnesWorkRam:7B7F:CombinedStatus_Party_S2:combines status and always status
+SnesWorkRam:7B80:CombinedStatus_Party_S3:combines status and always status
+SnesWorkRam:7B81:CombinedStatus_Party_S4:combines status and always status
+SnesWorkRam:7B9E:CombinedStatus_Monster_S1:combines status and always status
+SnesWorkRam:7B9F:CombinedStatus_Monster_S2:combines status and always status
+SnesWorkRam:7BA0:CombinedStatus_Monster_S3:combines status and always status
+SnesWorkRam:7BA1:CombinedStatus_Monster_S4:combines status and always status
+SnesWorkRam:7BDE:BattleOver:Flag for ending battle
+SnesWorkRam:7BE1:Strength
+SnesWorkRam:7BE2:Agility
+SnesWorkRam:7BE3:Vitality
+SnesWorkRam:7BE4:MagicPower
+SnesWorkRam:7BE5:Level
+SnesWorkRam:7BE6:Void:40h void battle state (no magic)
+SnesWorkRam:7BE8:FleeSuccess:80h on Exit cast, 0 seems to reset FleeTicker for normal running, so might be another value while holding L+R?
+SnesWorkRam:7BEB:HitsInactive:causes attacks to still be able to hit most inactive targets (dead, hiding, etc)
+SnesWorkRam:7BFB:UnknownReaction:bunch of "do nothing" commands set this to 1, not used in battle logic but likely animation related
+SnesWorkRam:7BFC:DelayedFight:set when Build Up or Jump commands execute
+SnesWorkRam:7BFD:SwordSlap:set when Sword Slap command executes, then is never checked again
+SnesWorkRam:7C03:MonsterIndex:also used as SearchGFXQueue
+SnesWorkRam:7C04:UncontrolledATB:Party member ATB when Zombie/Berserk/Charm
+SnesWorkRam:7C08:MPTaken:Flag set when MP is taken for a spell
+SnesWorkRam:7C09:MonsterKillTracker:bitfield of monsters used to track kills, for loot
+SnesWorkRam:7C0A:InactiveMonsters:bitfield, bits set for slots that weren't active/visible at battle start
+SnesWorkRam:7C0B-7C0D:VictoryGil:3 byte total of Gil from monster kills (only tallied at end of battle)
+SnesWorkRam:7C0E-7C10:VictoryExp:3 byte total of Exp from monster kills (only tallied at end of battle)
+SnesWorkRam:7C11-7C18:OriginalMaxHP:saved before Giant Drink doubles MHP, 8 bytes, 2 per char
+SnesWorkRam:7C19:BackAttack
+SnesWorkRam:7C1A-7C1D:SavedCharRow:1 byte * 4 characters, same format as CharStruct.CharRow
+SnesWorkRam:7C1E-7C1F:EarthWallHP
+SnesWorkRam:7C20:BlueLearnedCount:number of blue spells learned this fight, max 8
+SnesWorkRam:7C21-7C28:BlueLearned:ids of blue spells learned, 8 bytes
+SnesWorkRam:7C29:NoValidTargets:set to 1 when retargetting fails to find a valid new target
+SnesWorkRam:7C2A:ForcedTarget_Party:
+SnesWorkRam:7C2B:ForcedTarget_Monster:						
+SnesWorkRam:7C3A:ControlTarget:holds target index for control, 4 bytes to handle party
+SnesWorkRam:7C3E:ControlCommand:likely chosen command for control (unconfirmed), 4 bytes to handle party,set to 0 upon successful control
+SnesWorkRam:7C42:ControllingA:related to control? 1 when controlling
+SnesWorkRam:7C43-7C4A:MonsterControlActions:8 bytes for monsters, Control Action from CharControl.Actions
+SnesWorkRam:7C4B:ReleasedMonsterID:monster ID when you release a monster? 
+SnesWorkRam:7C4C:SandwormBattle:changes what attack type 61 does and some other adjustments
+SnesWorkRam:7C4D:ControllingB:related to control? 1 when controlling, unsure how it differs from A, they're set at the same time
+SnesWorkRam:7C4E:FleeTickerActive:FleeTicker doesn't advance unless this is set, set to 1 on first character atb
+SnesWorkRam:7C4F:WasMonsterReleased
+SnesWorkRam:7C50:AISkipDeadCheck:set to 1 at start of monster turn, also set to 1 if passing a condition:dead check
+SnesWorkRam:7C51:QuickTurns:Set to 3 when Quick cast
+SnesWorkRam:7C52:WaitModePause:1 when battle is paused due to wait mode with menu open
+SnesWorkRam:7C53:BattleTickerA:loops through 0-3 every run of the main battle loop
+SnesWorkRam:7C54:BattleTickerB:1 when BattleTickerA is 0, 0 otherwise (so 25% of the time)
+SnesWorkRam:7C55:RNGPointer:0 or 1 to determine which RNG to use
+SnesWorkRam:7C56:ReactingIndexType:1 for monster target in ReactingIndex $4755 (0-7) >1 for character target in ReactingIndex $4755 (0-11)
+SnesWorkRam:7C59:GiantDrink:>0 means hp has already been doubled, 4 bytes here, 1 for each char
+SnesWorkRam:7C5D:SpiritFlag:0 if inflicting Zombie, 1 if not, set by Attack 4F (Spirit), think this is used to show a graphical effect later
+SnesWorkRam:7C5F:FleeTicker:counts up toward 20 (when holding L+R, presumably?), if it makes it there a flee attempt roll is made
+SnesWorkRam:7C60:SandwormHitIndex:slot index where worm was hit
+SnesWorkRam:7C61:SandwormHitFlag:1 when sandworm was hit
+SnesWorkRam:7C62:SelectedItem:Item selected when weapon is used (from item menu)
+SnesWorkRam:7C63:ThrownItem:from CharStruct.SelectedItem
+SnesWorkRam:7C64:CurrentHP:Attacker's Current HP, capped at 9999.   Used by White Wind
+SnesWorkRam:7C66-7C6D:BattleItemsWon:8 bytes
+SnesWorkRam:7C72:MonsterNextForm:Monster's next form when switching with Attack Type 71, would be used to load new stats
+SnesWorkRam:7C73:ActedIndex:index of character that acted this battle tick
+SnesWorkRam:7C74:BattleData_MagicLamp:
+SnesWorkRam:7C75:BattleData_Escapes:
+SnesWorkRam:7C76:BattleData_WonderRod:
+SnesWorkRam:7C77-7C8F:BattleData_Unknown:unknown/unused?
+SnesWorkRam:7C80:BattleData_Battles:
+SnesWorkRam:7C82:BattleData_Saves:
+SnesWorkRam:7C84-7C93:BattleData_EventFlags: 	
+SnesWorkRam:7C94:BattleTimerEnable:02 means end battle when timer is up
+SnesWorkRam:7C95:BattleTimer:frame count, 16 bit
+SnesWorkRam:7C97:MagicNull:Set when magic attacks are nullified (element immunity), generally used to properly set AtkMissed
+SnesWorkRam:7C98:SpellCheckStone:flags that make the CastSpell hit the target even if they are inactive, if they have this status
+SnesWorkRam:7C99:SpellCheckDeath:flags that make the CastSpell hit the target even if they are inactive, if they have this status
+SnesWorkRam:7C9A:StealNoItems:Set when there are no items left to steal
+SnesWorkRam:7C9B:ActionAnimShift:messes with animations, might be a better name but don't understand it yet, used by double lance command $55
+SnesWorkRam:7C9C:HitsJumping:nonzero means ok to hit jumping target (inteceptor rocket)
+SnesWorkRam:7C9D:MissInactive:causes attacks that would otherwise hit inactive targets to not do so
+SnesWorkRam:7CAE:MonsterEscaped:Set when monster escapes (8 bytes, 1 for each monster)
+SnesWorkRam:7CB6:QuickCharIndex:Index (0-12) of character that is currently Quick
+SnesWorkRam:7CB7:Dividend
+SnesWorkRam:7CB9:Divisor
+SnesWorkRam:7CBB:Quotient
+SnesWorkRam:7CBD:Remainder
+SnesWorkRam:7CC7:CheckQuick:0 causes ATB update to skip the check for Quick status
+SnesWorkRam:7CD8:ResetBattle:Set when Reset is used
+SnesWorkRam:DB6E-DB71:BattleFrameCount:4 bytes, time elapsed in battle (in frames)
+SnesWorkRam:DBB3:MusicChanged:1 while music change routine is being called

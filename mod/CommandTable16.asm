@@ -56,7 +56,8 @@ if !_Optimize
 	BEQ .LH								;*C2/0CCB: D0 03        BNE $0CD0
 									;*C2/0CCD: 4C 2C 0D     JMP $0D2C
 
-.RH	LDA RHWeapon.AtkType,X						;*C2/0CD0: 20 23 99     JSR $9923
+.RH	LDX $0E
+	LDA RHWeapon.AtkType,X						;*C2/0CD0: 20 23 99     JSR $9923
 	STA $11			;attack type				;*C2/0CD3: 84 14        STY $14
 	LDY #!RHWeapon							;*C2/0CD5: 64 12        STZ $12
 	STY $14			;weapon info pointer			;*C2/0CD7: A6 0E        LDX $0E
@@ -99,6 +100,7 @@ if !_Optimize
 .LH	LDX AttackerOffset						;C2/0D2C: A6 32        LDX $32        
 	LDA CharStruct.LHWeapon,X					;C2/0D2E: BD 14 20     LDA $2014,X
 	BEQ .Next							;*C2/0D31: D0 03        BNE $0D36
+	LDX $0E
 	LDA LHWeapon.AtkType,X						;*C2/0D33: 4C 96 0D     JMP $0D96
 	STA $11			;attack type				;*C2/0D36: 20 23 99     JSR $9923
 	LDY #!LHWeapon							;*C2/0D39: 84 12        STY $12
@@ -168,6 +170,7 @@ if !_Optimize
         CMP #$0C		;copy 12 bytes weapon data	
         BNE -							
 
+	LDA #$04		;fight anim
         JSR GFXCmdAbilityAnim
         LDA $16
         STA GFXQueue.Data2,X	;hand for animation

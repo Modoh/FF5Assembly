@@ -8,7 +8,7 @@ incsrc "utility/attackutil.asm"
 ;Param2: Rune Damage Boost
 ;Param3: Rune MP Cost
 %subdef(Attack3C)
-	JSR SetHitParam1andTargetEvade_Dupe				
+	JSR SetHitParam1andTargetEvade				
 	JSR HitPhysical							
 	LDA AtkMissed							
 	BEQ .Hit

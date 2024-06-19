@@ -947,12 +947,13 @@ endmacro
 	;Param2:	Value to set (if not status or alwaysstatus bytes)
 	;		.. or Status to toggle (only highest bit applies)
 
-DisplayDamage = $3A4C		;a displayed damage number (16 bit)
+DisplayDamage = $3A4C		;displayed damage numbers table (16 bit)
 				;high bit set indicates healing, another flag with 40h
 				;table of these is oddly structured:  monsters then party
 				;with another offset $79FB * 24 on top of that so there's more than one table of them
-
-;7 byte structure here (indexed by multicommand*7)
+				;seems to be 24 bytes * 16
+				
+;7 byte*16 structure here (indexed by multicommand*7)
 ;saves data after an action to allow it to be animated by C1 bank code
 struct ActionAnim $7E3BCC
 	.0: .Flags:		skip 1	;$3BCC	;3BD3	;3BDA	;3BE1
@@ -1921,7 +1922,7 @@ ROMStatBonuses = $D12880	;16 bytes, 8 stat mod pairs
 ROMMagicAnim = $D12981		;16 byte table of bitfields mapping to spells $80+
 				;1 indicates a given spell uses animation type 7 (magic)
 
-ROMBattleMessageOffsets = $D13840
+ROMBattleMessageOffsets = $D13840	;for messages after damage?  unsure how many are here
 
 ROMLevelExp = $D15000		;3 bytes * 99 entries
 ROMLevelHP = $D15129		;2 bytes * 99

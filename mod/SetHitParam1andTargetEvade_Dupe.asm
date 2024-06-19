@@ -2,10 +2,10 @@ if !_Optimize
 
 ;this deletes an unneeded routine
 ;the only time it is called has been replaced by a call to the other copy
-;but we'll define the label to the RTS from the previous routine just in case
 
-skip -1
+;we need a valid label though for the vanilla routine rollback
+;so it's defined to wherever we are
+;worst case if someone calls it they'll likely get one of the other hit routines
 %subdef(SetHitParam1andTargetEvade_Dupe)
-skip 1
 
 endif

@@ -7,7 +7,7 @@ incsrc "utility/attackutil.asm"
 ;Param1: Hit%
 ;Param2/3: Proc% and Proc, not handled here
 %subdef(Attack34)
-	JSR SetHitParam1andTargetEvade_Dupe				
+	JSR SetHitParam1andTargetEvade			
 	JSR HitPhysical							
 	LDA AtkMissed							
 	BEQ .Hit	
