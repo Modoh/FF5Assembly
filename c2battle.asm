@@ -20,6 +20,7 @@ incsrc "settings.asm"
 incsrc "macros.asm"
 incsrc "ff5_structures.asm"	;defines and structures used by FF5, labeled
 incsrc "outsidec2.asm"		;labels for code called outside C2 bank
+incsrc "mod_data.asm"		;applies any data changes (not code) for mods
 
 ;clean the rom area this applies to first, for easier testing
 org $C20000	
