@@ -106,24 +106,18 @@ incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 
 	LDA $10				;weapon properties
 	AND #$04			;Magic Sword OK				
-	BNE .MSword								
-	TDC 				;no MSword effect					
-	BRA .CreateGFXCmds									
+	BEQ .CreateGFXCmds
 								
-.MSword	LDA $16
-	ASL				;high bit into carry (for hand test later)
-	LDX AttackerOffset							
-	LDA CharStruct.MSwordAnim,X						
-	AND #$7F			;clear hand bit
-	BCC .CreateGFXCmds
-	ORA #$80			;set hand bit if LH
+.MSword	LDX AttackerOffset							
+	LDA CharStruct.MSwordAnim,X			
+	ORA $16				;apply hand bit
+	STA $16
 
-.CreateGFXCmds	
-	PHA 									
+.CreateGFXCmds
 	LDA #$04
 	JSR GFXCmdAbilityAnim		;creates gfx command $00,FC,01,04,00
-	PLA 									
-	STA GFXQueue.Data2,X		;replaces last param with MSword anim
+	LDA $16
+	STA GFXQueue.Data2,X		;replaces last param with Hand/MSword anim
 	LDA ProcSequence							
 	TAX 									
 	LDA $11						

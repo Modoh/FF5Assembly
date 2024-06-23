@@ -81,7 +81,7 @@ SnesPrgRom:10FFA0-10FFA1:ROMMonsterFormData_Encounter:2 byte encounter, 14 byte 
 SnesPrgRom:10FFE0-10FFFF:ROMOneTime_Encounter:2 byte encounter, 2 byte replacement, 8 entries
 ;SnesPrgRom:10FFE0-10FFE1:ROMOneTime_Encounter:
 ;SnesPrgRom:10FFE2-10FFE3:ROMOneTime_Replacement:
-SnesPrgRom:110000-1105FF:ROMItems_Weapons_Targetting:	
+SnesPrgRom:110000-1105FF:ROMItems_Weapons:	
 ;SnesPrgRom:110000:ROMItems_Weapons_Targetting:	
 ;SnesPrgRom:110001:ROMItems_Weapons_Category:
 ;SnesPrgRom:110002:ROMItems_Weapons_EquipmentType_CmdStatus_Misc:
@@ -163,25 +163,24 @@ SnesPrgRom:1152C0-1152E9:ROMJobPointers:2 bytes * 21, pointer to first ability f
 SnesPrgRom:1152EA-1152FF:ROMJobLevels:1 byte * 22, number of levels for each job (also ability count)
 SnesPrgRom:115300-11542B:ROMJobAbilities:3 bytes * ?, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers, unsure on length
 SnesPrgRom:1159E0-115CDF:ROMAbilityInfo
-;SnesPrgRom:1159E0:ROMAbilityInfo_Targetting:0
-;SnesPrgRom:1159E1:ROMAbilityInfo_Category:1
-;SnesPrgRom:1159E2:ROMAbilityInfo_Misc_CmdStatus:2
-;SnesPrgRom:1159E3:ROMAbilityInfo_MPCost_DamageMod:3
-;SnesPrgRom:1159E4:ROMAbilityInfo_AtkType:4
-;SnesPrgRom:1159E5:ROMAbilityInfo_Param1:5
-;SnesPrgRom:1159E6:ROMAbilityInfo_Param2:6
-;SnesPrgRom:1159E7:ROMAbilityInfo_Param3:7
+SnesPrgRom:1159E1:ROMAbilityInfo_Category:1
+SnesPrgRom:1159E2:ROMAbilityInfo_Misc_CmdStatus:2
+SnesPrgRom:1159E3:ROMAbilityInfo_MPCost_DamageMod:3
+SnesPrgRom:1159E4:ROMAbilityInfo_AtkType:4
+SnesPrgRom:1159E5:ROMAbilityInfo_Param1:5
+SnesPrgRom:1159E6:ROMAbilityInfo_Param2:6
+SnesPrgRom:1159E7:ROMAbilityInfo_Param3:7
 SnesPrgRom:115CE0-115CE1:ROMStatusDisableCommands:16 bit entries, index is command ID, holds Status1 and Status2 that should disable that command
 SnesPrgRom:115DA0-115DFF:ROMCommandDelay:1 byte per command, atb delay when used, 80h set -> use weapon or spell delay instead
 SnesPrgRom:116AB1-116DF8:ROMEffectInfo
-;SnesPrgRom:116AB1:ROMEffectInfo_Targetting:0
-;SnesPrgRom:116AB2:ROMEffectInfo_Category:1
-;SnesPrgRom:116AB3:ROMEffectInfo_Misc_CmdStatus:2
-;SnesPrgRom:116AB4:ROMEffectInfo_MPCost_DamageMod:3
-;SnesPrgRom:116AB5:ROMEffectInfo_AtkType:4
-;SnesPrgRom:116AB6:ROMEffectInfo_Param1:5
-;SnesPrgRom:116AB7:ROMEffectInfo_Param2:6
-;SnesPrgRom:116AB8:ROMEffectInfo_Param3:7
+SnesPrgRom:116AB1:ROMEffectInfo_Targetting:0
+SnesPrgRom:116AB2:ROMEffectInfo_Category:1
+SnesPrgRom:116AB3:ROMEffectInfo_Misc_CmdStatus:2
+SnesPrgRom:116AB4:ROMEffectInfo_MPCost_DamageMod:3
+SnesPrgRom:116AB5:ROMEffectInfo_AtkType:4
+SnesPrgRom:116AB6:ROMEffectInfo_Param1:5
+SnesPrgRom:116AB7:ROMEffectInfo_Param2:6
+SnesPrgRom:116AB8:ROMEffectInfo_Param3:7
 SnesPrgRom:116DF9-116DFC:ROMTerrainSpells:4 bytes per terrain type
 SnesPrgRom:116EF9-116F88:ROMCombineSpells:144 bytes, Effect spell ids for combine/mix, 12*item2 + item1
 SnesWorkRam:0032:AttackerOffset:16 bit offset into Character Structures (should be multiple of $80)

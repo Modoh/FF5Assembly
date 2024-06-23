@@ -660,7 +660,7 @@ Struct CharStruct $7E2000
 	.Unused3:				;		Only used in Atk Type 5B which is itself unused
 	.DrinkAtk_Bugfix	skip 1		;2079		Optional power drink fix uses this byte
 						;		
-	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand
+	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand (for all attacks)
 	.Reaction2Element:	skip 1		;207B
 	.Reaction2Category:	skip 1		;207C
 	.Reaction2Targets:	skip 1		;207D
