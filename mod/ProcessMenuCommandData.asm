@@ -87,8 +87,9 @@ endif
         LDA #$80                                                        
         STA MenuData.ActionFlag                                         
 if !_Optimize	;opt: use loop to save space, does clear a few extra unused bytes
-        LDX #$000B
--	STZ MenuData.Command,X  
+        STZ MenuData.Command
+	LDX #$0009
+-	STZ MenuData.MonsterTargets,X
 	DEX			
 	BPL -			
 else	
@@ -370,7 +371,7 @@ endif
 	LDA #$80		;physical/other				
 	STA MenuData.ActionFlag						
 if !_Optimize		;save space using a loop
-	LDX $000B	
+	LDX #$000B	
 -	STZ MenuData.Command,X	
 	DEX			
 	BPL -			
