@@ -50,9 +50,9 @@ incsrc "utility/CalcBitfieldIndexes.asm"
 	JSR CalcBitfieldIndexes			;X = byte offset, Y = bit offset
 	CPX #$0006
 	BCS .FightInstead			;everything past the end of the table is invalid
-	TDC
-	ORA ROMBitSet,Y				
-	AND ROMBerserkCommands,X		;check if ability is allowed
+	LDA BerserkCommands,X
+	TYX
+	JSR SelectBit_X
 	BNE .CheckDupe
 
 .FightInstead						
@@ -85,7 +85,7 @@ incsrc "utility/CalcBitfieldIndexes.asm"
 	
 .Ret	RTS
 	
-ROMBerserkCommands:
+BerserkCommands:
 ;hardcoded bitfield of valid commands
 ;should probably be in a data bank but here works for now
 ;currently excludes anything magical, flee-related, or needing a menu selection
