@@ -34,7 +34,6 @@ incsrc utility/SetupUncontrolledFight.asm
 									;*C2/1E8B: 9E 5D 20     STZ $205D,X
 									;*C2/1E8E: 9E 5E 20     STZ $205E,X
 									;*C2/1E91: 9E 5F 20     STZ $205F,X
-	PHX 								;C2/1E94: DA           PHX 
 	TDC 								;C2/1E95: 7B           TDC 
 	TAX 								;C2/1E96: AA           TAX 
 	LDA #$03							;C2/1E97: A9 03        LDA #$03
@@ -44,7 +43,7 @@ incsrc utility/SetupUncontrolledFight.asm
 	JSR SetBit_X       						;C2/1E9E: 20 D6 01     JSR $01D6       
 	PLX 								;C2/1EA1: FA           PLX 
 	STA CharStruct.PartyTargets,X	;fight random party member	;C2/1EA2: 9D 59 20     STA $2059,X
-	JMP .QueueUncontrolledAction					;C2/1EA5: 4C 7D 1F     JMP $1F7D
+	JMP QueueUncontrolledAction					;C2/1EA5: 4C 7D 1F     JMP $1F7D
 
 .Magic
 	LDA $3D		;char index					;C2/1EA8: A5 3D        LDA $3D
