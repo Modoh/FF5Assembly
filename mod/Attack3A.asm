@@ -10,7 +10,7 @@ incsrc "utility/attackutil.asm"
 	JSR SetHitParam1andTargetEvade			
 	JSR HitPhysical							
 	LDA AtkMissed							
-	BNE .Hit							
+	BEQ .Hit							
 	JMP PhysMiss
 .Hit	JSR AxeDamage
 	JSR StandardMSwordMods				
