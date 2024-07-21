@@ -16,7 +16,8 @@ incsrc "utility/attackutil.asm"
 	LDA Param2
 	STA Param1		;HitMagic expects hit chance in Param 1
 	JSR HitMagic
-	JMP Attack07_Status	;Vanilla Gravity/Harp routine, status portion
+	JSR Attack07_Status	;Vanilla Gravity/Harp routine, status portion
+	STZ AtkMissed		;Attack still hits even if status portion missed
 .Ret	RTS
 
 endif
