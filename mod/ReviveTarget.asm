@@ -24,9 +24,8 @@ incsrc "utility/CalcDamageUtil.asm"
 .Revive									
 	LDX TargetOffset						
 	LDA CharStruct.Status1,X					
-	AND #$02			;zombie				
+	BIT #$02			;zombie				
 	BNE .Miss							
-	LDA CharStruct.Status1,X					
 	AND #$7F			;clear dead			
 	STA CharStruct.Status1,X					
 	LDA Param3							
@@ -37,7 +36,7 @@ incsrc "utility/CalcDamageUtil.asm"
 	STA $2A								
 	JSR CalcDamagePercent		;calculates hp * fraction / 16, result in X and $2E
 	LDX TargetOffset						
-	REP $21
+	REP #$21
 	LDA CharStruct.CurHP,X						
 	ADC $2E								
 	BCS +				;check for overflow		
