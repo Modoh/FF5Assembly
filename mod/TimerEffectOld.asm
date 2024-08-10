@@ -40,11 +40,12 @@ endif
 	BEQ +		;skip update if we'd go from 1->0		;C2/229E: F0 03        BEQ $22A3
 	STA CharStruct.Level,X						;C2/22A0: 9D 02 20     STA $2002,X
 +	LDA CharStruct.MonsterAttack,X					;C2/22A3: BD 44 20     LDA $2044,X
-if !_Fixes
+
+if !_Fixes		;Old is supposed to decrease monster attack also (presumably because monster fight doesn't use Level or Str)
 	BEQ .Ret	;skip update if we'd go from 0->255
 	DEC
 	BEQ .Ret	;skip update if we'd go from 1->0
-else			;not only can the attack underflow but it also only applies to attack values over 128
+else			;original attempts to check for underflow but instead prevents decrease when under 128
 	DEC 								;C2/22A6: 3A           DEC 
 	BPL .Ret	;only decreases attack if above 128		;C2/22A7: 10 03        BPL $22AC
 endif
