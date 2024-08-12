@@ -15361,8 +15361,8 @@ db $0A,$14,$1E,$0A,$1E	;HP 10, 20, 30 then MP 10, 30		;C2/57E1: 0A 14 1E 0A 1E
 ;Param1: 	80h miss vs bosses
 ;		40h scans level
 ;		20h scans current and max hp
-;		08h scans element weakness (and status effects 1 and 2, due to a bug)
-;		04h (should scan status effects 1 and 2, but does nothing due to a bug)
+;		10h scans element weakness (and status effects 1 and 2, due to a bug)
+;		08h (should scan status effects 1 and 2, but does nothing due to a bug)
 ;**bug: 	status scan checks the wrong bit
 %sub(Attack1D)
 	JSR SetupMsgBoxIndexes	;prepares things in case of x-magic	;C2/6C17: 20 65 99     JSR $9965
@@ -15415,7 +15415,7 @@ db $0A,$14,$1E,$0A,$1E	;HP 10, 20, 30 then MP 10, 30		;C2/57E1: 0A 14 1E 0A 1E
 	STA MessageBoxData[1].2,Y					;C2/6C8B: 99 C4 3C     STA $3CC4,Y
 	STA MessageBoxData[2].2,Y					;C2/6C8E: 99 C7 3C     STA $3CC7,Y
 +	LDA Param1							;C2/6C91: A5 57        LDA $57
-	AND #$08							;C2/6C93: 29 08        AND #$08
+	AND #$08		;this is a bug and should check for $10	;C2/6C93: 29 08        AND #$08
 	BEQ +								;C2/6C95: F0 1E        BEQ $6CB5
 	LDX TargetOffset						;C2/6C97: A6 49        LDX $49
 	LDA CharStruct.EWeak,X						;C2/6C99: BD 34 20     LDA $2034,X  (Scan Weakness)
@@ -15435,7 +15435,7 @@ db $0A,$14,$1E,$0A,$1E	;HP 10, 20, 30 then MP 10, 30		;C2/57E1: 0A 14 1E 0A 1E
 	CPY #$0008							;C2/6CB0: C0 08 00     CPY #$0008
 	BNE .EleLoop							;C2/6CB3: D0 EF        BNE $6CA4
 +	LDA Param1							;C2/6CB5: A5 57        LDA $57
-	AND #$08		;this is a bug and should check for $04	;C2/6CB7: 29 08        AND #$08
+	AND #$08							;C2/6CB7: 29 08        AND #$08
 	BEQ .Ret							;C2/6CB9: F0 25        BEQ $6CE0
 	LDX TargetOffset						;C2/6CBB: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/6CBD: BD 1A 20     LDA $201A,X  (Scan Status Effect 1)

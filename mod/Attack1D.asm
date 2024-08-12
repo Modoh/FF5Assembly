@@ -4,8 +4,8 @@ if !_Fixes
 ;Param1: 	80h miss vs bosses
 ;		40h scans level
 ;		20h scans current and max hp
-;		08h scans element weakness (*fixed: no longer scans status effects 1 and 2)
-;		04h scans status effects 1 and 2 (*fixed)
+;		10h scans element weakness (*fixed: no longer scans status effects 1 and 2)
+;		08h scans status effects 1 and 2 (*fixed)
 %subdef(Attack1D)
 	JSR SetupMsgBoxIndexes	;prepares things in case of x-magic	;C2/6C17: 20 65 99     JSR $9965
 	STX $0E			;$7B2C*24				;C2/6C1A: 86 0E        STX $0E
@@ -57,7 +57,11 @@ if !_Fixes
 	STA MessageBoxData[1].2,Y					;C2/6C8B: 99 C4 3C     STA $3CC4,Y
 	STA MessageBoxData[2].2,Y					;C2/6C8E: 99 C7 3C     STA $3CC7,Y
 +	LDA Param1							;C2/6C91: A5 57        LDA $57
+if !_Fixes			;fix: check correct byte for weakness reporting
+	AND #$10
+else
 	AND #$08							;C2/6C93: 29 08        AND #$08
+endif
 	BEQ +								;C2/6C95: F0 1E        BEQ $6CB5
 	LDX TargetOffset						;C2/6C97: A6 49        LDX $49
 	LDA CharStruct.EWeak,X						;C2/6C99: BD 34 20     LDA $2034,X  (Scan Weakness)
@@ -77,11 +81,7 @@ if !_Fixes
 	CPY #$0008							;C2/6CB0: C0 08 00     CPY #$0008
 	BNE .EleLoop							;C2/6CB3: D0 EF        BNE $6CA4
 +	LDA Param1							;C2/6CB5: A5 57        LDA $57
-if !_Fixes			;fix: check correct byte for status reporting
-	AND #$04
-else
 	AND #$08							;C2/6CB7: 29 08        AND #$08
-endif
 	BEQ .Ret							;C2/6CB9: F0 25        BEQ $6CE0
 	LDX TargetOffset						;C2/6CBB: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/6CBD: BD 1A 20     LDA $201A,X  (Scan Status Effect 1)
