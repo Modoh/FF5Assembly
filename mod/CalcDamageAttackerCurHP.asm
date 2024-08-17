@@ -10,7 +10,7 @@ incsrc "utility/CalcDamageUtil.asm"
 	LDA Param2						
 	REP #$20
 	STA $2C							
-	LDX TargetOffset					
+	LDX AttackerOffset					
 	LDA CharStruct.CurHP,X					
 	STA $2A							
 	JSR CalcDamagePercent
