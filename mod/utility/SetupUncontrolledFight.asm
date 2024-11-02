@@ -10,6 +10,7 @@ incsrc "ClearSecondAction.asm"
 	STA CharStruct.Command,X	
 	STZ CharStruct.PartyTargets,X	
 	STZ CharStruct.MonsterTargets,X
+	STZ CharStruct.SelectedItem,X
 	JSR ClearSecondAction
 	RTS
 	

@@ -16,6 +16,8 @@ padbyte $00
 				;magic sword with more weapon types
 				;double hand with spears
 				;rod/bell/harp/brave formula improvements
+				;if a weapon has all the element ups (ignoring holy), it gets +water (since there's no other way for items to give +water)
+				;   applies to wizard rod in vanilla FF5
 				
 ;Individual Fixes, not included in the above !_Fixes set 
 !_Overpowered_Knife_Fix = 0	;Directly fixes the knife agi bug with no concern for balance
@@ -32,15 +34,13 @@ padbyte $00
 				;usually seen with Berserkers + Thornlet for ~250 magic power
 
 ;Some bigger individual gameplay changes not included in Combat Tweaks
-!_BerserkerCommands = 0		;Berserk use random equipped commands
-				; 25% chance per slot, invalid commands or duplicates count as fight
-				;not ready yet, needs some work and testing
-
-
+!_BerserkerCommands = 1		;Berserk uses random equipped commands
+				; 33% chance per slot
+				; invalid commands convert to fight
 
 
 ;Test/Debug options
-!_DumpAddr = 1			;prints all org addresses to console
+!_DumpAddr = 0			;prints all org addresses to console
 
 !_ReportMods = 1		;prints all mod asm files that were loaded
 
