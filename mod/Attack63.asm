@@ -2,76 +2,68 @@ if !_Optimize
 
 ;Attack Type 63 (Grand Cross)
 ;optimizations:
-;	pick status type first, then retry on bad outcomes
-;		a bit ugly and executes slower, but saves space
-;		confused casters in vanilla use this retry strategy to pick spells 
-;		which could have a much higher chance of retrying, so this should be ok
-;	111 bytes
+;		rewrote routine 
+;		directly uses the random roll with SetBit for Status 1 and 2
+;		since float/image aren't applied by GC, those are remapped to status 3 and 4
+;
+;		95 bytes
 %subdef(Attack63)
 	LDX TargetOffset						;C2/76CE: A6 49        LDX $49
 	LDA CharStruct.Status1,X					;C2/76D0: BD 1A 20     LDA $201A,X
 	AND #$C2		;select for dead/stone/zombie		;C2/76D3: 29 C2        AND #$C2
-	BEQ +	 							;C2/76D5: F0 01        BEQ $76D8    (Check if Target Status 1 = Dead, Stone or Zombie)
-	RTS 								;C2/76D7: 60           RTS 
+	BEQ .Continue 							;C2/76D5: F0 01        BEQ $76D8    (Check if Target Status 1 = Dead, Stone or Zombie)
+	RTS 			;return early if already dead		;C2/76D7: 60           RTS 
 									;
-+	INC								;C2/76D8: A9 01        LDA #$01
+.Continue
+	INC								;C2/76D8: A9 01        LDA #$01
 	STA StatusFixedDur						;C2/76DA: 8D D7 3E     STA $3ED7
 	
 .Retry	TDC 								;C2/76DD: 7B           TDC 
 	TAX 								;C2/76DE: AA           TAX 
-	LDA #$20								
-	JSR Random_X_A 		;0..32
-	;33 outcomes, 15 result in rerolls
-	;remaining 18 outcomes are evenly distributed just like the original
+	LDA #$11								
+	JSR Random_X_A 		;0..17
 	
-	CMP #$20
+	CMP #$11
 	BCS .HPCritical
-	CMP #$18
-	BCS .Status4
 	CMP #$10
-	BCS .Status3
+	BCS .Status3		;slow
 	CMP #$08
-	AND #$07		;now 0..7 for Status 1 and 2 (doesn't change carry for branch)
+	AND #$07		;now 0..7 for Status 1 and 2 (this doesn't change carry flag for the branch)
 	BCS .Status2
 	
 .Status1			
 	CMP #$04		;float not allowed
-	BEQ .Retry			
+	BEQ .Status3		;so use this slot as the second chance for slow
 	TAX
 	TDC
 	JSR SetBit_X		
-	STA Param3		;status to apply
+	STA Param3		;status bit to apply
 	JSR ApplyStatus1
 	BRA .Finish
 	
 .Status2			
-	CMP #$06		;image statuses not allowed
-	BCS .Retry			
+	CMP #$06		;image statuses not allowed 
+	BCS .Status4		;so use these for countdown and hp leak	
 	TAX
 	TDC
 	JSR SetBit_X		
-	STA Param3		;status to apply
+	STA Param3		;status bit to apply
 	JSR ApplyStatus2
 	BRA .Finish
 
-.Status3				
-	AND #$03		;now 0..3
-	BNE .Retry		;retry 3 of 4 status 3 rolls to preserve original status chances
-	LDA #$04		;slow status
-	STA Param3
+.Status3			;only slow	
+	LDA #$04		;slow status bit
+	STA Param3		;status bit to apply
 	JSR ApplyStatus3
 	BRA .Finish
 
-.Status4			
-	AND #$07		;now 0..7
-	CMP #$02		
-	BCS .Retry		;retry 3 of 4 status 4 rolls to preserve original status chances
-	AND #$01		;now 0 or 1
+.Status4			;only countdown or HP Leak
+	AND #$01		;random number is now 0 or 1
 	INC			;now 1 or 2
 	ASL			
 	ASL
-	ASL
-	STA Param3		;after shifts, is now $08 or $10, for Countdown or HP Leak
+	ASL			;after shifts, is now $08 or $10, for Countdown or HP Leak bits
+	STA Param3		;status bit to apply
 	JSR ApplyStatus4
 	BRA .Finish
 
@@ -82,8 +74,7 @@ if !_Optimize
 	RTS 								;C2/7773: 60           RTS 
 
 
-
-;alternate option, disabled for now
+;alternate option a bit more like the original code
 if 0
 ;Attack Type 63 (Grand Cross)
 ;optimizations:
@@ -169,5 +160,8 @@ if 0
 .Finish	STZ AtkMissed							;C2/7771: 64 56        STZ $56
 	RTS 								;C2/7773: 60           RTS 
 endif
+
+
+
 
 endif
