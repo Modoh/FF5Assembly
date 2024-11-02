@@ -657,9 +657,10 @@ Struct CharStruct $7E2000
 	.BonusVit:		skip 1		;2076		No song affects this, likely unused
 	.BonusMag:		skip 1		;2077
 	.BonusLevel:		skip 1		;2078
-	.Unused3:		skip 1		;2079		Only used in Atk Type 5B which is itself unused
-						;		Optional power drink fix uses this byte
-	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand
+	.Unused3:				;		Only used in Atk Type 5B which is itself unused
+	.DrinkAtk_Bugfix	skip 1		;2079		Optional power drink fix uses this byte
+						;		
+	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand (for all attacks)
 	.Reaction2Element:	skip 1		;207B
 	.Reaction2Category:	skip 1		;207C
 	.Reaction2Targets:	skip 1		;207D
@@ -946,12 +947,13 @@ endmacro
 	;Param2:	Value to set (if not status or alwaysstatus bytes)
 	;		.. or Status to toggle (only highest bit applies)
 
-DisplayDamage = $3A4C		;a displayed damage number (16 bit)
+DisplayDamage = $3A4C		;displayed damage numbers table (16 bit)
 				;high bit set indicates healing, another flag with 40h
 				;table of these is oddly structured:  monsters then party
 				;with another offset $79FB * 24 on top of that so there's more than one table of them
-
-;7 byte structure here (indexed by multicommand*7)
+				;seems to be 24 bytes * 16
+				
+;7 byte*16 structure here (indexed by multicommand*7)
 ;saves data after an action to allow it to be animated by C1 bank code
 struct ActionAnim $7E3BCC
 	.0: .Flags:		skip 1	;$3BCC	;3BD3	;3BDA	;3BE1
@@ -1095,8 +1097,8 @@ Struct <name> <address> 	;EncounterInfo from rom encounter info table at $D03000
 	.FleeChance:		skip 1		;$3EF0		;Flee Chance = 80h if Can't Run
 	.AP			skip 1		;$3EF1
 	.Visible		skip 1		;$3EF2		;1 bit per monster
-	.MonsterID:		skip 8		;$3EF3-$7EFA	;one byte for each monster
-	.Palettes		skip 2		;$3EFB-7EFC	;2 bits per monster
+	.MonsterID:		skip 8		;$3EF3-3EFA	;one byte for each monster
+	.Palettes		skip 2		;$3EFB-3EFC	;2 bits per monster
 	.Music			skip 1		;$3EFD		;index into $D0EEDF table
 	.Flags			skip 1		;$3EFE		;80h Always Back Attack
 								;40h Can't use Void
@@ -1213,8 +1215,8 @@ endstruct
 !<name> = <name>.ActionFlag
 endmacro
 
-%CreateSavedActionStruct(SavedAction,$7E41D4)	;used for mimic
-%CreateSavedActionStruct(SavedAction2,$7E473A)	;used for reactions
+%CreateSavedActionStruct(SavedActionMimic,$7E41D4)	;used for mimic
+%CreateSavedActionStruct(SavedActionReaction,$7E473A)	;used for reactions
 
 MonsterMagic = $7E41DE		;spells available to monsters
 				;1 byte * 16 slots (per monster)
@@ -1253,16 +1255,16 @@ AIConditionMet = $4694		;non-zero if a the last checked condition is met
 
 AICurrentOffset = $4696		
 
-;SavedAction2 = $473A		;SavedAction struct, 10 bytes
+;SavedActionReaction = $473A		;SavedAction struct, 10 bytes
 				;used for monster reactions
 
 ;copies of 	MonsterAiScript post-action (100 bytes)
 ;		MonsterMagic post-action (16 bytes)
 ;		MMTargets post-action (32 bytes)
 ;saved and later restored during monster reactions
-SavedMonsterAIScript = $46D6
 SavedMonsterMagic = $46A6
 SavedMMTargets = $46B6
+SavedMonsterAIScript = $46D6
 
 ;EnableTimer.ATB and CurrentTimer.ATB are saved to these then later restored
 ;the offset is bugged though, so it saves/restores the wrong character
@@ -1392,15 +1394,15 @@ Struct <name> <address>			;AttackInfo $7E79FC
 							;04 Lightning    \
 							;02 Ice           Stat bonuses
 							;01 Fire         /
-									;Stat bonuses  **cleanup: get actual rom data here
-										;0 +1 
-										;1 +2 
-										;2 +3 
-										;3 +1/-1/+1/-1 (not used) 
-										;4 -1 (use inverted stat selection) (not used) 
-										;5 +5/-5/+5/-5 (Giant Gloves) 
-										;6 -5 (use inverted stat selection) 
-										;7 +5 
+									;Stat bonus table 	**cleanup: verify
+										;0: +0, +1 
+										;1: +0, +2 
+										;2: +0, +3 
+										;3: +1, -1 (not used) 
+										;4: -1, +0 (not used) 
+										;5: +5, -5 (Giant Gloves) 
+										;6: -5, +0 
+										;7: +0, +5 
 	.MPCost:				;For Magic
 							;80 Not reflectable 
 							;40-01 MP cost
@@ -1515,7 +1517,7 @@ MultiCommand = $7B2C			;Name here is a guess but seems to fit
 					; but there's at least one place where I'm not sure what will happen if it's more than 3
 					;seems like it is which attack we're currently processing for any double attack type effects?
 
-AtkType = $7B2D			;table of attack types indexed by MultiCommand above
+AtkType = $7B2D				;table of attack types indexed by MultiCommand above
 					;High bit is used as a flag that clears some data?
 					;$FF is also a special case that points to the next MultiCommand
 
@@ -1920,7 +1922,7 @@ ROMStatBonuses = $D12880	;16 bytes, 8 stat mod pairs
 ROMMagicAnim = $D12981		;16 byte table of bitfields mapping to spells $80+
 				;1 indicates a given spell uses animation type 7 (magic)
 
-ROMBattleMessageOffsets = $D13840
+ROMBattleMessageOffsets = $D13840	;for messages after damage?  unsure how many are here
 
 ROMLevelExp = $D15000		;3 bytes * 99 entries
 ROMLevelHP = $D15129		;2 bytes * 99
@@ -1928,7 +1930,7 @@ ROMLevelMP = $D151EF		;2 bytes * 99
 
 ROMJobPointers = $D152C0	;2 bytes * 21, pointer to first ability for each job (no freelancer)
 ROMJobLevels = $D152EA		;1 byte * 22, number of levels for each job (also ability count)
-ROMJobAbilities = $D15300	;3 bytes, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers
+ROMJobAbilities = $D15300	;3 bytes * ?, 2 byte ap cost followed by 1 byte id, accessed via ROMJobPointers
 
 %CreateMagicInfoStruct(ROMAbilityInfo,$D159E0)		;8 bytes * 96 abilities
 
@@ -1942,6 +1944,6 @@ ROMCommandDelay = $D15DA0	;1 byte per command, atb delay when used
 						;8 bytes * 105? abilities
 ROMTerrainSpells = $D16DF9	;4 bytes per terrain type
 							
-ROMCombineSpells = $D16EF9	;144 bytes?
+ROMCombineSpells = $D16EF9	;144 bytes
 				;Effect spell ids for combine/mix
 				;12*item2 + item1
