@@ -138,19 +138,18 @@ if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks
 	SEP #$20		;copying just low bytes				;C2/9B6F: E2 20        SEP #$20	
 	LDX AttackerOffset							;C2/9B73: A6 32        LDX $32		
 	LDA Temp	;element up						;C2/9B75: AD 20 26     LDA $2620	
-	AND #$7F	;high bit used as stats flag, can't have +water on gear ;C2/9B78: 29 7F        AND #$7F	
+;			;vanilla clears high bit but it can't be set by code flow here
+;	AND #$7F	;high bit used as stats flag, can't have +water on gear ;C2/9B78: 29 7F        AND #$7F	
+
 if !_CombatTweaks	;sets water bit if all of the other bits are set (ignoring holy)
-	PHA
 	AND #$6F
-	CMP #$6F
-	BEQ .AddWater
-	PLA
-	BRA .After
-.AddWater
-	PLA
-	ORA #$80
-.After
+	CMP #$6F	
+	BNE .Normal	;not all set, just apply normally
+	LDA Temp	
+	ORA #$80	;set water up bit
+.Normal
 endif
+
 	STA CharStruct.ElementUp,X						;C2/9B7A: 9D 22 20     STA $2022,X	
 	
 .ApplyStatsLoop

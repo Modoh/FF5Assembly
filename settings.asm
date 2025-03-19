@@ -16,8 +16,10 @@ padbyte $00
 				;magic sword with more weapon types
 				;double hand with spears
 				;rod/bell/harp/brave formula improvements
-				;if a weapon has all the element ups (ignoring holy), it gets +water (since there's no other way for items to give +water)
-				;   applies to wizard rod in vanilla FF5
+				
+				;if your equipment has all the element ups (ignoring holy), 
+				;you get +water (since there's no other way for items to give +water)
+				;only really applies to wizard rod in vanilla FF5
 				
 ;Individual Fixes, not included in the above !_Fixes set 
 !_Overpowered_Knife_Fix = 0	;Directly fixes the knife agi bug with no concern for balance
