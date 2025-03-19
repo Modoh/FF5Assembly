@@ -144,9 +144,9 @@ if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks || !_ArmorEvade || !_Sta
 if !_CombatTweaks	;sets water bit if all of the other bits are set (ignoring holy)
 	AND #$6F
 	CMP #$6F	
-	BNE .Normal	;not all set, just apply normally
-	LDA Temp	
-	ORA #$80	;set water up bit
+	BEQ .Normal	;not all set, just apply normally
+	LDA #$80	;+water
+	ORA Temp
 .Normal
 endif
 
