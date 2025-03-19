@@ -1,4 +1,4 @@
-if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks || !_ArmorEvade 
+if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks || !_ArmorEvade || !_StackingDefender
 
 ;Apply Stats and Status from gear ($7B7B: Character index 0-3)
 
@@ -192,9 +192,40 @@ endif
 	STA CharStruct.MonsterAttack,X						;C2/9BB9: 9D 44 20     STA $2044,X
 	LDA LHWeapon.AtkPower,Y							;C2/9BBC: B9 98 40     LDA $4098,Y	
 	STA CharStruct.MonsterAttackLH,X					;C2/9BBF: 9D 45 20     STA $2045,X
+
+if !_StackingDefender		;if 2 weapons with the same defense bit are set, set the extra bit #$10 so later code can stack the chance
+	LDA RHWeapon.Properties,Y						;C2/9BC2: B9 8A 40     LDA $408A,Y	
+	STA $0E
+	ORA LHWeapon.Properties,Y						;C2/9BC5: 19 96 40     ORA $4096,Y	
+	STA CharStruct.WeaponProperties,X					;C2/9BC8: 9D 38 20     STA $2038,X
+
+	LDA LHWeapon.Properties,Y							
+	BMI .SwordBlock
+	AND #$40
+	BEQ .ExitStackingDefender
+
+	;knife block in lh, check rh
+	BIT $0E
+	BVS .SetExtraFlag
+	BRA .ExitStackingDefender
+	
+.SwordBlock	;sword block in lh, check rh
+	BIT $0E
+	BMI .SetExtraFlag
+	BRA .ExitStackingDefender
+	
+.SetExtraFlag	
+	LDA CharStruct.WeaponProperties,X
+	ORA #$10
+	STA CharStruct.WeaponProperties,X
+	
+.ExitStackingDefender
+else
+
 	LDA RHWeapon.Properties,Y						;C2/9BC2: B9 8A 40     LDA $408A,Y	
 	ORA LHWeapon.Properties,Y						;C2/9BC5: 19 96 40     ORA $4096,Y	
 	STA CharStruct.WeaponProperties,X					;C2/9BC8: 9D 38 20     STA $2038,X
+endif
 
 	CLC 									;C2/9BCB: 18           CLC 
 	LDA RHShield.ShieldEvade,Y						;C2/9BCC: B9 73 40     LDA $4073,Y	

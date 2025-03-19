@@ -23,7 +23,7 @@ padbyte $00
 				
 ;Individual Fixes, not included in the above !_Fixes set 
 !_Overpowered_Knife_Fix = 0	;Directly fixes the knife agi bug with no concern for balance
-				;only recommended if you're also lowering knife weapon attack values or something
+				;only recommended if you're also lowering knife/agi weapon attack values or something
 				;normal knife fix:	Str*Lvl/256 + Agi*Lvl/256 + 3  (included in !_Fixes and !_CombatTweaks)
 				;overpowered fix: 	Str*Lvl/128 + Agi*Lvl/128 + 2
 				;vanilla knives:	Str*Lvl/128 + [bugged 0 or 1] + 2
@@ -44,6 +44,10 @@ padbyte $00
 				;this still doesn't load evade from weapons, 
 				;because that byte is reused for item magic like rod breaking
 
+!_StackingDefender = 0 		;Allows the bonus weapon evades of the same type to stack, 
+				;using the extra bit $10 in WeaponProperties
+				;
+				
 ;Test/Debug options
 !_DumpAddr = 0			;prints all org addresses to console
 
