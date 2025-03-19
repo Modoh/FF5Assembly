@@ -40,6 +40,9 @@ padbyte $00
 				; 33% chance per slot
 				; invalid commands convert to fight
 
+!_ArmorEvade = 1		;Normally the game doesn't load evasion values from armor, now it does
+				;this still doesn't load evade from weapons, 
+				;because that byte is reused for item magic like rod breaking
 
 ;Test/Debug options
 !_DumpAddr = 0			;prints all org addresses to console

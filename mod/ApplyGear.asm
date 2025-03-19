@@ -1,4 +1,4 @@
-if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks
+if !_Fix_Stat_Underflow || !_Optimize || !_CombatTweaks || !_ArmorEvade 
 
 ;Apply Stats and Status from gear ($7B7B: Character index 0-3)
 
@@ -195,9 +195,15 @@ endif
 	LDA RHWeapon.Properties,Y						;C2/9BC2: B9 8A 40     LDA $408A,Y	
 	ORA LHWeapon.Properties,Y						;C2/9BC5: 19 96 40     ORA $4096,Y	
 	STA CharStruct.WeaponProperties,X					;C2/9BC8: 9D 38 20     STA $2038,X
+
 	CLC 									;C2/9BCB: 18           CLC 
 	LDA RHShield.ShieldEvade,Y						;C2/9BCC: B9 73 40     LDA $4073,Y	
 	ADC LHShield.ShieldEvade,Y						;C2/9BCF: 79 7F 40     ADC $407F,Y	
+if !_ArmorEvade			;vanilla doesn't add evade for armor slots, now we do
+	ADC Headgear.ShieldEvade,Y
+	ADC Bodywear.ShieldEvade,Y
+        ADC Accessory.ShieldEvade,Y
+endif
 	CMP #$63								;C2/9BD2: C9 63        CMP #$63		
 	BCC +									;C2/9BD4: 90 02        BCC $9BD8	
 	LDA #$63	;99 cap	for Evade					;C2/9BD6: A9 63        LDA #$63		
