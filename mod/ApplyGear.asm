@@ -146,8 +146,7 @@ if !_CombatTweaks	;sets water bit if all of the other bits are set (ignoring hol
 	CMP #$6F	
 	BEQ .Normal	;not all set, just apply normally
 	LDA #$80	;+water
-	ORA Temp
-.Normal
+.Normal	ORA Temp
 endif
 
 	STA CharStruct.ElementUp,X						;C2/9B7A: 9D 22 20     STA $2022,X	
