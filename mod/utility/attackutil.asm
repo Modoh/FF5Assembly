@@ -19,7 +19,7 @@ includeonce
 %subdef(PhysElement)
 	LDA Param1							
 	STA AtkElement							
-	JSR ElementDamageModPhys		
+	JMP ElementDamageModPhys		
 	
 %subdef(StandardMSwordMods)
 	JSR CommandMod							
