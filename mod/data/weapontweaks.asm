@@ -233,3 +233,15 @@ db $38,$20,$50,$7F,$16,$04,$78,$2D,$3C,$63,$0A,$05		;Rune		;added spellblade eff
 db $38,$20,$50,$80,$23,$00,$78,$37,$39,$00,$00,$00		;Tinker
 
 ;Currently non-spellbladed items/attacks include Whips, Chakram, Flails, Bows, Non-Rune bells, Rods, Staves, Fists
+
+
+
+org $d1042c
+;full moon
+;38 80 5E 80 23 00 78 23 38 5F 00 00
+;changing action type from physical to aerial to match full moon (for can't evade to apply properly)
+db $38,$40,$5E,$80,$23,$00,$78,$23,$38,$5F,$00,$00
+
+;org $d104b0
+;rising sun
+;38 40 5E 80 23 00 78 47 38 5A 00 00
