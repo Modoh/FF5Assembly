@@ -85,7 +85,9 @@ incsrc utility/GFXCmd.asm		;for GFXCmdMagicAnim utility routine
 	JSR Random_0_99								
 	CMP $12				;proc chance				
 	BCS .NormalAttack							
-	LDA $13				;proc command				
+	LDA $13				;proc command
+	PLX				;this removes the return address from the stack to effectively cancel any remaining attacks
+					;only needed because we're in a utility routine that didn't exist in the original
 	JMP DispatchCommand_CommandReady	;dispatch the new command	
 
 .NormalAttack								
