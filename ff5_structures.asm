@@ -1865,7 +1865,7 @@ Struct ROMOneTime $D0FFE0	;4 bytes * 8 entries for one-time encounters
 	.Replacement:		skip 2
 endstruct
 
-%CreateAttackInfoStruct(ROMItems,$D10000)		;12 bytes, 256 entries, ends at $D10BFF
+%CreateAttackInfoStruct(ROMItems,$D10000)		;12 bytes per item, ends at $D10A7F
 							;identical to AttackInfo struct at $79FC, see that for details
 !ROMWeapons = ROMItems
 !ROMArmor = ROMItems[$80]	;$D10600
