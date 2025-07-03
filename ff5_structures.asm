@@ -549,7 +549,7 @@ Struct CharStruct $7E2000
 	.EnableSpells:     	skip 3		;203D   	Sword/White	4 bits high/low unpacked into separate bytes later
 						;203E		Black/Time
 						;203F		Summon/Misc	(Misc would be Songs/Blue but seems unused)
-	.EquipWeapons:		skip 2		;2040		bitmask for equippable weapons
+		:		skip 2		;2040		bitmask for equippable weapons
 						;		low byte: 80h	Katana		high: 80h	
 						;                         40h	Hammer                40h	Bell
 						;                         20h	Axe                   20h	Whip
@@ -660,7 +660,7 @@ Struct CharStruct $7E2000
 	.Unused3:				;		Only used in Atk Type 5B which is itself unused
 	.DrinkAtk_Bugfix	skip 1		;2079		Optional power drink fix uses this byte
 						;		
-	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand (for all attacks)
+	.MSwordAnim:		skip 1		;207A		Used for Magic Sword Animations, high bit is hand
 	.Reaction2Element:	skip 1		;207B
 	.Reaction2Category:	skip 1		;207C
 	.Reaction2Targets:	skip 1		;207D
@@ -1366,6 +1366,7 @@ Struct <name> <address>			;AttackInfo $7E79FC
 
 	.EquipmentType:		;2	;79FE	404B	4087	4093
 						;For Weapons
+							;80 (unselectable in battle inventory?)
 							;40 NOT throwable 
 							;20-01 Table of "sets" of classes that can use it
 	.Misc:					;For Spells
@@ -1375,8 +1376,16 @@ Struct <name> <address>			;AttackInfo $7E79FC
 							;10 Learnable 10% (unused?)
 							;08
 							;04-01 Number of hits (minus 1?) (Meteo)
-						;For Items
+						;For Items (logic is inverted for most, for some reason)
+							;80 (unselectable in battle inventory?)
+							;40 Not Throwable
+							;20 Not Usable (for Item Command)
+							;10 Not Drinkable
 							;08 Does not consume when used
+							;04 Unused (but copied to inventory where the bit means double grip)
+							;02 Not Mixable
+							;01 Unused
+							
 	.CmdStatus:				;For Abilities
 							;80h Defending
 							;40h Guarding
@@ -1542,7 +1551,7 @@ AnotherTargetIndex = $7B45		;index indicating who is covering for an attack (str
 Reflected = $7B46			;either a flag indicating reflect occuring or a count of reflected spells
 
 CounterReflecteeTable = $7B49		;8 bytes * Multicommand
-					;doesn't seem to ever be used anywhere after being set up
+					;only written to in C2, used in C1 graphics routines
 
 BaseDamage = $7B69			;Damage after defense and M 
 
@@ -1766,6 +1775,9 @@ CheckQuick = $7CC7			;0 causes ATB update to skip the check for Quick status
 
 ResetBattle = $7CD8			;Set when Reset is used
 
+
+;Addresses $8000 and above in WRAM are generally used for graphics (C1 bank) or sound (C4) things
+;but are occasionally referenced from C2
 BattleFrameCount = $DB6E		;4 bytes, time elapsed in battle (in frames)
 
 MusicChanged = $DBB3			;1 while music change routine is being called
@@ -1865,11 +1877,12 @@ Struct ROMOneTime $D0FFE0	;4 bytes * 8 entries for one-time encounters
 	.Replacement:		skip 2
 endstruct
 
-%CreateAttackInfoStruct(ROMItems,$D10000)		;12 bytes per item, ends at $D10A7F
+%CreateAttackInfoStruct(ROMItems,$D10000)		;12 bytes * 96 weapons/armor, ends at $D10A7F
 							;identical to AttackInfo struct at $79FC, see that for details
+							;consumable items immediately follow but use the 8 byte magic/ability structure instead
 !ROMWeapons = ROMItems
 !ROMArmor = ROMItems[$80]	;$D10600
-;consumable items use the 8 byte magic/ability structure instead
+
 
 macro CreateMagicInfoStruct(name,address)							
 Struct <name> <address>		;8 bytes
@@ -1889,7 +1902,7 @@ endstruct
 endmacro
 
 %CreateMagicInfoStruct(TempMagicInfo,$7E262A)
-
+	
 %CreateMagicInfoStruct(ROMConsumables,$D10A80)		;8 bytes * 32 consumables
 
 %CreateMagicInfoStruct(ROMMagicInfo,$D10B80)		;8 bytes * 256 spells
