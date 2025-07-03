@@ -68,7 +68,7 @@ incsrc utility/SimpleOneHand.asm
 	LDY $0E			;GearStruct offset
 	LDA LHWeapon.AtkType,Y
 	STA $11			;attack type
-	LDX #!LRWeapon          
+	LDX #!LHWeapon          
 	STX $14                 ;weapon info pointer	
 	LDA #$80              	
 	STA $16                	;flag for hand anim

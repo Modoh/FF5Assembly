@@ -549,7 +549,7 @@ Struct CharStruct $7E2000
 	.EnableSpells:     	skip 3		;203D   	Sword/White	4 bits high/low unpacked into separate bytes later
 						;203E		Black/Time
 						;203F		Summon/Misc	(Misc would be Songs/Blue but seems unused)
-		:		skip 2		;2040		bitmask for equippable weapons
+	.EquipWeapons:		skip 2		;2040		bitmask for equippable weapons
 						;		low byte: 80h	Katana		high: 80h	
 						;                         40h	Hammer                40h	Bell
 						;                         20h	Axe                   20h	Whip
