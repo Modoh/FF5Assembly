@@ -1,9 +1,18 @@
 if !_Optimize
+;**optimize: 	lots to trim in the targetting code
+;		could also use BuildTargetBitmask instead of duplicating all its code here
 
+
+incsrc utility/SimpleOneHand.asm	;fight for one attack without procs
+;Params
+;$0E: char equipment offset
+;$11: weapon attack type
+;$14: Pointer to weapon info struct
+;$16: 0 for rh, $80 for LH
+;$17: number of extra attacks (twin lance)
 
 ;Command $17 (X-Fight)
-;**optimize: 	lots to trim in the targetting code
-;		could also use BuildTargetBitmask instead of duplicating all its code here	
+	
 %subdef(CommandTable16)
 	LDA #$17		;ability name				;C2/0C6F: A9 17        LDA #$17
 	JSR GFXCmdAttackNameA						;C2/0C71: 20 FA 16     JSR $16FA
@@ -49,21 +58,22 @@ if !_Optimize
 	LDA AttackerIndex						;C2/0CBC: A5 47        LDA $47        
 	TAX 								;C2/0CBE: AA           TAX 
 	LDA ROMTimes84,X	;combined size of gearstats structs	;C2/0CBF: BF 85 ED D0  LDA $D0ED85,X
-	TAX 								;C2/0CC3: AA           TAX 
-	STX $0E			;gearstats offset			;C2/0CC4: 86 0E        STX $0E
-	LDX AttackerOffset						;C2/0CC6: A6 32        LDX $32        
-	LDA CharStruct.RHWeapon,X					;C2/0CC8: BD 13 20     LDA $2013,X
+	TAY 								;C2/0CC3: AA           TAX 
+	STY $0E			;gearstats offset			;C2/0CC4: 86 0E        STX $0E
+	LDX AttackerOffset						;*C2/0CC6: A6 32        LDX $32        
+	LDA CharStruct.RHWeapon,X					;*C2/0CC8: BD 13 20     LDA $2013,X
 	BEQ .LH								;*C2/0CCB: D0 03        BNE $0CD0
 									;*C2/0CCD: 4C 2C 0D     JMP $0D2C
-
-.RH	LDX $0E
-	LDA RHWeapon.AtkType,X						;*C2/0CD0: 20 23 99     JSR $9923
+;.RH
+	LDA RHWeapon.AtkType,Y						;*C2/0CD0: 20 23 99     JSR $9923
 	STA $11			;attack type				;*C2/0CD3: 84 14        STY $14
-	LDY #!RHWeapon							;*C2/0CD5: 64 12        STZ $12
-	STY $14			;weapon info pointer			;*C2/0CD7: A6 0E        LDX $0E
+	LDX #!RHWeapon							;*C2/0CD5: 64 12        STZ $12
+	STX $14			;weapon info pointer			;*C2/0CD7: A6 0E        LDX $0E
 	STZ $16			;flag for hand anim			;*C2/0CD9: BD 85 40     LDA $4085,X    
+	STZ $17			;no extra attacks
+	;opt: call routine instead of duplicating code for hands
 	JSR SimpleOneHand						;*C2/0CDC: 99 FC 79     STA $79FC,Y
-	;opt: call routine instead of duplicating code for hands	;*C2/0CDF: E8           INX 
+									;*C2/0CDF: E8           INX 
 									;*C2/0CE0: C8           INY 
 									;*C2/0CE1: E6 12        INC $12
 									;*C2/0CE3: A5 12        LDA $12
@@ -100,13 +110,14 @@ if !_Optimize
 .LH	LDX AttackerOffset						;C2/0D2C: A6 32        LDX $32        
 	LDA CharStruct.LHWeapon,X					;C2/0D2E: BD 14 20     LDA $2014,X
 	BEQ .Next							;*C2/0D31: D0 03        BNE $0D36
-	LDX $0E
-	LDA LHWeapon.AtkType,X						;*C2/0D33: 4C 96 0D     JMP $0D96
+	LDY $0E
+	LDA LHWeapon.AtkType,Y						;*C2/0D33: 4C 96 0D     JMP $0D96
 	STA $11			;attack type				;*C2/0D36: 20 23 99     JSR $9923
-	LDY #!LHWeapon							;*C2/0D39: 84 12        STY $12
-	STY $14			;weapon info pointer			;*C2/0D3B: 64 14        STZ $14
+	LDX #!LHWeapon							;*C2/0D39: 84 12        STY $12
+	STX $14			;weapon info pointer			;*C2/0D3B: 64 14        STZ $14
 	LDA #$80							;*C2/0D3D: A6 0E        LDX $0E
 	STA $16			;flag for hand anim			;*C2/0D3F: BD 91 40     LDA $4091,X    
+	STZ $17			;no extra attacks
 	JSR SimpleOneHand						;*C2/0D42: 99 FC 79     STA $79FC,Y
 	;opt: call routine instead of duplicating code for hands	;*C2/0D45: E8           INX 
 									;*C2/0D46: C8           INY 
@@ -148,46 +159,5 @@ if !_Optimize
 	BEQ .Ret							;C2/0D9C: F0 03        BEQ $0DA1
 	JMP .AttackLoop							;C2/0D9E: 4C 76 0C     JMP $0C76
 .Ret	RTS 								;C2/0DA1: 60           RTS 
-
-
-%subdef(SimpleOneHand)
-;Process one hand's attacks (for simple no-proc attacks)
-;Params
-;$0E: char equipment offset
-;$11: weapon attack type
-;$14: Pointer to weapon info struct
-;$16: 0 for rh, $80 for LH
-	JSR SelectCurrentProcSequence	;sets Y to attackinfo offset			
-        STZ $12
-	TYX
-        LDY $0E			;gearstats offset		
--       LDA ($14),Y						
-        STA !AttackInfo,X					
-        INX 							
-        INY 							
-        INC $12							
-        LDA $12							
-        CMP #$0C		;copy 12 bytes weapon data	
-        BNE -							
-
-	LDA #$04		;fight anim
-        JSR GFXCmdAbilityAnim
-        LDA $16
-        STA GFXQueue.Data2,X	;hand for animation
-        LDA ProcSequence					
-        TAX 							
-	ASL
-	TAY
-        LDA $11			;attack type
-        STA AtkType,X						
-        STZ MultiTarget,X					
-        STZ TargetType,X					
-        LDA TempTargetBitmask					
-        STA CommandTargetBitmask,Y				
-        LDA TempTargetBitmask+1					
-        STA CommandTargetBitmask+1,Y				
-        INC ProcSequence					
-        JMP GFXCmdDamageNumbers
-
 
 endif
