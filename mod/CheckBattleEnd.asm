@@ -73,6 +73,7 @@ if !_Fixes
 .CheckFlee									
 	LDA FleeSuccess		;bugfix: check FleeSuccess before checking FleeTickerActive
 	BMI .FleeSuccess	;80h: exit cast				
+	BEQ .ResetFleeTicker
 	LDA FleeTickerActive						
 	BEQ .ResetFleeTicker						
 	LDA EncounterInfo.FleeChance					;C2/5B3A: AD F0 3E     LDA $3EF0
